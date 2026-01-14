@@ -1,0 +1,31 @@
+{
+    "brand_name": "Pro EV Service อู่ซ่อมรถไฟฟ้า ปากเกร็ด",
+    "address": "เมเจอร์ ฮอลลีวู้ด ตำบลปากเกร็ด อำเภอปากเกร็ด นนทบุรี 11120",
+    "phone": "0989794116",
+    "facebook": "https://www.facebook.com/proevservice",
+    "messenger": "https://m.me/proevservice",
+    "line": "https://line.me/R/ti/p/@869msrge",
+    "maps": "https://maps.app.goo.gl/h21RDsTBUFH5fH9z7",
+    "hours": "09:00 - 19:00 (หยุดวันพุธ)",
+    "service_areas": [
+        "ปากเกร็ด",
+        "แจ้งวัฒนะ",
+        "เมืองนนทบุรี",
+        "ราชพฤกษ์",
+        "งามวงศ์วาน",
+        "หลักสี่",
+        "กรุงเทพฯ"
+    ],
+    "models": [
+        "NETA V",
+        "NETA V-II",
+        "BYD Dolphin",
+        "BYD Atto 3",
+        "MG EP",
+        "MG ZS EV",
+        "Deepal",
+        "Jaecoo",
+        "Geely",
+        "GAC AION"
+    ]
+}

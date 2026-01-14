@@ -1,0 +1,57 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+collections:
+  - name: "settings"
+    label: "Settings"
+    files:
+      - name: "general"
+        label: "General Settings"
+        file: "content/settings.json"
+        fields:
+          - {label: "Brand Name", name: "brand_name", widget: "string"}
+          - {label: "Address", name: "address", widget: "string"}
+          - {label: "Phone", name: "phone", widget: "string"}
+          - {label: "Facebook", name: "facebook", widget: "string"}
+          - {label: "LINE OA", name: "line", widget: "string"}
+          - {label: "Map Link", name: "maps", widget: "string"}
+          - {label: "Opening Hours", name: "hours", widget: "string"}
+          - {label: "Service Areas", name: "service_areas", widget: "list"}
+          - {label: "Common Models", name: "models", widget: "list"}
+
+  - name: "services"
+    label: "Services"
+    folder: "content/services"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Service Title", name: "title", widget: "string"}
+      - {label: "Description", name: "description", widget: "text"}
+      - {label: "Detail Content", name: "body", widget: "markdown"}
+      - {label: "Icon Name (Lucide)", name: "icon", widget: "string"}
+      - {label: "Cover Image", name: "image", widget: "image"}
+      - {label: "Mini Q&A", name: "qna", widget: "list", fields: [{label: "Q", name: "question", widget: "string"}, {label: "A", name: "answer", widget: "text"}]}
+
+  - name: "faq"
+    label: "FAQ (Home)"
+    folder: "content/faq"
+    create: true
+    fields:
+      - {label: "Question", name: "question", widget: "string"}
+      - {label: "Answer", name: "answer", widget: "text"}
+
+  - name: "posts"
+    label: "Blog Posts"
+    folder: "content/posts"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    fields:
+      - {label: "Title", name: "title", widget: "string"}
+      - {label: "Publish Date", name: "date", widget: "datetime"}
+      - {label: "Body", name: "body", widget: "markdown"}
+      - {label: "Cover Image", name: "thumbnail", widget: "image"}
+      - {label: "Excerpt", name: "excerpt", widget: "text"}

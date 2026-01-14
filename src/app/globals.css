@@ -1,0 +1,39 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
+  }
+}
+
+@layer base {
+  body {
+    @apply bg-white text-gray-900 font-sans antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-bold tracking-tight;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply inline-flex items-center justify-center rounded-full bg-[#00A651] px-6 py-3 text-white transition-all hover:bg-[#008f45] active:scale-95 text-base font-semibold shadow-md hover:shadow-lg;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center justify-center rounded-full border-2 border-[#00A651] px-6 py-3 text-[#00A651] transition-all hover:bg-[#00A651] hover:text-white active:scale-95 text-base font-semibold;
+  }
+
+  .section-padding {
+    @apply py-16 md:py-24;
+  }
+}
