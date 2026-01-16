@@ -4,14 +4,58 @@
 
 @layer base {
   :root {
-    --background: 0 0% 100%;
-    --foreground: 222.2 84% 4.9%;
-  }
-}
+    /* Light Mode */
+    --bg: 248 250 252;
+    /* #F8FAFC */
+    --surface: 255 255 255;
+    /* #FFFFFF */
+    --card: 255 255 255;
+    --border: 229 231 235;
+    /* #E5E7EB */
 
-@layer base {
+    --text: 15 23 42;
+    /* #0F172A */
+    --text-muted: 100 116 139;
+    /* #64748B */
+
+    --primary: 30 42 68;
+    /* #1E2A44 */
+    --primary-2: 79 70 229;
+    /* #4F46E5 */
+    --accent: 34 197 94;
+    /* #22C55E */
+    --accent-hover: 22 163 74;
+    /* #16A34A */
+  }
+
+  .dark {
+    /* Dark Mode */
+    --bg: 11 18 32;
+    /* #0B1220 */
+    --surface: 17 24 39;
+    /* #111827 */
+    --card: 30 41 59;
+    /* #1E293B */
+    --border: 51 65 85;
+    /* #334155 */
+
+    --text: 229 231 235;
+    /* #E5E7EB */
+    --text-muted: 156 163 175;
+    /* #9CA3AF */
+
+    --primary: 99 102 241;
+    /* #6366F1 */
+    --primary-2: 129 140 248;
+    /* #818CF8 */
+    --accent: 34 197 94;
+    /* #22C55E */
+    --accent-hover: 22 163 74;
+    /* #16A34A */
+  }
+
   body {
-    @apply bg-white text-gray-900 font-sans antialiased;
+    @apply bg-bg text-text font-sans antialiased;
   }
 
   h1,
@@ -20,20 +64,12 @@
   h4,
   h5,
   h6 {
-    @apply font-bold tracking-tight;
+    @apply font-bold tracking-tight text-text;
   }
 }
 
 @layer components {
-  .btn-primary {
-    @apply inline-flex items-center justify-center rounded-full bg-[#00A651] px-6 py-3 text-white transition-all hover:bg-[#008f45] active:scale-95 text-base font-semibold shadow-md hover:shadow-lg;
-  }
-
-  .btn-outline {
-    @apply inline-flex items-center justify-center rounded-full border-2 border-[#00A651] px-6 py-3 text-[#00A651] transition-all hover:bg-[#00A651] hover:text-white active:scale-95 text-base font-semibold;
-  }
-
-  .section-padding {
-    @apply py-16 md:py-24;
+  .font-outline-2 {
+    -webkit-text-stroke: 2px white;
   }
 }

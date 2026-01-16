@@ -19,21 +19,29 @@ const config: Config = {
         sans: ["var(--font-prompt)", "sans-serif"],
       },
       colors: {
-        brand: {
-          green: "#00A651",     // Vibrant Accent
-          dark: "#006747",      // Deep Green
-          black: "#1A1A1A",     // Soft Black
-          light: "#F5F5F7",     // Premium Gray
+        bg: "rgb(var(--bg) / <alpha-value>)",
+        surface: "rgb(var(--surface) / <alpha-value>)",
+        card: "rgb(var(--card) / <alpha-value>)",
+        border: "rgb(var(--border) / <alpha-value>)",
+
+        text: "rgb(var(--text) / <alpha-value>)",
+        muted: "rgb(var(--text-muted) / <alpha-value>)",
+
+        primary: {
+          DEFAULT: "rgb(var(--primary) / <alpha-value>)",
+          2: "rgb(var(--primary-2) / <alpha-value>)",
         },
-        slate: {
-          850: "#1e293b",
-        }
+        accent: {
+          DEFAULT: "rgb(var(--accent) / <alpha-value>)",
+          hover: "rgb(var(--accent-hover) / <alpha-value>)",
+        },
       },
       backgroundImage: {
         "hero-pattern": "linear-gradient(to right bottom, rgba(0, 0, 0, 0.8), rgba(0, 103, 71, 0.8))",
       },
     },
   },
+  darkMode: "class",
   plugins: [
     require("@tailwindcss/typography"),
     require("tailwindcss-animate"),

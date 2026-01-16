@@ -3,7 +3,7 @@ import { Prompt } from "next/font/google";
 import "./globals.css";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
-import { CtaBar } from "@/components/CtaBar";
+//import { CtaBar } from "@/components/CtaBar";
 import { getSettings } from "@/lib/site";
 import { JsonLd } from "@/components/JsonLd";
 
@@ -36,19 +36,19 @@ export default function RootLayout({
     const settings = getSettings();
 
     return (
-        <html lang="th" className={prompt.variable}>
-            <body className="flex min-h-screen flex-col font-sans antialiased text-brand-black bg-white pb-[calc(80px+env(safe-area-inset-bottom))] md:pb-0">
+        <html lang="th" className={`${prompt.variable} dark`}>
+            <body className="flex min-h-screen flex-col font-sans antialiased text-text bg-bg">
                 <Navbar />
                 <main className="flex-1 w-full">
                     {children}
                 </main>
                 <Footer />
-                <CtaBar
+                {/*} <CtaBar
                     fbLink={settings.facebook}
                     messengerLink={settings.messenger}
                     lineLink={settings.line}
                     phone={settings.phone}
-                />
+                />*/}
                 <JsonLd settings={settings} />
             </body>
         </html>

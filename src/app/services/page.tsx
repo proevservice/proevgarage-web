@@ -8,11 +8,11 @@ export default function ServicesPage() {
     const services = getAllLegacyServices(); // using legacy loader to get MD content
 
     return (
-        <div className="bg-gray-50 min-h-screen pb-20">
+        <div className="bg-bg min-h-screen pb-20">
             {/* Header */}
-            <div className="bg-brand-black py-16 text-center text-white">
+            <div className="bg-surface pt-24 pb-16 text-center text-text border-b border-border shadow-sm">
                 <h1 className="mb-4 text-3xl font-bold md:text-4xl">บริการของเรา</h1>
-                <p className="text-gray-400">ดูแลรถไฟฟ้าของคุณด้วยมาตรฐานมืออาชีพ</p>
+                <p className="text-muted">ดูแลรถไฟฟ้าของคุณด้วยมาตรฐานมืออาชีพ</p>
             </div>
 
             <div className="container px-4 py-12">
@@ -25,23 +25,23 @@ export default function ServicesPage() {
                             <div key={index} className={`flex flex-col gap-8 lg:items-center ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'}`}>
                                 {/* Content */}
                                 <div className="flex-1 space-y-6">
-                                    <div className="inline-flex h-14 w-14 items-center justify-center rounded-xl bg-brand-light text-brand-green shadow-sm">
+                                    <div className="inline-flex h-14 w-14 items-center justify-center rounded-xl bg-card border border-border text-accent shadow-lg shadow-accent/10">
                                         <Icon className="h-7 w-7" />
                                     </div>
-                                    <h2 className="text-3xl font-bold text-gray-900">{service.title}</h2>
-                                    <div className="prose prose-lg text-gray-600">
+                                    <h2 className="text-3xl font-bold text-text">{service.title}</h2>
+                                    <div className="prose prose-lg dark:prose-invert text-muted">
                                         {service.content}
                                     </div>
 
                                     {/* Mini Q&A if present */}
                                     {service.qna && service.qna.length > 0 && (
-                                        <div className="mt-6 rounded-xl border border-blue-100 bg-blue-50/50 p-6">
-                                            <h4 className="mb-4 font-bold text-blue-900">คำถามที่พบบ่อย</h4>
+                                        <div className="mt-6 rounded-xl border border-border bg-card p-6">
+                                            <h4 className="mb-4 font-bold text-accent">คำถามที่พบบ่อย</h4>
                                             <div className="space-y-4">
                                                 {service.qna.map((qa: any, qIdx: number) => (
                                                     <div key={qIdx}>
-                                                        <p className="font-semibold text-blue-800 text-sm">Q: {qa.question}</p>
-                                                        <p className="text-sm text-gray-600">A: {qa.answer}</p>
+                                                        <p className="font-semibold text-text text-sm">Q: {qa.question}</p>
+                                                        <p className="text-sm text-muted">A: {qa.answer}</p>
                                                     </div>
                                                 ))}
                                             </div>
@@ -52,7 +52,7 @@ export default function ServicesPage() {
                                         <Link
                                             href={settings.facebook}
                                             target="_blank"
-                                            className="btn-outline"
+                                            className="inline-flex items-center justify-center rounded-full border border-accent/50 px-6 py-3 text-accent transition-all hover:bg-accent hover:text-white active:scale-95 text-base font-bold"
                                         >
                                             จองคิวซ่อมรายการนี้
                                         </Link>
@@ -61,8 +61,8 @@ export default function ServicesPage() {
 
                                 {/* Image Placeholder */}
                                 <div className="flex-1">
-                                    <div className="aspect-video w-full overflow-hidden rounded-2xl bg-gray-200 shadow-xl">
-                                        <div className="flex h-full w-full items-center justify-center text-gray-400">
+                                    <div className="aspect-video w-full overflow-hidden rounded-2xl bg-card border border-border shadow-2xl">
+                                        <div className="flex h-full w-full items-center justify-center text-muted">
                                             {service.image ? (
                                                 // Ideally use next/image but for external/cms images simple img is safer if domains not optimized
                                                 // eslint-disable-next-line @next/next/no-img-element
