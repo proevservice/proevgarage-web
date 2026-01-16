@@ -143,45 +143,29 @@ export default function Home() {
                     <div className="max-w-4xl">
 
                         {/* HEADLINE */}
-                        <h1 className="mb-2 text-4xl font-extrabold tracking-tight text-white sm:text-7xl lg:text-9xl leading-[1.1]">
+                        <h1 className="mb-2 text-4xl font-extrabold tracking-tight text-white sm:text-7xl lg:text-8xl leading-[1.1]">
                             <span className="font-outline-2 text-transparent">Pro </span>
                             <span className="text-accent">EV </span>
                             <span className="text-white">Service</span>
                         </h1>
 
-                        <h2 className="mb-6 text-2xl font-extrabold text-white sm:text-5xl lg:text-6xl md:mb-8">
+                        <h2 className="mb-6 text-2xl font-extrabold text-white md:text-accent sm:text-5xl lg:text-5xl md:mb-8">
                             อู่ซ่อมรถไฟฟ้า ปากเกร็ด
                         </h2>
 
-                        {/* Bullet Points */}
-                        <ul className="mb-8 space-y-0 text-base text-muted md:text-xl font-light leading-snug max-w-3xl md:mb-10 md:space-y-1">
+                        {/* Bullet Points - Refined for Desktop */}
+                        <ul className="mb-8 space-y-2 text-base text-muted md:text-xl font-light leading-snug max-w-3xl md:mb-12 md:space-y-4">
                             <li className="flex items-start gap-2">
-                                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent shadow-[0_0_8px_rgba(34,197,94,0.8)] md:mt-2 md:h-2 md:w-2" />
-                                <span>อู่ซ่อมรถยนต์ไฟฟ้า (EV) เฉพาะทาง</span>
+                                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent shadow-[0_0_8px_rgba(34,197,94,0.8)] md:mt-2.5 md:h-2 md:w-2" />
+                                <span>ดูแลรถยนต์ไฟฟ้าด้วยมาตรฐานงานเฉพาะทาง</span>
                             </li>
                             <li className="flex items-start gap-2">
-                                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent shadow-[0_0_8px_rgba(34,197,94,0.8)] md:mt-2 md:h-2 md:w-2" />
-                                <span>ซ่อมแบตเตอรี่ EV และระบบไฟแรงดันสูง</span>
+                                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent shadow-[0_0_8px_rgba(34,197,94,0.8)] md:mt-2.5 md:h-2 md:w-2" />
+                                <span>ตรวจ วิเคราะห์ และซ่อมอย่างเป็นระบบ ด้วยเครื่องมือเฉพาะทาง</span>
                             </li>
                             <li className="flex items-start gap-2">
-                                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent shadow-[0_0_8px_rgba(34,197,94,0.8)] md:mt-2 md:h-2 md:w-2" />
-                                <span>ทีมวิศวกรและช่าง EV ผ่านการอบรมโดยตรง</span>
-                            </li>
-                            <li className="flex items-start gap-2">
-                                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent shadow-[0_0_8px_rgba(34,197,94,0.8)] md:mt-2 md:h-2 md:w-2" />
-                                <span>ตรวจเช็กก่อนซ่อม พร้อมรับประกันงานบริการ</span>
-                            </li>
-                            <li className="flex items-start gap-2">
-                                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent shadow-[0_0_8px_rgba(34,197,94,0.8)] md:mt-2 md:h-2 md:w-2" />
-                                <span>ศูนย์บริการรถไฟฟ้า EV ใกล้คุณ</span>
-                            </li>
-                            <li className="flex items-start gap-2">
-                                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent shadow-[0_0_8px_rgba(34,197,94,0.8)] md:mt-2 md:h-2 md:w-2" />
-                                <span>บันทึกประวัติการซ่อมและข้อมูลรถทุกคัน</span>
-                            </li>
-                            <li className="flex items-start gap-2">
-                                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent shadow-[0_0_8px_rgba(34,197,94,0.8)] md:mt-2 md:h-2 md:w-2" />
-                                <span>มาตรฐานงานซ่อมระดับมืออาชีพ</span>
+                                <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent shadow-[0_0_8px_rgba(34,197,94,0.8)] md:mt-2.5 md:h-2 md:w-2" />
+                                <span>มั่นใจได้ว่ารถคุณถูกดูแลอย่างถูกต้อง</span>
                             </li>
                         </ul>
 
