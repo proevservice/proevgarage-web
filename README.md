@@ -72,3 +72,23 @@ Configuration is in `public/admin/config.yml`.
 - Tailwind CSS + Typography + Animate
 - Lucide React (Icons)
 - Decap CMS (CDN)
+
+Commit โค้ด ที่โฟลเดอร์โปรเจกต์:
+   npm install
+   ```
+   ```bash
+   git status
+   ```
+
+ถ้าเห็นไฟล์ที่แก้แล้ว:
+   ```bash
+   git add .
+   ```
+   ```bash
+   git commit -m "คำอธิบายอัพเดท หรือ V"
+   ```
+   
+Push ขึ้น GitHub (ขั้นตอนสำคัญที่สุด)
+  ```bash
+   git push origin main
+   ```

@@ -26,9 +26,9 @@ const FALLBACK_REVIEWS: GooglePlaceDetails = {
     isFallback: true,
     reviews: [
         {
-            author_name: "คุณวิชัย",
+            author_name: "Nawat Sripathar",
             rating: 5,
-            text: "บริการดีมากครับ วิเคราะห์อาการตรงจุด ซ่อมจบไว ราคาเป็นกันเอง แนะนำเลยครับสำหรับคนใช้ EV",
+            text: "มาล้างแอร์แล้วโอเคมาก บริการดี ละเอียด สุภาพ ช่างให้คำแนะนำดีมาก อุปกรณ์ครบ มีความรู้ระบบการทำงานของรถ",
             relative_time_description: "1 เดือนที่ผ่านมา",
             time: Date.now() / 1000 - 2592000,
         },
