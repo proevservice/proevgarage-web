@@ -3,9 +3,12 @@ import { MessageCircle, CheckCircle, Shield, Award, Wrench, ArrowRight, Clock, B
 import Link from "next/link";
 import Image from "next/image";
 import * as LucideIcons from "lucide-react";
+import { getGoogleReviews } from "@/lib/google";
+import { GoogleReviews } from "@/components/GoogleReviews";
 
-export default function Home() {
+export default async function Home() {
     const settings = getSettings();
+    const googleReviews = await getGoogleReviews();
     const servicesList = require("@/lib/site").getAllLegacyServices();
 
     const jsonLd = {
@@ -42,26 +45,20 @@ export default function Home() {
                         "closes": "19:00"
                     }
                 ],
-                "review": [
-                    {
-                        "@type": "Review",
-                        "author": { "@type": "Person", "name": "คุณวิชัย" },
-                        "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
-                        "reviewBody": "บริการดีมากครับ วิเคราะห์อาการตรงจุด ซ่อมจบไว ราคาเป็นกันเอง แนะนำเลยครับสำหรับคนใช้ EV"
-                    },
-                    {
-                        "@type": "Review",
-                        "author": { "@type": "Person", "name": "คุณอารดา" },
-                        "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
-                        "reviewBody": "ช่างมีความรู้จริง อธิบายละเอียดมาก รถมีปัญหาเรื่องระบบไฟ เข้ามาที่นี่วันเดียวหาย ประทับใจมากค่ะ"
-                    },
-                    {
-                        "@type": "Review",
-                        "author": { "@type": "Person", "name": "คุณสมชาย" },
-                        "reviewRating": { "@type": "Rating", "ratingValue": "5", "bestRating": "5" },
-                        "reviewBody": "หาอู่ซ่อมรถไฟฟ้ายากมาก มาเจอที่นี่อุ่นใจเลยครับ เครื่องมือครบ ทีมงานมืออาชีพ"
-                    }
-                ],
+                "review": googleReviews.reviews.slice(0, 5).map(review => ({
+                    "@type": "Review",
+                    "author": { "@type": "Person", "name": review.author_name },
+                    "reviewRating": { "@type": "Rating", "ratingValue": review.rating.toString(), "bestRating": "5" },
+                    "reviewBody": review.text,
+                    "datePublished": new Date(review.time * 1000).toISOString().split('T')[0]
+                })),
+                "aggregateRating": googleReviews.ratingAvg ? {
+                    "@type": "AggregateRating",
+                    "ratingValue": googleReviews.ratingAvg.toString(),
+                    "reviewCount": googleReviews.reviewCount?.toString(),
+                    "bestRating": "5",
+                    "worstRating": "1"
+                } : undefined,
                 "hasOfferCatalog": {
                     "@type": "OfferCatalog",
                     "name": "บริการหลัก",
@@ -135,7 +132,7 @@ export default function Home() {
                         fill
                         priority
                         fetchPriority="high"
-                        className="object-cover object-center opacity-30"
+                        className="object-cover object-center opacity-80"
                         sizes="100vw"
                     />
                     {/* Dark Overlay (Gradient) */}
@@ -361,40 +358,8 @@ export default function Home() {
 
             {/* TESTIMONIALS */}
             {/* TESTIMONIALS */}
-            <section id="reviews" aria-label="Customer Reviews" className="bg-brand-dark py-20">
-                <div className="container px-4">
-                    <div className="mb-14 text-center">
-                        <h2 className="text-3xl font-extrabold text-brand-text md:text-4xl">เสียงจากลูกค้า</h2>
-                    </div>
-                    <div className="grid gap-6 md:grid-cols-3">
-                        {[
-                            { text: "บริการดีมากครับ วิเคราะห์อาการตรงจุด ซ่อมจบไว ราคาเป็นกันเอง แนะนำเลยครับสำหรับคนใช้ EV", name: "คุณวิชัย", car: "NETA V" },
-                            { text: "ช่างมีความรู้จริง อธิบายละเอียดมาก รถมีปัญหาเรื่องระบบไฟ เข้ามาที่นี่วันเดียวหาย ประทับใจมากค่ะ", name: "คุณอารดา", car: "ORA Good Cat" },
-                            { text: "หาอู่ซ่อมรถไฟฟ้ายากมาก มาเจอที่นี่อุ่นใจเลยครับ เครื่องมือครบ ทีมงานมืออาชีพ", name: "คุณสมชาย", car: "BYD Atto 3" },
-                        ].map((review, i) => (
-                            <div key={i} className="flex flex-col justify-between rounded-3xl bg-brand-card p-8 border border-brand-border shadow-lg transition-shadow hover:shadow-xl h-full">
-                                <div>
-                                    <div className="mb-6 flex text-yellow-500">
-                                        {[...Array(5)].map((_, stars) => (
-                                            <LucideIcons.Star key={stars} className="h-4 w-4 fill-yellow-500 stroke-yellow-500" />
-                                        ))}
-                                    </div>
-                                    <p className="mb-6 text-brand-muted leading-relaxed font-light">"{review.text}"</p>
-                                </div>
-                                <div className="mt-auto flex items-center gap-4 pt-6 border-t border-brand-border">
-                                    <div className="h-10 w-10 rounded-full bg-brand-black border border-brand-border flex items-center justify-center text-brand-green font-bold">
-                                        {review.name[0]}
-                                    </div>
-                                    <div>
-                                        <div className="font-bold text-brand-text text-sm">{review.name}</div>
-                                        <div className="text-xs text-brand-green font-medium">{review.car}</div>
-                                    </div>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-            </section>
+            {/* TESTIMONIALS */}
+            <GoogleReviews data={googleReviews} />
 
             {/* SERVICE AREA TEASER & FINAL CTA */}
             {/* SERVICE AREA TEASER & FINAL CTA */}
