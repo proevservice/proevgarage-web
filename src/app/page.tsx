@@ -1,6 +1,7 @@
 import { getSettings } from "@/lib/site";
 import { MessageCircle, CheckCircle, Shield, Award, Wrench, ArrowRight, Clock, Battery, Zap, Phone } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import * as LucideIcons from "lucide-react";
 
 export default function Home() {
@@ -128,11 +129,14 @@ export default function Home() {
             <section id="hero" aria-label="Hero Section" className="relative w-full flex min-h-[90vh] md:min-h-screen items-start md:items-center overflow-hidden bg-bg border-b border-border pt-20 md:pt-0">
                 {/* Background Image - Full Bleed */}
                 <div className="absolute inset-0 z-0 select-none">
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img
+                    <Image
                         src="/images/hero-bg-2.jpg"
                         alt="Pro EV Service Garage Atmosphere"
-                        className="h-full w-full object-cover object-center opacity-30"
+                        fill
+                        priority
+                        fetchPriority="high"
+                        className="object-cover object-center opacity-30"
+                        sizes="100vw"
                     />
                     {/* Dark Overlay (Gradient) */}
                     <div className="absolute inset-0 bg-gradient-to-r from-bg via-bg/80 to-transparent"></div>

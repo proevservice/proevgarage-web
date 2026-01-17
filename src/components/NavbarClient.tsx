@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { MessageCircle, Phone } from "lucide-react";
 import { Settings } from "@/lib/site";
 import { MobileMenu } from "@/components/MobileMenu";
@@ -39,11 +40,16 @@ export function NavbarClient({ settings, navItems }: NavbarClientProps) {
                 {/* Brand */}
                 <Link href="/" className="flex items-center gap-2 md:gap-3 group">
                     <div className="relative flex h-10 items-center justify-center px-0 py-0 md:h-20 transition-transform group-hover:scale-105">
-                        <img
-                            src="/images/logo.png"
-                            alt="Pro EV Service Logo"
-                            className="h-full w-auto object-contain"
-                        />
+                        <div className="relative h-full w-auto aspect-[3/1]">
+                            <Image
+                                src="/images/logo.png"
+                                alt="Pro EV Service Logo"
+                                fill
+                                className="object-contain"
+                                sizes="(max-width: 768px) 150px, 200px"
+                                priority
+                            />
+                        </div>
                     </div>
                 </Link>
 
