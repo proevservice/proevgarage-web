@@ -1,6 +1,7 @@
 import { getAllLegacyServices, getSettings } from "@/lib/site";
 import { MessageCircle, ArrowRight } from "lucide-react";
 import Link from "next/link";
+
 import * as LucideIcons from "lucide-react";
 
 export default function ServicesPage() {

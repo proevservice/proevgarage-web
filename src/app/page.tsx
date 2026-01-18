@@ -3,8 +3,10 @@ import { MessageCircle, CheckCircle, Shield, Award, Wrench, ArrowRight, Clock, B
 import Link from "next/link";
 import Image from "next/image";
 import * as LucideIcons from "lucide-react";
+import { MobileSaveContactBtn } from "@/components/MobileSaveContactBtn";
 import { getGoogleReviews } from "@/lib/google";
 import { GoogleReviews } from "@/components/GoogleReviews";
+
 
 export default async function Home() {
     const settings = getSettings();
@@ -170,6 +172,7 @@ export default async function Home() {
                             </li>
                         </ul>
 
+
                         {/* CTA Buttons - Unified Row */}
                         <div className="flex flex-col sm:flex-row gap-3 mb-10 md:gap-4 md:mb-12">
                             {/* Facebook - Order 3 on Mobile, Default on Desktop */}
@@ -189,7 +192,7 @@ export default async function Home() {
                             >
                                 {/* Simple L icon */}
                                 <span className="flex h-5 w-5 items-center justify-center rounded bg-white text-[10px] font-black text-[#06C755] md:h-6 md:w-6">L</span>
-                                แอด LINE OA
+                                แอด LINE
                             </Link>
 
                             {/* Phone - Order 2 on Mobile, Default on Desktop */}
@@ -200,6 +203,9 @@ export default async function Home() {
                                 <Phone className="h-5 w-5" /> โทร 098-9794116
                             </Link>
                         </div>
+
+                        {/* Mobile Save Contact Button (Mobile Only) */}
+                        <MobileSaveContactBtn />
 
                         {/* Operating Info (Pills) */}
                         <div className="flex flex-col sm:flex-row gap-4 text-sm font-medium mb-8 md:mb-0 pb-[env(safe-area-inset-bottom)]">

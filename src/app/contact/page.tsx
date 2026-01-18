@@ -2,6 +2,7 @@ import { getSettings } from "@/lib/content";
 import { MessageCircle, Phone, MapPin, Clock } from "lucide-react";
 import Link from "next/link";
 import { MapEmbed } from "@/components/MapEmbed";
+import { MobileSaveContactBtn } from "@/components/MobileSaveContactBtn";
 
 export default function ContactPage() {
     const settings = getSettings();
@@ -59,6 +60,7 @@ export default function ContactPage() {
                                 แอด LINE สอบถาม
                             </Link>
                         </div>
+
                     </div>
 
                     {/* Areas Side */}

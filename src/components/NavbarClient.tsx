@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import { MessageCircle, Phone } from "lucide-react";
@@ -14,6 +15,7 @@ interface NavbarClientProps {
 
 export function NavbarClient({ settings, navItems }: NavbarClientProps) {
     const [scrolled, setScrolled] = useState(false);
+    const pathname = usePathname();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -55,19 +57,26 @@ export function NavbarClient({ settings, navItems }: NavbarClientProps) {
 
                 {/* Desktop Nav */}
                 <nav className="hidden items-center gap-8 md:flex">
-                    {navItems.map(([label, href]) => (
-                        <Link
-                            key={href}
-                            href={href}
-                            className={`group relative text-base font-medium transition-colors ${scrolled
-                                ? "text-text hover:text-accent"
-                                : "text-text/90 hover:text-accent"
-                                }`}
-                        >
-                            {label}
-                            <span className="absolute -bottom-1 left-0 h-0.5 w-0 bg-accent transition-all group-hover:w-full" />
-                        </Link>
-                    ))}
+                    {navItems.map(([label, href]) => {
+                        const isActive = href === "/"
+                            ? pathname === href
+                            : pathname.startsWith(href);
+
+                        return (
+                            <Link
+                                key={href}
+                                href={href}
+                                className={`group relative text-base font-medium transition-colors ${scrolled
+                                    ? isActive ? "text-accent" : "text-text hover:text-accent"
+                                    : isActive ? "text-accent" : "text-text/90 hover:text-accent"
+                                    }`}
+                            >
+                                {label}
+                                <span className={`absolute -bottom-1 left-0 h-0.5 bg-accent transition-all duration-300 ease-out group-hover:w-full ${isActive ? "w-full" : "w-0"
+                                    }`} />
+                            </Link>
+                        );
+                    })}
                 </nav>
 
                 {/* CTA + Mobile menu */}
