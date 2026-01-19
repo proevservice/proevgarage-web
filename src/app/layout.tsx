@@ -43,6 +43,10 @@ export default function RootLayout({
 
     return (
         <html lang="th" className={`${prompt.variable} dark`}>
+            <head>
+                <GoogleTagManager />
+                <JsonLd settings={settings} />
+            </head>
             <body className="flex min-h-screen flex-col font-sans antialiased text-text bg-bg">
                 <GoogleTagManagerNoScript />
                 <Navbar />
@@ -50,14 +54,12 @@ export default function RootLayout({
                     {children}
                 </main>
                 <Footer />
-                {/*} <CtaBar
-                    fbLink={settings.facebook}
-                    messengerLink={settings.messenger}
-                    lineLink={settings.line}
-                    phone={settings.phone}
-                />*/}
-                <JsonLd settings={settings} />
-                <GoogleTagManager />
+                {/* <CtaBar
+          fbLink={settings.facebook}
+          messengerLink={settings.messenger}
+          lineLink={settings.line}
+          phone={settings.phone}
+        /> */}
             </body>
         </html>
     );
