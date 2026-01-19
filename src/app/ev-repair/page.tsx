@@ -40,7 +40,7 @@ export default function EvRepairLandingPage() {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
-    const handleConversion = (type: "facebook_chat" | "line_chat" | "phone_call", location: string) => {
+    const handleConversion = (type: "facebook_chat" | "line_chat" | "phone_call" | "navigation", location: string) => {
         sendLeadEvent(type, location);
     };
 
@@ -342,6 +342,7 @@ export default function EvRepairLandingPage() {
                             href="https://maps.app.goo.gl/h21RDsTBUFH5fH9z7"
                             target="_blank"
                             rel="noopener noreferrer"
+                            onClick={() => handleConversion("navigation", "footer_map")}
                             className="inline-flex items-center justify-center rounded-xl border border-border bg-card px-8 py-4 font-bold text-text hover:bg-surface hover:border-text transition-colors"
                         >
                             ดูแผนที่ร้าน

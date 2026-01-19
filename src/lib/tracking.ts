@@ -2,10 +2,10 @@
 
 export const GTM_ID = process.env.NEXT_PUBLIC_GTM_ID;
 
-type LeadType = "facebook_chat" | "line_chat" | "phone_call";
+type LeadType = "facebook_chat" | "line_chat" | "phone_call" | "navigation";
 
 interface LeadEvent {
-    event: "generate_lead";
+    event: string;
     lead_type: LeadType;
     page_type: string; // e.g., 'landing'
     page_name: string; // e.g., 'ev_repair_landing'
@@ -33,8 +33,25 @@ export const sendLeadEvent = (
 
     eventTimestamps[key] = now;
 
+    // Map internal types to requested Event Names
+    let eventName = "generate_lead";
+    switch (lead_type) {
+        case "phone_call":
+            eventName = "generate_lead_call";
+            break;
+        case "line_chat":
+            eventName = "generate_lead_line";
+            break;
+        case "facebook_chat":
+            eventName = "generate_lead_message";
+            break;
+        case "navigation":
+            eventName = "generate_lead_navigation";
+            break;
+    }
+
     const eventData: LeadEvent = {
-        event: "generate_lead",
+        event: eventName,
         lead_type,
         page_type: "landing",
         page_name: "ev_repair_landing",
