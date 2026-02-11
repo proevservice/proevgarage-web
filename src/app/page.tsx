@@ -138,7 +138,7 @@ export default async function Home() {
                         sizes="100vw"
                     />
                     {/* Dark Overlay (Gradient) */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-bg via-bg/80 to-transparent"></div>
+                    <div className="absolute inset-0 bg-gradient-to-r from-bg via-bg/20 to-transparent"></div>
                     <div className="absolute inset-0 bg-gradient-to-t from-bg via-transparent to-transparent"></div>
                 </div>
 
