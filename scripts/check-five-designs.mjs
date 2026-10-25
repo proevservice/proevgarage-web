@@ -27,7 +27,7 @@ try {
  for(let id=1;id<=5;id++){
   for(const part of ["","services","work","blog","contact","booking","problems","vehicles"]){
    await check("/designs/"+id+(part?"/"+part:""));
-   if(!part){await page.evaluate(()=>document.fonts.ready);await page.screenshot({path:out+"/design-"+id+".png"});}
+   if(!part){await page.evaluate(()=>document.fonts.ready);await page.waitForFunction(()=>[...document.images].filter(i=>i.loading!=="lazy").every(i=>i.complete&&i.naturalWidth>0));await page.screenshot({path:out+"/design-"+id+".png"});}
   }
   await page.goto(base+"/designs/"+id);
   await page.locator("#design-navigation").getByRole("link",{name:"บริการของเรา",exact:true}).click();
