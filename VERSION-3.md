@@ -18,3 +18,5 @@ No invented prices, reviews, guarantees, or diagnostic results. No new location 
 
 ## Review
 This branch is a preview. Do not merge to main until the owner reviews Version 3.
+
+Conversion compatibility: see CONVERSION-CONTRACT.md. Shared GTM and existing ad landing event names retained; new CTAs use the existing direct-link triggers. No duplicate tracking layer added.

@@ -3,7 +3,7 @@ import { getRepairCases } from "@/lib/repair-cases";
 import { getAllPosts } from "@/lib/site";
 import { services,problems,vehicles,SITE_URL } from "@/lib/website-v3";
 export default function sitemap():MetadataRoute.Sitemap{return [
-...["","/services","/problems","/vehicles","/work","/contact","/booking","/blog"].map(path=>({url:SITE_URL+path})),
+...["","/services","/ev-repair","/problems","/vehicles","/work","/contact","/booking","/blog"].map(path=>({url:SITE_URL+path})),
 ...services.map(i=>({url:SITE_URL+"/services/"+i.slug})),
 ...problems.map(i=>({url:SITE_URL+"/problems/"+i.slug})),
 ...vehicles.map(i=>({url:SITE_URL+"/vehicles/"+i.slug})),
