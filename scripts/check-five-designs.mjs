@@ -24,8 +24,11 @@ try {
   await page.waitForFunction(()=>document.fonts.status==="loaded",null,{timeout:20000});
   assert.equal(await page.locator("h1").count(),1,"one h1: "+path);
   assert.ok((await page.locator('meta[name="robots"]').getAttribute("content")).includes("noindex"));
-  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,"no overflow: "+path);
+  const overflow=await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth);
+  if(overflow)console.log("OVERFLOW "+path+" "+JSON.stringify(await page.evaluate(()=>[...document.querySelectorAll("*")].filter(e=>e.getBoundingClientRect().right>innerWidth+1).slice(-16).map(e=>({tag:e.tagName,class:e.className,left:e.getBoundingClientRect().left,right:e.getBoundingClientRect().right,width:getComputedStyle(e).width,text:e.textContent?.slice(0,60)})))));
+  assert.equal(overflow,false,"no overflow: "+path);
  }
+ await check("/designs/4/services");
  for(let id=1;id<=5;id++){
   if(id>1){await page.close();page=await browser.newPage({viewport:{width:1440,height:1000},deviceScaleFactor:1});await page.route("**/*",route=>new URL(route.request().url()).hostname==="127.0.0.1"?route.continue():route.abort());page.on("pageerror",e=>errors.push(e.message));}
   for(const part of ["","services","work","blog","contact","booking","problems","vehicles"]){
