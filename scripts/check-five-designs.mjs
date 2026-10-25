@@ -3,6 +3,7 @@ import { spawn } from "node:child_process";
 import { mkdir, writeFile, readdir } from "node:fs/promises";
 import assert from "node:assert/strict";
 import sharp from "sharp";
+process.env.PW_TEST_SCREENSHOT_NO_FONTS_READY="1";
 const server=spawn(process.execPath,["node_modules/next/dist/bin/next","start","-p","3000"],{stdio:"ignore"});
 let browser;
 const base="http://127.0.0.1:3000";
@@ -13,21 +14,23 @@ try {
  for(let i=0;i<90;i++){try{if((await fetch(base+"/designs")).ok)break;}catch{}if(i===89)throw Error("preview server did not start");await new Promise(r=>setTimeout(r,500));}
  await mkdir(out,{recursive:true});
  browser=await chromium.launch();
- const page=await browser.newPage({viewport:{width:1440,height:1000},deviceScaleFactor:1});
+ let page=await browser.newPage({viewport:{width:1440,height:1000},deviceScaleFactor:1});
  await page.route("**/*",route=>new URL(route.request().url()).hostname==="127.0.0.1"?route.continue():route.abort());
  const errors=[];page.on("pageerror",e=>errors.push(e.message));
  async function check(path){
-  const response=await page.goto(base+path,{waitUntil:"domcontentloaded"});
+  const response=await page.goto(base+path,{waitUntil:"load"});
   assert.equal(response.status(),200,path);
   await page.locator("h1").waitFor({state:"visible"});
+  await page.waitForFunction(()=>document.fonts.status==="loaded",null,{timeout:20000});
   assert.equal(await page.locator("h1").count(),1,"one h1: "+path);
   assert.ok((await page.locator('meta[name="robots"]').getAttribute("content")).includes("noindex"));
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,"no overflow: "+path);
  }
  for(let id=1;id<=5;id++){
+  if(id>1){await page.close();page=await browser.newPage({viewport:{width:1440,height:1000},deviceScaleFactor:1});await page.route("**/*",route=>new URL(route.request().url()).hostname==="127.0.0.1"?route.continue():route.abort());page.on("pageerror",e=>errors.push(e.message));}
   for(const part of ["","services","work","blog","contact","booking","problems","vehicles"]){
    await check("/designs/"+id+(part?"/"+part:""));
-   if(!part){await page.evaluate(()=>document.fonts.ready);await page.waitForFunction(()=>[...document.images].filter(i=>i.loading!=="lazy").every(i=>i.complete&&i.naturalWidth>0));await page.screenshot({path:out+"/design-"+id+".png"});}
+   if(!part){await page.waitForFunction(()=>[...document.images].filter(i=>i.loading!=="lazy").every(i=>i.complete&&i.naturalWidth>0));await page.screenshot({path:out+"/design-"+id+".png"});}
   }
   await page.goto(base+"/designs/"+id);
   await page.locator("#design-navigation").getByRole("link",{name:"บริการของเรา",exact:true}).click();
