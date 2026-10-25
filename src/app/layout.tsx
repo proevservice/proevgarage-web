@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Prompt } from "next/font/google";
 import "./globals.css";
-import ProductionChrome from "@/components/ProductionChrome";
+import SiteFrame from "@/components/SiteFrame";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 //import { CtaBar } from "@/components/CtaBar";
@@ -30,7 +30,7 @@ export const metadata: Metadata = {
         locale: "th_TH",
         url: "https://proevgarage.com",
         title: "Pro EV Service ซ่อมรถไฟฟ้า ปากเกร็ด - แอร์ แบต ช่วงล่าง",
-        description: "จบทุกปัญหารถไฟฟ้า แอร์ไม่เย็น แบตเตอรี่มีปัญหา ช่วงล่างดัง. วิเคราะห์ตรงจุดด้วยเครื่องมือมาตรฐาน. รับประกันงานซ่อม.",
+        description: "ตรวจวิเคราะห์และซ่อมรถไฟฟ้า แอร์ แบตเตอรี่ ระบบชาร์จ ระบบไฟ และช่วงล่าง ดูผลงานจริงและนัดหมายเข้าตรวจที่ Pro EV Service ปากเกร็ด",
         siteName: "Pro EV Service",
         images: ["/images/hero-garage.jpg"],
     },
@@ -51,11 +51,9 @@ export default function RootLayout({
             </head>
             <body className="flex min-h-screen flex-col font-sans antialiased text-text bg-bg">
                 <GoogleTagManagerNoScript />
-                <ProductionChrome><Navbar /></ProductionChrome>
-                <main className="flex-1 w-full">
+                <SiteFrame settings={settings} legacyHeader={<Navbar />} legacyFooter={<Footer />}>
                     {children}
-                </main>
-                <ProductionChrome><Footer /></ProductionChrome>
+                </SiteFrame>
                 {/* <CtaBar
           fbLink={settings.facebook}
           messengerLink={settings.messenger}

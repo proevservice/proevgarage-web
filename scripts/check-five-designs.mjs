@@ -28,6 +28,18 @@ try {
   if(overflow)console.log("OVERFLOW "+path+" "+JSON.stringify(await page.evaluate(()=>[...document.querySelectorAll("*")].filter(e=>e.getBoundingClientRect().right>innerWidth+1).slice(-16).map(e=>({tag:e.tagName,class:e.className,left:e.getBoundingClientRect().left,right:e.getBoundingClientRect().right,width:getComputedStyle(e).width,text:e.textContent?.slice(0,60)})))));
   assert.equal(overflow,false,"no overflow: "+path);
  }
+ for(const part of ["","services","work","blog","contact","booking","problems","vehicles","ev-repair"]){
+  await check("/"+part);
+  if(!part){await page.waitForFunction(()=>[...document.images].filter(i=>{const r=i.getBoundingClientRect();return r.width>0&&r.height>0&&r.bottom>0&&r.top<innerHeight;}).every(i=>i.complete&&i.naturalWidth>0));await page.screenshot({path:out+"/version3-home.png"});}
+ }
+ await page.goto(base+"/services",{waitUntil:"load"});
+ await page.locator("#ev-air-conditioning a[aria-label]").click();
+ await page.waitForURL(new RegExp("^"+base+"/work/facebook-"));
+ assert.equal(await page.locator('button[aria-label^="ดูภาพที่"]').count(),9);
+ await page.setViewportSize({width:390,height:844});
+ for(const part of ["","services","work","blog","contact","booking"])await check("/"+part);
+ await page.setViewportSize({width:1440,height:1000});
+ console.log("PASS unified Version 3 primary pages, mobile, gallery and preserved ad landing");
  await check("/designs/4/services");
  for(let id=1;id<=5;id++){
   if(id>1){await page.close();page=await browser.newPage({viewport:{width:1440,height:1000},deviceScaleFactor:1});await page.route("**/*",route=>new URL(route.request().url()).hostname==="127.0.0.1"?route.continue():route.abort());page.on("pageerror",e=>errors.push(e.message));}

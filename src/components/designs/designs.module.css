@@ -50,3 +50,13 @@
 @media(prefers-reduced-motion:reduce){.casePhoto img{transition:none}}
 
 @media(max-width:800px){.theme[data-design="4"] .content :global(section[id]>a[aria-label]){min-height:0;width:100%;max-width:100%}}
+
+/* Shared production typography and content rhythm. */
+.theme[data-design="1"] .navigation a{font-size:14px}
+.theme[data-design="1"] .cinematic{min-height:620px}
+.theme[data-design="1"] .heroCopy{max-width:740px}
+.theme[data-design="1"] .caseCard h2{font-size:22px;line-height:1.7;font-weight:500}
+.theme[data-design="1"] .content :global(.prose){line-height:1.95}
+@media(max-width:1100px){.theme[data-design="1"] .navigation a{font-size:13px}}
+@media(max-width:800px){.theme[data-design="1"] .cinematic{min-height:570px}.theme[data-design="1"] .navigation a{font-size:14px}}
+@media(max-width:520px){.theme[data-design="1"] .heroCopy h1{font-size:40px}.theme[data-design="1"] .caseCard h2{font-size:19px}}
