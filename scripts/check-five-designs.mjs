@@ -33,7 +33,7 @@ try {
   if(id>1){await page.close();page=await browser.newPage({viewport:{width:1440,height:1000},deviceScaleFactor:1});await page.route("**/*",route=>new URL(route.request().url()).hostname==="127.0.0.1"?route.continue():route.abort());page.on("pageerror",e=>errors.push(e.message));}
   for(const part of ["","services","work","blog","contact","booking","problems","vehicles"]){
    await check("/designs/"+id+(part?"/"+part:""));
-   if(!part){await page.waitForFunction(()=>[...document.images].filter(i=>i.loading!=="lazy").every(i=>i.complete&&i.naturalWidth>0));await page.screenshot({path:out+"/design-"+id+".png"});}
+   if(!part){await page.waitForFunction(()=>[...document.images].filter(i=>{const r=i.getBoundingClientRect();return r.width>0&&r.height>0&&r.bottom>0&&r.top<innerHeight;}).every(i=>i.complete&&i.naturalWidth>0),null,{timeout:20000});await page.screenshot({path:out+"/design-"+id+".png"});}
   }
   await page.goto(base+"/designs/"+id);
   await page.locator("#design-navigation").getByRole("link",{name:"บริการของเรา",exact:true}).click();
@@ -51,7 +51,7 @@ try {
   await page.setViewportSize({width:390,height:844});
   for(const part of ["","services","contact","booking"]){
    await check("/designs/"+id+(part?"/"+part:""));
-   if(!part)await page.screenshot({path:out+"/design-"+id+"-mobile.png"});
+   if(!part){await page.waitForFunction(()=>[...document.images].filter(i=>{const r=i.getBoundingClientRect();return r.width>0&&r.height>0&&r.bottom>0&&r.top<innerHeight;}).every(i=>i.complete&&i.naturalWidth>0),null,{timeout:20000});await page.screenshot({path:out+"/design-"+id+"-mobile.png"});}
   }
   await page.goto(base+"/designs/"+id);
   await page.getByRole("button",{name:"เมนู +",exact:true}).click();
