@@ -56,7 +56,7 @@ export function NavbarClient({ settings, navItems }: NavbarClientProps) {
                 </Link>
 
                 {/* Desktop Nav */}
-                <nav className="hidden items-center gap-8 md:flex">
+                <nav className="hidden items-center gap-4 lg:gap-6 md:flex">
                     {navItems.map(([label, href]) => {
                         const isActive = href === "/"
                             ? pathname === href
@@ -66,7 +66,7 @@ export function NavbarClient({ settings, navItems }: NavbarClientProps) {
                             <Link
                                 key={href}
                                 href={href}
-                                className={`group relative text-base font-medium transition-colors ${scrolled
+                                className={`group relative text-sm lg:text-base font-medium transition-colors ${scrolled
                                     ? isActive ? "text-accent" : "text-text hover:text-accent"
                                     : isActive ? "text-accent" : "text-text/90 hover:text-accent"
                                     }`}
