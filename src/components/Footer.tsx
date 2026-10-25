@@ -50,6 +50,7 @@ export async function Footer() {
                         <ul className="space-y-3 text-sm">
                             <li><Link href="/" className="hover:text-accent">หน้าแรก</Link></li>
                             <li><Link href="/services" className="hover:text-accent">บริการทั้งหมด</Link></li>
+                            <li><Link href="/work" className="hover:text-accent">ผลงานซ่อม</Link></li>
                             <li><Link href="/booking" className="hover:text-accent">ขั้นตอนการจอง</Link></li>
                             <li><Link href="/blog" className="hover:text-accent">บทความ & ความรู้</Link></li>
                         </ul>

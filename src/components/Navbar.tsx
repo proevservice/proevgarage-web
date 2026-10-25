@@ -6,6 +6,7 @@ export function Navbar() {
     const navItems = [
         ["หน้าแรก", "/"],
         ["บริการของเรา", "/services"],
+        ["ผลงาน", "/work"],
         ["ขั้นตอนจองคิว", "/booking"],
         ["ติดต่อเรา", "/contact"],
         ["บทความ", "/blog"],
