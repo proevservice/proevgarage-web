@@ -1,6 +1,6 @@
 # Facebook work import: owner-selected posts
 
-Only posts containing the full hashtag #?????PROEV are imported. Untagged posts are never selected by keywords or AI.
+Only posts containing the full hashtag #ผลงานPROEV are imported. Untagged posts are never selected by keywords or AI.
 
 - Add the hashtag to any old or new Page post to add it to the website.
 - Edit that same Facebook post to update the website text and main image. Stable post IDs prevent duplicates.
