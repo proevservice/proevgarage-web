@@ -17,8 +17,9 @@ try {
  await page.route("**/*",route=>new URL(route.request().url()).hostname==="127.0.0.1"?route.continue():route.abort());
  const errors=[];page.on("pageerror",e=>errors.push(e.message));
  async function check(path){
-  const response=await page.goto(base+path,{waitUntil:"networkidle"});
+  const response=await page.goto(base+path,{waitUntil:"domcontentloaded"});
   assert.equal(response.status(),200,path);
+  await page.locator("h1").waitFor({state:"visible"});
   assert.equal(await page.locator("h1").count(),1,"one h1: "+path);
   assert.ok((await page.locator('meta[name="robots"]').getAttribute("content")).includes("noindex"));
   assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,"no overflow: "+path);
