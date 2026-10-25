@@ -3,6 +3,7 @@ import path from "node:path";
 import {fileURLToPath} from "node:url";
 import {createHash} from "node:crypto";
 import {IMPORT_TAG, classifyPost} from "./facebook-tag.mjs";
+import {getPostPhotos} from "./facebook-media.mjs";
 export function toCase(post, tag = IMPORT_TAG){
  if(!/^\d+_\d+$/.test(post.id||""))throw new Error("Invalid post ID");
  const body=(post.message||"").trim();
@@ -38,7 +39,7 @@ export async function sync({root=process.cwd(), fetchImpl=fetch, env=process.env
    const selection=classifyPost(post,tag);
    if(selection.status==="skip")continue;
    const item=toCase(post,tag);if(!item)continue;
-   records.push({item,picture:post.full_picture});
+   records.push({item,post});
   }
   if(!json.paging?.next){finished=true;break;}
   const cursor=json.paging?.cursors?.after;if(!cursor||cursor===after)throw new Error("Invalid Facebook pagination");
@@ -47,9 +48,11 @@ export async function sync({root=process.cwd(), fetchImpl=fetch, env=process.env
  if(!finished)throw new Error("Pagination limit reached; no content changed");
  // Validate and download all selected records before changing published content.
  const seen=new Set();const stagedImages=new Map();
- for(const {item,picture} of records){
+ for(const {item,post} of records){
   seen.add(item.slug+".json");
-  if(picture){
+  const media=await getPostPhotos(post,{token,version,fetchImpl});
+  item.images=[];item.videoUrls=media.videos;
+  for(const picture of media.photos){
    const u=new URL(picture);
    if(u.protocol!=="https:"||!/(^|\.)(fbcdn\.net|fbsbx\.com)$/.test(u.hostname))throw new Error("Untrusted image host");
    const r=await fetchImpl(u,{redirect:"error",signal:AbortSignal.timeout(30000)});
@@ -63,8 +66,9 @@ export async function sync({root=process.cwd(), fetchImpl=fetch, env=process.env
    const bytes=Buffer.concat(parts);
    const digest=createHash("sha256").update(bytes).digest("hex").slice(0,16);
    const file=item.slug+"-"+digest+"."+ext;stagedImages.set(file,bytes);
-   item.image="/images/facebook/"+file;
+   if(!item.images.includes("/images/facebook/"+file))item.images.push("/images/facebook/"+file);
   }
+  item.image=item.images[0];
  }
  await fs.mkdir(dir,{recursive:true});await fs.mkdir(images,{recursive:true});
  for(const [file,bytes] of stagedImages)await fs.writeFile(path.join(images,file),bytes);

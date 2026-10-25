@@ -1,6 +1,6 @@
 import fs from "fs";
 import path from "path";
-export interface RepairCase { slug:string; title:string; model:string; summary:string; body:string; image?:string; images?:string[]; sourceUrl?:string; date?:string; updated?:string; }
+export interface RepairCase { slug:string; title:string; model:string; summary:string; body:string; image?:string; images?:string[]; videoUrls?:string[]; sourceUrl?:string; date?:string; updated?:string; }
 export function getRepairCases():RepairCase[] {
  const dir=path.join(process.cwd(),"content","work");
  if(!fs.existsSync(dir)) return [];
