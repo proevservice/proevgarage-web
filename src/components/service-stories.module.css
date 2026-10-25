@@ -1,0 +1,51 @@
+.intro{padding:76px 0 40px;border-bottom:1px solid rgb(var(--border))}
+.introGrid{display:grid;grid-template-columns:1.2fr 1fr;gap:70px;align-items:end;margin-top:40px}
+.kicker{font-size:11px;letter-spacing:.19em;color:rgb(var(--accent));font-weight:600;margin-bottom:18px}
+.intro h1{font-size:clamp(38px,4.7vw,60px);font-weight:600;line-height:1.35;letter-spacing:-.045em;margin:0}
+.intro h1 span{color:rgb(var(--accent))}
+.introText{font-size:16px;line-height:1.95;color:rgb(var(--text-muted));margin-bottom:20px;max-width:480px}
+.overview{display:flex;align-items:center;gap:24px;margin-top:28px;color:rgb(var(--text-muted));font-size:12px}
+.overview strong{font-size:18px;color:rgb(var(--text));margin-right:6px;font-weight:500}
+.catalogNav{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));border-bottom:1px solid rgb(var(--border));padding:24px 0;gap:10px}
+.catalogNav a{display:flex;flex-direction:column;gap:7px;padding:10px 12px;border-radius:10px;color:rgb(var(--text-muted));font-size:13px;line-height:1.6;transition:background .2s,color .2s}
+.catalogNav a:hover{color:rgb(var(--text));background:rgb(var(--card))}
+.catalogNav small{font-size:10px;letter-spacing:.12em;color:rgb(var(--accent))}
+.stories{padding:12px 0}
+.story{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:64px;align-items:center;padding:64px 0;border-bottom:1px solid rgb(var(--border));scroll-margin-top:100px}
+.story:nth-child(even){grid-template-columns:minmax(0,1.2fr) minmax(0,1fr)}
+.story:nth-child(even) .storyContent{order:2}
+.story:nth-child(even) .storyVisual{order:1}
+.serviceNumber{font-size:10px;letter-spacing:.17em;color:rgb(var(--text-muted));display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.serviceNumber span{font-size:17px;color:rgb(var(--accent));letter-spacing:.05em}
+.story h2{font-size:clamp(26px,2.8vw,36px);line-height:1.5;letter-spacing:-.035em;font-weight:600;margin-bottom:18px}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:24px}
+.tags span{font-size:11px;padding:6px 10px;border:1px solid rgb(var(--border));border-radius:5px;color:rgb(var(--text-muted))}
+.description{font-size:15px;line-height:1.95;color:rgb(var(--text-muted));margin-bottom:20px}
+.checks{display:grid;gap:12px;margin-bottom:28px}
+.checks li{display:flex;gap:10px;font-size:13px;line-height:1.8;color:rgb(var(--text-muted))}
+.checks svg{color:rgb(var(--accent));flex:none;margin-top:4px}
+.storyActions{display:flex;flex-wrap:wrap;align-items:center;gap:12px 22px}
+.serviceLink,.primaryLink{display:inline-flex;align-items:center;justify-content:center;gap:10px;font-size:13px;font-weight:500;min-height:46px}
+.serviceLink{color:rgb(var(--text));border-bottom:1px solid rgb(var(--border));padding:8px 0}
+.serviceLink:hover{color:rgb(var(--accent));border-color:rgb(var(--accent))}
+.primaryLink{background:rgb(var(--accent));color:#07160d;border-radius:8px;padding:12px 18px;transition:background .2s}
+.primaryLink:hover{background:#4ade80}
+.moreLink{display:inline-block;color:rgb(var(--accent));font-size:12px;margin-top:18px}
+.storyVisual{position:relative;display:block;min-height:460px;align-self:stretch;overflow:hidden;border-radius:18px;background:rgb(var(--card));border:1px solid rgb(var(--border))}
+.storyVisual>img{object-fit:cover;transition:transform .5s}
+.storyVisual:hover>img{transform:scale(1.025)}
+.visualShade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.2),transparent 40%,rgba(3,9,16,.9))}
+.photoLabel{position:absolute;top:20px;left:20px;background:rgba(11,18,32,.85);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.2);border-radius:50px;padding:8px 13px;font-size:11px;color:#fff}
+.photoCaption{position:absolute;bottom:0;left:0;right:0;padding:28px 72px 28px 28px}
+.photoMeta{font-size:11px;color:#b9d9c5;margin-bottom:12px}
+.photoCaption h3{font-size:18px;font-weight:500;line-height:1.65;color:white;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.photoArrow,.visualCorner{position:absolute;bottom:28px;right:24px;width:40px;height:40px;display:flex;align-items:center;justify-content:center;border-radius:50%;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.35);color:#fff}
+.searchDrawer{margin-top:28px;border-top:1px solid rgb(var(--border));padding-top:18px}
+.searchDrawer summary{cursor:pointer;display:list-item;font-size:13px;color:rgb(var(--text-muted))}
+.searchDrawer[open] summary{color:rgb(var(--accent))}
+.searchDrawer input{max-width:100%}
+.catalogNav a:focus-visible,.storyVisual:focus-visible,.serviceLink:focus-visible,.primaryLink:focus-visible,.moreLink:focus-visible{outline:3px solid rgb(var(--accent));outline-offset:5px}
+@media(max-width:1000px){.story{gap:32px}.storyVisual{min-height:430px}.introGrid{gap:36px}.catalogNav{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media(max-width:800px){.intro{padding-top:48px}.introGrid{grid-template-columns:1fr;gap:26px;margin-top:32px}.introText{max-width:640px}.story,.story:nth-child(even){grid-template-columns:1fr;gap:26px;padding:40px 0;scroll-margin-top:76px}.story .storyContent,.story:nth-child(even) .storyContent{order:2}.story .storyVisual,.story:nth-child(even) .storyVisual{order:1}.storyVisual{min-height:0;aspect-ratio:4/3}.storyContent{max-width:640px}.story h2{font-size:30px}.catalogNav{gap:6px;padding:16px 0}.catalogNav a{padding:10px 6px}.serviceNumber{margin-bottom:14px}}
+@media(max-width:520px){.introGrid{margin-top:28px}.intro h1{font-size:37px}.introText{font-size:14px;margin-bottom:14px}.overview{gap:20px}.catalogNav a{font-size:11px}.storyVisual{aspect-ratio:1/1;border-radius:14px}.photoCaption{padding:22px 62px 22px 20px}.photoCaption h3{font-size:15px}.photoArrow,.visualCorner{width:34px;height:34px;right:16px;bottom:22px}.photoLabel{left:16px;top:16px;font-size:10px}.photoMeta{font-size:10px;margin-bottom:8px}.story h2{font-size:27px}.description{font-size:14px}.storyActions{gap:10px 20px}.primaryLink,.serviceLink{font-size:13px}.tags{margin-bottom:18px}}
+@media(prefers-reduced-motion:reduce){.storyVisual>img,.primaryLink,.catalogNav a{transition:none}}

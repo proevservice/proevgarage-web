@@ -1,41 +1,43 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Check } from "lucide-react";
 import { services } from "@/lib/website-v3";
 import { getRepairCases } from "@/lib/repair-cases";
 import { casesForService } from "@/lib/service-work.mjs";
-import s from "./v3.module.css";
+import s from "./service-stories.module.css";
 
 export function ServiceShowcase() {
   const cases = getRepairCases();
-  return <div className={s.grid}>
+  return <div className={s.stories}>
     {services.map((service, index) => {
       const related = casesForService(cases, service.slug);
-      return <article key={service.slug} className={s.serviceCard} aria-labelledby={"service-" + service.slug}>
-        <Link href={"/services/" + service.slug} className={s.serviceMain}>
-          <div className={s.photo}>
-            <Image src={service.image} alt={service.title} fill sizes="(max-width:520px) 100vw, (max-width:800px) 50vw, 33vw" />
+      const featured = related[0];
+      const photo = featured?.image || service.image;
+      const destination = featured ? "/work/" + featured.slug : "/services/" + service.slug;
+      return <section id={service.slug} key={service.slug} className={s.story} aria-labelledby={"service-" + service.slug}>
+        <div className={s.storyContent}>
+          <p className={s.serviceNumber}><span>0{index + 1}</span> / PRO EV SERVICE</p>
+          <h2 id={"service-" + service.slug}>{service.title}</h2>
+          <div className={s.tags}>{service.short.split(" · ").map(tag => <span key={tag}>{tag}</span>)}</div>
+          <p className={s.description}>{service.description}</p>
+          <ul className={s.checks}>{service.checks.slice(0, 2).map(check => <li key={check}><Check size={16} aria-hidden="true" /><span>{check}</span></li>)}</ul>
+          <div className={s.storyActions}>
+            <Link className={featured ? s.serviceLink : s.primaryLink} href={"/services/" + service.slug}>รายละเอียดบริการ <ArrowUpRight size={18} /></Link>
+            {featured && <Link className={s.primaryLink} href={"/work/" + featured.slug}>ดูเคสซ่อมจริง <ArrowUpRight size={18} /></Link>}
           </div>
-          <div className={s.cardBody}>
-            <span className={s.number}>SERVICE / 0{index + 1}</span>
-            <h2 id={"service-" + service.slug}>{service.title}</h2>
-            <p>{service.short}</p>
-            <span className={s.textLink}>รายละเอียดบริการ <ArrowUpRight size={16} /></span>
-          </div>
+          {related.length > 1 && <Link className={s.moreLink} href={"/services/" + service.slug + "#related-work"}>ดูผลงานในบริการนี้ทั้งหมด {related.length} งาน →</Link>}
+        </div>
+        <Link className={s.storyVisual} href={destination} aria-label={featured ? "ดูผลงาน: " + featured.title : "รายละเอียด: " + service.title}>
+          <Image src={photo} alt={featured?.title || service.title} fill sizes="(max-width:800px) 100vw, 55vw" priority={index === 0} />
+          <div className={s.visualShade} />
+          <span className={s.photoLabel}>{featured ? "ผลงานซ่อมจริงจากอู่" : "บริการของ PRO EV"}</span>
+          {featured ? <div className={s.photoCaption}>
+            <p className={s.photoMeta}>{featured.images?.length || 1} ภาพจากโพสต์ต้นฉบับ</p>
+            <h3>{featured.title}</h3>
+            <span className={s.photoArrow}><ArrowUpRight size={24} /></span>
+          </div> : <span className={s.visualCorner}><ArrowUpRight size={26} /></span>}
         </Link>
-        {related.length > 0 && <div className={s.serviceProof}>
-          <p className={s.proofHeading}><span aria-hidden="true" /> ผลงานจริงในบริการนี้ <span className={s.proofCount}>{related.length} งาน</span></p>
-          {related.slice(0, 2).map(item => <Link href={"/work/" + item.slug} key={item.slug} className={s.proofLink}>
-            {item.image && <div className={s.proofImage}><Image src={item.image} alt="" fill sizes="76px" /></div>}
-            <div className={s.proofText}>
-              <h3>{item.title}</h3>
-              <p>{item.images?.length || (item.image ? 1 : 0)} ภาพ · อ่านเรื่องราวการซ่อม</p>
-            </div>
-            <ArrowUpRight size={16} aria-hidden="true" />
-          </Link>)}
-          {related.length > 2 && <Link href={"/services/" + service.slug + "#related-work"} className={s.textLink}>ดูผลงานที่เกี่ยวข้องทั้งหมด →</Link>}
-        </div>}
-      </article>;
+      </section>;
     })}
   </div>;
 }
