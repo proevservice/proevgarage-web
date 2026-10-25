@@ -1,0 +1,5 @@
+"use client";
+import { useState } from "react";
+import Link from "next/link";
+import s from "./v3.module.css";
+export default function ServiceSearch({items}:{items:{title:string;href:string;type:string;keywords:string}[]}){const [query,setQuery]=useState("");const text=query.trim().toLowerCase();const result=text?items.filter(i=>(i.title+" "+i.keywords).toLowerCase().includes(text)).slice(0,8):[];return <div className={s.search}><label htmlFor="service-search">ค้นหาบริการ อาการ หรือยี่ห้อรถ</label><input id="service-search" className={s.searchInput} type="search" value={query} onChange={e=>setQuery(e.target.value)} placeholder="เช่น แอร์ไม่เย็น, BCU, NETA" autoComplete="off"/><div className={s.searchResults} aria-live="polite">{text&&(result.length?result.map(i=><Link className={s.searchResult} href={i.href} key={i.href}>{i.title}<span>{i.type} ↗</span></Link>):<p className={s.muted}>ยังไม่พบรายการที่ตรง ลองคำสั้นลง หรือ<Link href="/contact" className={s.textLink}>ส่งอาการให้ทีมงาน →</Link></p>)}</div></div>}

@@ -16,12 +16,13 @@ const prompt = Prompt({
 });
 
 export const metadata: Metadata = {
+    metadataBase: new URL("https://www.proevgarage.com"),
     title: "Pro EV Service ซ่อมรถไฟฟ้า Neta BYD MG - แอร์ แบตเตอรี่ ช่วงล่าง (ปากเกร็ด)",
     description: "ศูนย์ซ่อมรถไฟฟ้าครบวงจร ปากเกร็ด นนทบุรี. เชี่ยวชาญระบบแอร์ EV แบตเตอรี่ High Voltage ระบบไฟโชว์ ช่วงล่าง. ซ่อมโดยช่างเทคนิคเฉพาะทาง เครื่องมือวิเคราะห์ตรงรุ่น. โทร 098-979-4116",
     keywords: ["ซ่อมรถไฟฟ้า", "อู่ซ่อม EV", "ซ่อมแอร์รถไฟฟ้า", "ซ่อมแบตเตอรี่ EV", "Neta V", "BYD Atto 3", "MG ZS EV", "ปากเกร็ด", "นนทบุรี"],
     robots: {
-        index: true,
-        follow: true,
+        index: process.env.VERCEL_ENV !== "preview",
+        follow: process.env.VERCEL_ENV !== "preview",
     },
     openGraph: {
         type: "website",

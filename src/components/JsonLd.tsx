@@ -4,10 +4,11 @@ export function JsonLd({ settings }: { settings: Settings }) {
     const schema = {
         "@context": "https://schema.org",
         "@type": "AutoRepair",
+        "@id": "https://www.proevgarage.com/#business",
         "name": settings.brand_name,
         "image": "https://proevgarage.com/uploads/cover.jpg",
         "telephone": settings.phone,
-        "url": "https://proevgarage.com",
+        "url": "https://www.proevgarage.com",
         "address": {
             "@type": "PostalAddress",
             "streetAddress": settings.address,
@@ -15,11 +16,6 @@ export function JsonLd({ settings }: { settings: Settings }) {
             "addressRegion": "Nonthaburi",
             "postalCode": "11120",
             "addressCountry": "TH"
-        },
-        "geo": {
-            "@type": "GeoCoordinates",
-            "latitude": 13.9130, // Approx for Major Hollywood Pak Kret
-            "longitude": 100.5020
         },
         "openingHoursSpecification": [
             {
