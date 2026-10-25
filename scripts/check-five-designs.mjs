@@ -1,0 +1,68 @@
+import { chromium } from "playwright";
+import { spawn } from "node:child_process";
+import { mkdir, writeFile, readdir } from "node:fs/promises";
+import assert from "node:assert/strict";
+import sharp from "sharp";
+const server=spawn(process.execPath,["node_modules/next/dist/bin/next","start","-p","3000"],{stdio:"ignore"});
+let browser;
+const base="http://127.0.0.1:3000";
+const out="public/design-previews";
+const names=["Signature","Precision","Workshop Journal","Private Garage","Service Desk"];
+const results=[];
+try {
+ for(let i=0;i<90;i++){try{if((await fetch(base+"/designs")).ok)break;}catch{}if(i===89)throw Error("preview server did not start");await new Promise(r=>setTimeout(r,500));}
+ await mkdir(out,{recursive:true});
+ browser=await chromium.launch();
+ const page=await browser.newPage({viewport:{width:1440,height:1000},deviceScaleFactor:1});
+ await page.route("**/*",route=>new URL(route.request().url()).hostname==="127.0.0.1"?route.continue():route.abort());
+ const errors=[];page.on("pageerror",e=>errors.push(e.message));
+ async function check(path){
+  const response=await page.goto(base+path,{waitUntil:"networkidle"});
+  assert.equal(response.status(),200,path);
+  assert.equal(await page.locator("h1").count(),1,"one h1: "+path);
+  assert.ok((await page.locator('meta[name="robots"]').getAttribute("content")).includes("noindex"));
+  assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,"no overflow: "+path);
+ }
+ for(let id=1;id<=5;id++){
+  for(const part of ["","services","work","blog","contact","booking","problems","vehicles"]){
+   await check("/designs/"+id+(part?"/"+part:""));
+   if(!part){await page.evaluate(()=>document.fonts.ready);await page.screenshot({path:out+"/design-"+id+".png"});}
+  }
+  await page.goto(base+"/designs/"+id);
+  await page.locator("#design-navigation").getByRole("link",{name:"บริการของเรา",exact:true}).click();
+  await page.waitForURL(base+"/designs/"+id+"/services");
+  await page.locator("#ev-air-conditioning a[aria-label]").click();
+  await page.waitForURL(new RegExp("/designs/"+id+"/work/facebook-"));
+  assert.equal(await page.locator('button[aria-label^="ดูภาพที่"]').count(),9,"full original gallery");
+  assert.ok((await page.locator("main").innerText()).includes("#ผลงานPROEV"),"full original post");
+  await page.getByRole("button",{name:"ดูภาพที่ 9",exact:true}).click();
+  assert.equal(await page.getByRole("button",{name:"ดูภาพที่ 9",exact:true}).getAttribute("aria-pressed"),"true");
+  await page.goto(base+"/designs/"+id+"/contact");
+  assert.ok(await page.locator('a[href="tel:098-9794116"]').count());
+  assert.ok(await page.locator('a[href="https://line.me/R/ti/p/@869msrge"]').count());
+  assert.ok(await page.locator('a[href="https://m.me/proevservice"]').count());
+  await page.setViewportSize({width:390,height:844});
+  for(const part of ["","services","contact","booking"]){
+   await check("/designs/"+id+(part?"/"+part:""));
+   if(!part)await page.screenshot({path:out+"/design-"+id+"-mobile.png"});
+  }
+  await page.goto(base+"/designs/"+id);
+  await page.getByRole("button",{name:"เมนู +",exact:true}).click();
+  await page.locator("#design-navigation").getByRole("link",{name:"ผลงานซ่อม",exact:true}).click();
+  await page.waitForURL(base+"/designs/"+id+"/work");
+  await page.setViewportSize({width:1440,height:1000});
+  results.push({design:id,name:names[id-1],pages:"8 desktop / 4 mobile",navigation:true,galleryPhotos:9,conversionLinks:"unchanged"});
+  console.log("PASS design "+id+" "+names[id-1]);
+ }
+ assert.deepEqual(errors,[],"browser errors");
+ const tiles=[];
+ for(let id=1;id<=5;id++){
+  const screenshot=await sharp(out+"/design-"+id+".png").resize(600,417).toBuffer();
+  const label=Buffer.from('<svg width="600" height="40"><rect width="600" height="40" fill="#182431"/><text x="18" y="27" fill="#f2f5f3" font-family="Arial" font-size="18">'+id+' / '+names[id-1]+'</text></svg>');
+  const tile=await sharp({create:{width:600,height:457,channels:3,background:"#0b1220"}}).composite([{input:label,top:0,left:0},{input:screenshot,top:40,left:0}]).png().toBuffer();
+  tiles.push({input:tile,left:((id-1)%2)*600,top:Math.floor((id-1)/2)*457});
+ }
+ await sharp({create:{width:1200,height:1371,channels:3,background:"#0b1220"}}).composite(tiles).png().toFile(out+"/comparison.png");
+ await writeFile(out+"/validation.json",JSON.stringify({results,browserErrors:errors},null,2));
+ console.log("PASS all five design previews, 60 page checks, original gallery and conversion URL contracts");
+} finally {await browser?.close();server.kill();}

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Prompt } from "next/font/google";
 import "./globals.css";
+import ProductionChrome from "@/components/ProductionChrome";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 //import { CtaBar } from "@/components/CtaBar";
@@ -50,11 +51,11 @@ export default function RootLayout({
             </head>
             <body className="flex min-h-screen flex-col font-sans antialiased text-text bg-bg">
                 <GoogleTagManagerNoScript />
-                <Navbar />
+                <ProductionChrome><Navbar /></ProductionChrome>
                 <main className="flex-1 w-full">
                     {children}
                 </main>
-                <Footer />
+                <ProductionChrome><Footer /></ProductionChrome>
                 {/* <CtaBar
           fbLink={settings.facebook}
           messengerLink={settings.messenger}
