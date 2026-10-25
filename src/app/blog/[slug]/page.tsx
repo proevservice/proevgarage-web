@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import Image from "next/image";
 import { notFound } from "next/navigation";
@@ -5,6 +6,11 @@ import { getPostBySlug } from "@/lib/site";
 import { ArrowLeft, Calendar, Clock } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 
+export function generateMetadata({params}:{params:{slug:string}}):Metadata {
+ const post=getPostBySlug(params.slug);
+ if(!post)return {};
+ return {title:post.title+" | Pro EV Service",description:post.excerpt,alternates:{canonical:"https://www.proevgarage.com/blog/"+post.slug},openGraph:{type:"article",title:post.title,description:post.excerpt,url:"https://www.proevgarage.com/blog/"+post.slug,images:post.thumbnail?[post.thumbnail]:[],publishedTime:post.date}};
+}
 export default function BlogPost({ params }: { params: { slug: string } }) {
     const post = getPostBySlug(params.slug);
 
