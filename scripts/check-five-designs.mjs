@@ -66,7 +66,9 @@ try {
  await page.locator("#ev-air-conditioning a[aria-label]").click();
  await page.waitForURL(new RegExp("^"+base+"/work/facebook-"));
  assert.equal(await page.locator('button[aria-label^="ดูภาพที่"]').count(),9);
+ const coverBefore=await page.getByRole("button",{name:"ขยายรูปภาพ",exact:true}).evaluate(e=>({width:e.getBoundingClientRect().width,src:e.querySelector("img").getAttribute("src")}));
  await page.getByRole("button",{name:"ขยายรูปภาพ",exact:true}).click();
+ assert.equal(await page.getByRole("button",{name:"ขยายรูปภาพ",exact:true}).evaluate(e=>e.getBoundingClientRect().width),coverBefore.width,"opening viewer preserves page width");
  await page.getByRole("button",{name:"ปิด ✕",exact:true}).focus();
  await page.keyboard.press("Shift+Tab");
  assert.equal(await page.evaluate(()=>document.activeElement?.getAttribute("aria-label")),"ภาพถัดไป");
@@ -75,6 +77,15 @@ try {
  await page.keyboard.press("Escape");
  assert.equal(await page.getByRole("dialog").count(),0);
  assert.equal(await page.evaluate(()=>document.activeElement?.getAttribute("aria-label")),"ขยายรูปภาพ");
+ await page.getByRole("button",{name:"ดูภาพที่ 8",exact:true}).click();
+ assert.equal(await page.getByRole("dialog").count(),1,"thumbnail opens viewer");
+ assert.equal(await page.getByRole("button",{name:"ขยายรูปภาพ",exact:true}).evaluate(e=>e.querySelector("img").getAttribute("src")),coverBefore.src,"viewer does not replace the page cover");
+ const viewerBefore=await page.getByRole("dialog").locator("img").boundingBox();
+ await page.keyboard.press("ArrowRight");
+ const viewerAfter=await page.getByRole("dialog").locator("img").boundingBox();
+ assert.equal(viewerAfter.width,viewerBefore.width,"viewer image frame width stays fixed");
+ assert.equal(viewerAfter.height,viewerBefore.height,"viewer image frame height stays fixed");
+ await page.keyboard.press("Escape");
  await page.setViewportSize({width:390,height:844});
  for(const part of ["","services","work","blog","contact","booking"])await check("/"+part);
  await page.setViewportSize({width:1440,height:1000});
