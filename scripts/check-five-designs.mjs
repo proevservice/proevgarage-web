@@ -49,7 +49,7 @@ try {
  // Exercise actual header clicks after a page transition, not just direct URLs.
  for(const part of ["work","blog","contact","booking","services",""]){
   const href="/"+part;
-  await page.locator('header nav a[href="'+href+'"]').click();
+  await page.locator('#design-navigation a[href="'+href+'"]').click();
   await page.waitForURL(base+href);
   await page.locator("h1").waitFor({state:"visible"});
  }
