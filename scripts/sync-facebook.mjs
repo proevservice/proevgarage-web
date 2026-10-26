@@ -3,6 +3,7 @@ import path from "node:path";
 import {fileURLToPath} from "node:url";
 import {createHash} from "node:crypto";
 import {IMPORT_TAG, ARTICLE_TAG, classifyPost} from "./facebook-tag.mjs";
+import {facebookRequestError} from "./facebook-auth.mjs";
 import {getPostPhotos} from "./facebook-media.mjs";
 export function toCase(post, tag = IMPORT_TAG){
  if(!/^\d+_\d+$/.test(post.id||""))throw new Error("Invalid post ID");
@@ -33,7 +34,7 @@ export async function sync({root=process.cwd(), fetchImpl=fetch, env=process.env
   url.searchParams.set("fields","id,message,created_time,updated_time,permalink_url,full_picture");
   url.searchParams.set("limit","100");if(after)url.searchParams.set("after",after);
   const res=await fetchImpl(url,{headers:{Authorization:"Bearer "+token},signal:AbortSignal.timeout(30000)});
-  if(!res.ok)throw new Error("Facebook request failed: HTTP "+res.status);
+  if(!res.ok)throw await facebookRequestError(res);
   const json=await res.json();if(!Array.isArray(json.data))throw new Error("Invalid Facebook response");
   for(const post of json.data){
    const kinds=[];

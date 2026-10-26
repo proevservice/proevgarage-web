@@ -22,7 +22,7 @@ jobs:
         with:
           node-version: '22'
       - name: Test both content selections before import
-        run: node --test scripts/facebook-tag.test.mjs scripts/facebook-sync-lifecycle.test.mjs scripts/sync-facebook.test.mjs scripts/facebook-media.test.mjs scripts/facebook-articles.test.mjs
+        run: node --test scripts/facebook-tag.test.mjs scripts/facebook-sync-lifecycle.test.mjs scripts/sync-facebook.test.mjs scripts/facebook-media.test.mjs scripts/facebook-articles.test.mjs scripts/facebook-auth.test.mjs
       - name: Check existing Page credentials
         id: credentials
         env:

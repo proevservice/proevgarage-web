@@ -38,7 +38,7 @@ jobs:
             public/images/facebook
           if-no-files-found: warn
       - name: Test sync behavior
-        run: node --test scripts/facebook-tag.test.mjs scripts/facebook-sync-lifecycle.test.mjs scripts/sync-facebook.test.mjs scripts/facebook-media.test.mjs scripts/facebook-articles.test.mjs
+        run: node --test scripts/facebook-tag.test.mjs scripts/facebook-sync-lifecycle.test.mjs scripts/sync-facebook.test.mjs scripts/facebook-media.test.mjs scripts/facebook-articles.test.mjs scripts/facebook-auth.test.mjs
       - name: Commit updated content
         if: github.event_name == 'schedule' || inputs.apply == true
         run: |
