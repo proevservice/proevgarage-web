@@ -1,5 +1,5 @@
 export async function getPostPhotos(post,{token,version,fetchImpl=fetch}) {
- const fields='media,media_type,type,url,subattachments.limit(100){media,media_type,type,url}';
+ const fields='media,media_type,type,url,target,subattachments.limit(100){media,media_type,type,url,target}';
  const photos=[];const videos=[];
  async function collect(edge){
   if(!Array.isArray(edge?.data))throw new Error('Invalid attachment response');
@@ -7,7 +7,17 @@ export async function getPostPhotos(post,{token,version,fetchImpl=fetch}) {
    if(attachment.subattachments){await collect(attachment.subattachments);continue;}
    const isVideo=/video/i.test(attachment.media_type||attachment.type||'');
    if(isVideo){if(attachment.url)videos.push(attachment.url);continue;}
-   const src=attachment.media?.image?.src;
+   let src=attachment.media?.image?.src;
+   // Photo-node renditions preserve more detail than attachment previews.
+   if(/^\d+$/.test(attachment.target?.id||'')){
+    const photoUrl=new URL('https://graph.facebook.com/'+version+'/'+attachment.target.id);
+    photoUrl.searchParams.set('fields','images');
+    const photo=await request(photoUrl);
+    const variants=(photo.images||[]).filter(image=>image.source&&Number(image.width)>0&&Number(image.height)>0);
+    variants.sort((a,b)=>b.width*b.height-a.width*a.height);
+    const best=variants[0];
+    if(best&&(!attachment.media?.image?.width||best.width*best.height>=attachment.media.image.width*attachment.media.image.height))src=best.source;
+   }
    if(src&&!photos.includes(src))photos.push(src);
   }
   if(edge.paging?.next){

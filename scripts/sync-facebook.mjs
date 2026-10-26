@@ -5,6 +5,7 @@ import {fileURLToPath} from "node:url";
 import {createHash} from "node:crypto";
 import {IMPORT_TAG, ARTICLE_TAG, classifyPost} from "./facebook-tag.mjs";
 import {facebookRequestError} from "./facebook-auth.mjs";
+// Import the largest available Facebook photo rendition for clear cover crops.
 import {getPostPhotos} from "./facebook-media.mjs";
 export function toCase(post, tag = IMPORT_TAG){
  if(!/^\d+_\d+$/.test(post.id||""))throw new Error("Invalid post ID");

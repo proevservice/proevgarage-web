@@ -5,3 +5,12 @@ test('collects album children and later pages without duplicate cover',async()=>
 });
 test('video remains a source link and is not falsely imported as a photo',async()=>{const result=await getPostPhotos({id:'1_2',full_picture:'thumbnail'},{token:'placeholder',version:'v26.0',fetchImpl:async()=>new Response(JSON.stringify({data:[{media_type:'video',url:'https://www.facebook.com/video'}]}))});assert.deepEqual(result.photos,[]);assert.equal(result.videos.length,1);});
 test('attachment failure stops import rather than publishing incomplete galleries',async()=>{await assert.rejects(getPostPhotos({id:'1_2'},{token:'placeholder',version:'v26.0',fetchImpl:async()=>new Response('',{status:503})}));});
+
+test('uses largest photo-node rendition regardless of API ordering',async()=>{
+ const result=await getPostPhotos({id:'1_2'},{token:'placeholder',version:'v26.0',fetchImpl:async url=>new Response(JSON.stringify(String(url).includes('/attachments')?{data:[{media_type:'photo',target:{id:'123'},media:{image:{src:'preview',width:720,height:1280}}}]}:{images:[{source:'small',width:360,height:640},{source:'original',width:1440,height:2560},{source:'medium',width:720,height:1280}]}))});
+ assert.deepEqual(result.photos,['original']);
+});
+test('keeps attachment photo when rendition list is empty',async()=>{
+ const result=await getPostPhotos({id:'1_2'},{token:'placeholder',version:'v26.0',fetchImpl:async url=>new Response(JSON.stringify(String(url).includes('/attachments')?{data:[{target:{id:'123'},media:{image:{src:'preview'}}}]}:{images:[]}))});
+ assert.deepEqual(result.photos,['preview']);
+});
