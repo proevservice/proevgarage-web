@@ -22,7 +22,16 @@ All Version 3 contact actions remain ordinary anchor links with the existing set
 
 No preventDefault, router interception, URL shortener, or delayed redirect is added to these external contact actions. The new buttons therefore remain eligible for the current Click URL rules regardless of styling.
 
-The existing /ev-repair advertising landing page and src/lib/tracking.ts are retained without changes. Its existing generate_lead_call, generate_lead_line, generate_lead_message and generate_lead_navigation dataLayer event names stay intact. Do not copy these custom events onto every new CTA: existing Google Ads conversion tags already use link-click triggers.
+The /ev-repair advertising landing route is retained. Its copy and diagnostic data attributes have changed; its nine CTA destinations, lead types, event names and click locations are preserved. src/lib/tracking.ts and src/components/GoogleTagManager.tsx are byte-identical to main. Its existing generate_lead_call, generate_lead_line, generate_lead_message and generate_lead_navigation dataLayer event names stay intact. Do not copy these custom events onto every new CTA: existing Google Ads conversion tags already use link-click triggers.
 
-## Verification boundary
-Production script presence, GTM trigger rules, matching CTA destinations, the existing landing page source and preview rendering are checked. No live telephone/chat conversion was fired as a test. DOM compatibility is not proof of Google Ads attribution; validate actual tag firing and deduplication with Tag Assistant and conversion diagnostics before approving production rollout. Consent, ad blockers and campaign attribution can affect recorded results.
+## Verification evidence — 2026-10-26 (Asia/Bangkok)
+- Production Tag Assistant found GTM-P7WNQQNH, G-1LMMEQBSJY and AW-17771461581. Base Google tags and Conversion Linker each fired once per observed page load.
+- Phone: owner confirmed three clicks; three gtm.linkClick events and three Call tag firings were observed. Each selected click event showed the Call tag successful. This round showed no extra Call tag firing relative to the reported clicks.
+- LINE: owner confirmed one click in the connected debug window. One generate_lead_line and one gtm.linkClick event were observed. The LINE Ads tag fired once and showed successful on gtm.linkClick; no tags fired on generate_lead_line.
+- Facebook: clicks were reported, but browser tab access was lost before results could be inspected. NOT verified.
+- These are production Version 2 observations, not proof of Preview or Version 3 production behavior.
+- Source comparison against main confirms identical tracking utility and GTM loader, identical landing LINKS values and nine matching conversion handlers; no preventDefault or stopPropagation was added to the landing page.
+- The controllable website tab displayed Tag Assistant Not Connected while Tag Assistant reported a connected window. Do not count clicks from that disconnected tab as a failed conversion. Verify the website-side connected indicator before each test.
+
+## Release gate still open
+Successful tag execution is not proof of Google Ads receipt, counting or attribution. Facebook firing/deduplication and Google Ads diagnostics remain outstanding. Browser session loss is not evidence of a website code defect. Do not add duplicate tracking snippets or merge/publish based on source compatibility alone.
