@@ -32,6 +32,10 @@ At launch, record the production deployment ID, time in Asia/Bangkok and source 
 After launch, check production robots/canonical/sitemap, old URL redirects, contact destinations, form/lead events, browser errors and 404s. Review Ads lead counts and cost per lead against the baseline daily during the first week.
 
 ## Facebook sync
-Manual importer works. Scheduled sync is still disabled.
-Automatic approval rejected modifying the workflow on main because the owner has not explicitly approved that default-branch infrastructure change.
-The prepared schedule runs every two hours and writes content only to codex/website-version3. It must not publish the V3 application or push content to main.
+Enabled with owner approval on 2026-10-26. Main commit 763501b507f6187148ff0157be541269ad845929 changes only .github/workflows/facebook-sync.yml; the production application remains Version 2.
+- Cron: `17 */2 * * *` (UTC), every two hours. GitHub may delay scheduled runs.
+- Checkout and push target are explicitly `codex/website-version3`; content is never pushed to main by this workflow.
+- Manual apply test: https://github.com/proevservice/proevgarage-web/actions/runs/40333876947 — success; 20 tests passed, 3 work posts and 1 article synchronized.
+- Tags select content: #ผลงานPROEV for work, #บทความ for articles. Edits and tag removal propagate on the next successful complete sync.
+- The workflow does not merge or publish the Version 3 application.
+- Existing Page credentials can still be revoked or lose data access; monitor failed Actions runs.
