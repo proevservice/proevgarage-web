@@ -1,8 +1,7 @@
 name: Validate SEO and answer content
 on:
-  pull_request:
   push:
-    branches: [codex/website-version3]
+    branches: [codex/website-version3, main]
     paths:
       - 'src/**'
       - 'content/**'
