@@ -3,6 +3,19 @@ import { spawn } from "node:child_process";
 import { mkdir, writeFile, readdir } from "node:fs/promises";
 import assert from "node:assert/strict";
 import sharp from "sharp";
+import ts from "typescript";
+import vm from "node:vm";
+import {readFile} from "node:fs/promises";
+const pushes=[];
+const trackingContext={exports:{},process:{env:{}},window:{dataLayer:pushes},console:{log(){},warn(){}}};
+vm.runInNewContext(ts.transpileModule(await readFile("src/lib/tracking.ts","utf8"),{compilerOptions:{module:ts.ModuleKind.CommonJS}}).outputText,trackingContext);
+assert.equal(pushes.length,0,"loading tracking creates no lead");
+for(const [type,event] of Object.entries({phone_call:"generate_lead_call",line_chat:"generate_lead_line",facebook_chat:"generate_lead_message",navigation:"generate_lead_navigation"})){
+ trackingContext.exports.sendLeadEvent(type,"qa");
+ trackingContext.exports.sendLeadEvent(type,"qa");
+ assert.equal(pushes.filter(item=>item.event===event).length,1,"one event per immediate double click");
+}
+console.log("PASS isolated conversion names and duplicate suppression");
 process.env.PW_TEST_SCREENSHOT_NO_FONTS_READY="1";
 const server=spawn(process.execPath,["node_modules/next/dist/bin/next","start","-p","3000"],{stdio:"ignore"});
 let browser;
@@ -36,6 +49,15 @@ try {
  await page.locator("#ev-air-conditioning a[aria-label]").click();
  await page.waitForURL(new RegExp("^"+base+"/work/facebook-"));
  assert.equal(await page.locator('button[aria-label^="ดูภาพที่"]').count(),9);
+ await page.getByRole("button",{name:"ขยายรูปภาพ",exact:true}).click();
+ await page.getByRole("button",{name:"ปิด ✕",exact:true}).focus();
+ await page.keyboard.press("Shift+Tab");
+ assert.equal(await page.evaluate(()=>document.activeElement?.getAttribute("aria-label")),"ภาพถัดไป");
+ await page.keyboard.press("Tab");
+ assert.equal(await page.evaluate(()=>document.activeElement?.textContent),"ปิด ✕");
+ await page.keyboard.press("Escape");
+ assert.equal(await page.getByRole("dialog").count(),0);
+ assert.equal(await page.evaluate(()=>document.activeElement?.getAttribute("aria-label")),"ขยายรูปภาพ");
  await page.setViewportSize({width:390,height:844});
  for(const part of ["","services","work","blog","contact","booking"])await check("/"+part);
  await page.setViewportSize({width:1440,height:1000});

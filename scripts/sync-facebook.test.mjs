@@ -8,3 +8,12 @@ test("skip empty content",()=>assert.equal(toCase({...post,message:""}),null));
 
 
 test("remove import hashtag from title",()=>{const c=toCase({...post,message:"NETA X #ผลงานPROEV\nRepair details"});assert.equal(c.title,"NETA X");});
+
+test("long Thai title ends on a word boundary and preserves the full body",()=>{
+ const message="บริการตรวจเช็กรถยนต์ไฟฟ้า ".repeat(20)+"#บทความ";
+ const c=toCase({...post,message});
+ assert.ok(c.title.endsWith("…"));
+ assert.ok([...new Intl.Segmenter("th",{granularity:"grapheme"}).segment(c.title)].length<=90);
+ assert.equal(c.body,message);
+ assert.ok(!c.title.includes("#บทความ"));
+});

@@ -1,3 +1,4 @@
+import {sourceTitle} from "./facebook-title.mjs";
 import fs from "node:fs/promises";
 import path from "node:path";
 import {fileURLToPath} from "node:url";
@@ -10,7 +11,7 @@ export function toCase(post, tag = IMPORT_TAG){
  const body=(post.message||"").trim();
  if(!body)return null;
  const clean=[tag,ARTICLE_TAG].reduce((text,tag)=>text.replace(new RegExp(tag.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "gi"), ""),body);
- const title=clean.split(/\r?\n/).map(line=>line.trim()).find(Boolean)?.slice(0,120);
+ const title=sourceTitle(clean);
  if(!title)return null;
  const link=new URL(post.permalink_url);
  if(!["www.facebook.com","facebook.com","m.facebook.com"].includes(link.hostname)||link.protocol!=="https:")throw new Error("Invalid permalink");

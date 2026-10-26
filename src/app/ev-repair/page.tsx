@@ -86,7 +86,7 @@ export default function EvRepairLandingPage() {
                                 จบปัญหาระบบไฟ-แอร์-ช่วงล่าง ด้วยมาตรฐานความปลอดภัยสูงสุด
                             </h3>
                             <p className="mb-8 text-lg text-muted md:text-xl md:max-w-2xl font-light">
-                                ศูนย์บริการเฉพาะทาง EV แห่งแรกในปากเกร็ด วิเคราะห์ปัญหาด้วย Software ตรงรุ่น เช็คค่า SOH แบตเตอรี่แรงดันสูงละเอียดทุก Cell ไม่เปลี่ยนอะไหล่มั่ว
+                                บริการตรวจเช็กและซ่อมรถยนต์ไฟฟ้าในปากเกร็ด แจ้งอาการและรุ่นรถเพื่อให้ทีมงานประเมินแนวทางตรวจสอบ ก่อนตกลงขอบเขตงานซ่อม
                             </p>
 
 
@@ -116,7 +116,7 @@ export default function EvRepairLandingPage() {
                             <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-muted md:justify-start">
                                 <div className="flex items-center">
                                     <CheckCircle2 className="mr-1.5 h-4 w-4 text-accent" />
-                                    รับประกันงานซ่อม
+                                    สอบถามเงื่อนไขงานซ่อม
                                 </div>
                                 <div className="flex items-center">
                                     <CheckCircle2 className="mr-1.5 h-4 w-4 text-accent" />
@@ -172,7 +172,7 @@ export default function EvRepairLandingPage() {
                                     </div>
                                     <div>
                                         <h4 className="text-lg font-bold text-text mb-2">เชี่ยวชาญระบบ HV Battery & Safety</h4>
-                                        <p className="text-muted leading-relaxed">ช่างผ่านการอบรม Safety Level 3 สำหรับงานซ่อมระบบไฟแรงดันสูง 400V-800V เข้าใจโครงสร้างแบตเตอรี่และระบบ Inverter</p>
+                                        <p className="text-muted leading-relaxed">งานระบบไฟแรงดันสูงต้องตรวจประเมินตามรุ่นรถและอาการ กรุณาสอบถามทีมงานถึงขอบเขตบริการก่อนนัดหมาย</p>
                                     </div>
                                 </div>
                                 <div className="flex">
@@ -236,7 +236,7 @@ export default function EvRepairLandingPage() {
                                 "เปลี่ยนบูชปีกนก / ลูกหมาก",
                                 "เปลี่ยนโช๊คอัพ / สปริง",
                                 "เจียรจานเบรค / เปลี่ยนผ้าเบรค",
-                                "ตั้งศูนย์ล้อ 3D"
+                                "ตรวจเช็กระบบช่วงล่าง"
                             ]}
                         />
                         <ServiceCard
@@ -301,7 +301,7 @@ export default function EvRepairLandingPage() {
                 <div className="container px-4 text-center">
                     <h2 className="mb-6 text-3xl font-extrabold md:text-5xl">พร้อมจบปัญหารถ EV ของคุณวันนี้</h2>
                     <p className="mb-10 text-muted max-w-2xl mx-auto text-lg">
-                        เรารับประกันความพึงพอใจ ปรึกษาอาการเสียได้ฟรี ไม่ซ่อมไม่ว่ากัน
+                        แจ้งอาการเสียเพื่อสอบถามแนวทางตรวจเช็ก ค่าใช้จ่าย และเงื่อนไขบริการก่อนนัดหมาย
                     </p>
 
                     <div className="flex flex-col items-center justify-center gap-4 sm:flex-row mb-16">
