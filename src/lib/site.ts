@@ -16,6 +16,7 @@ export interface Settings {
     hours: string;
     service_areas: string[];
     models: string[];
+    opening_hours?: {days:string[];opens:string;closes:string};
 }
 
 export interface Service {

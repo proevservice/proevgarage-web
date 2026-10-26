@@ -3,7 +3,8 @@ import Link from "next/link";
 import { services, problems, vehicles, SITE_URL } from "@/lib/website-v3";
 import { ServiceShowcase } from "@/components/ServiceShowcase";
 import { getRepairCases } from "@/lib/repair-cases";
-import { Breadcrumbs, VehicleLinks, ContactCta, MobileContact } from "@/components/WebsiteV3";
+import { Schema, Breadcrumbs, VehicleLinks, ContactCta, MobileContact } from "@/components/WebsiteV3";
+import {webPageSchema} from "@/lib/seo";
 import ServiceSearch from "@/components/ServiceSearch";
 import s from "@/components/v3.module.css";
 import design from "@/components/service-stories.module.css";
@@ -24,7 +25,7 @@ export default function Services() {
     ...cases.map(i => ({ title: i.title, href: "/work/" + i.slug, type: "ผลงานจริง", keywords: i.model + " " + i.title }))
   ];
   return <div className={s.page}><div className={s.wrap}>
-    <header className={design.intro}>
+    <Schema data={webPageSchema("บริการซ่อมรถไฟฟ้า","บริการแอร์ แบตเตอรี่ ระบบชาร์จ ระบบไฟ ช่วงล่าง และบำรุงรักษา พร้อมผลงานจริง","/services","CollectionPage")}/><header className={design.intro}>
       <Breadcrumbs items={[{ label: "บริการของเรา" }]} />
       <div className={design.introGrid}>
         <div><p className={design.kicker}>OUR SERVICES / REAL REPAIR STORIES</p><h1>บริการของเรา<br/><span>ดูผ่านงานซ่อมจริง</span></h1></div>
