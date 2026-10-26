@@ -30,6 +30,6 @@ export default function DesignShell({id,settings,children,review=true}:{id:strin
   </header>
   <div className={s.content}>{children}</div>
   <footer className={s.footer}><div><p className={s.eyebrow}>PRO EV SERVICE</p><h2>ให้เราช่วยดูแลรถ EV ของคุณ</h2><p>{settings.address}</p><p>{settings.hours}</p></div><div className={s.footerContact}><a href={"tel:"+settings.phone}>โทร {settings.phone}</a><a href={settings.line} target="_blank" rel="noopener noreferrer">นัดหมายผ่าน LINE ↗</a><a href={settings.messenger} target="_blank" rel="noopener noreferrer">Facebook Messenger ↗</a><a href={settings.maps} target="_blank" rel="noopener noreferrer">แผนที่ร้าน ↗</a></div><div className={s.footerBottom}><span>© PRO EV SERVICE</span><Link href={prefix+"/services"}>บริการ</Link><Link href={prefix+"/work"}>ผลงานจริง</Link>{review&&<span>{option.name}</span>}</div></footer>
-  <div className={s.mobileActions}><a href={"tel:"+settings.phone}>โทรหาร้าน</a><a href={settings.line} target="_blank" rel="noopener noreferrer">นัดหมาย LINE</a><a href={settings.messenger} target="_blank" rel="noopener noreferrer">แชท Facebook</a></div>
+  {pathname!=="/ev-repair"&&<div className={s.mobileActions}><a href={"tel:"+settings.phone}>โทรหาร้าน</a><a href={settings.line} target="_blank" rel="noopener noreferrer">นัดหมาย LINE</a><a href={settings.messenger} target="_blank" rel="noopener noreferrer">แชท Facebook</a></div>}
  </div>;
 }

@@ -46,6 +46,48 @@ try {
   if(!part){await page.waitForFunction(()=>[...document.images].filter(i=>{const r=i.getBoundingClientRect();return r.width>0&&r.height>0&&r.bottom>0&&r.top<innerHeight;}).every(i=>i.complete&&i.naturalWidth>0));await page.screenshot({path:out+"/version3-home.png"});}
  }
 
+
+ // Click every original ad CTA without navigating or sending real leads.
+ const adPath="/ev-repair?utm_source=google&utm_medium=cpc&utm_campaign=qa-preview&gclid=qa-test";
+ await page.goto(base+adPath,{waitUntil:"load"});
+ await page.evaluate(()=>{
+  window.dataLayer=[];
+  document.addEventListener("click",event=>{
+   if(event.target.closest?.("a[data-lead-type]"))event.preventDefault();
+  },true);
+ });
+ const expectedAds=[
+  ["facebook_chat","hero","generate_lead_message","https://m.me/proevservice"],
+  ["phone_call","hero","generate_lead_call","tel:0989794116"],
+  ["facebook_chat","cases_cta","generate_lead_message","https://www.facebook.com/proevservice"],
+  ["facebook_chat","final_cta","generate_lead_message","https://m.me/proevservice"],
+  ["line_chat","final_cta","generate_lead_line","https://line.me/R/ti/p/@869msrge"],
+  ["navigation","footer_map","generate_lead_navigation","https://maps.app.goo.gl/h21RDsTBUFH5fH9z7"],
+  ["facebook_chat","sticky_bar","generate_lead_message","https://m.me/proevservice"],
+  ["line_chat","sticky_bar","generate_lead_line","https://line.me/R/ti/p/@869msrge"],
+  ["phone_call","sticky_bar","generate_lead_call","tel:0989794116"]
+ ];
+ assert.equal(await page.locator("a[data-lead-type]").count(),expectedAds.length);
+ assert.equal((await page.evaluate(()=>window.dataLayer)).length,0,"page load sends no conversion");
+ for(const [type,location,event,href] of expectedAds){
+  const cta=page.locator('a[data-lead-type="'+type+'"][data-lead-location="'+location+'"]');
+  assert.equal(await cta.getAttribute("href"),href,"original destination");
+  await cta.evaluate(anchor=>{anchor.click();anchor.click();});
+  const events=await page.evaluate(()=>window.dataLayer);
+  const matched=events.filter(item=>item.lead_type===type&&item.click_location===location);
+  assert.equal(matched.length,1,"single event for double click: "+type+" "+location);
+  assert.equal(matched[0].event,event);
+  assert.equal(matched[0].page_name,"ev_repair_landing");
+  assert.equal(matched[0].page_type,"landing");
+  assert.equal(matched[0].service_area_km,20);
+ }
+ assert.equal(page.url(),base+adPath,"ad query parameters retained");
+ await page.setViewportSize({width:390,height:844});
+ assert.equal(await page.locator('a[data-lead-location="sticky_bar"]').count(),3);
+ assert.equal(await page.getByRole("link",{name:"โทรหาร้าน",exact:true}).count(),0,"no duplicate shell mobile contact bar");
+ assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth>innerWidth),false,"mobile ad page has no overflow");
+ await page.setViewportSize({width:1440,height:1000});
+ console.log("PASS all nine original ad CTA destinations, conversion payloads and duplicate suppression; query parameters retained");
  await page.goto(base+"/",{waitUntil:"load"});
  // Exercise actual header clicks after a page transition, not just direct URLs.
  for(const part of ["work","blog","contact","booking","services",""]){
