@@ -50,7 +50,7 @@ try {
     assert.ok(await page.locator('a[href="tel:098-9794116"]').count(),"phone route");
     assert.ok(await page.locator('a[href="https://line.me/R/ti/p/@869msrge"]').count(),"LINE route");
     if(!part||part==="blog"){
-     await page.waitForFunction(()=>[...document.images].filter(i=>{const r=i.getBoundingClientRect();return r.width>0&&r.height>0&&r.bottom>0&&r.top<innerHeight;}).every(i=>i.complete&&i.naturalWidth>0),null,{timeout:20000});
+     await page.waitForFunction(()=>[...document.images].filter(i=>{const r=i.getBoundingClientRect();return r.width>0&&r.height>0&&r.bottom>0&&r.top<innerHeight;}).every(i=>i.complete&&i.naturalWidth>0),null,{timeout:20000}).catch(async error=>{console.log("IMAGE FAILURE "+path+" width="+width+" "+JSON.stringify(await page.locator("img").evaluateAll(imgs=>imgs.map(i=>({src:i.currentSrc,complete:i.complete,naturalWidth:i.naturalWidth,top:i.getBoundingClientRect().top})))));throw error;});
      await page.screenshot({path:out+"/direction-"+id+(part?"-"+part:"")+(width===390?"-mobile":"")+".png"});
     }
    }
