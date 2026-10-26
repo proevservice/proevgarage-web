@@ -2,13 +2,13 @@ import fs from "node:fs/promises";
 import path from "node:path";
 import {fileURLToPath} from "node:url";
 import {createHash} from "node:crypto";
-import {IMPORT_TAG, classifyPost} from "./facebook-tag.mjs";
+import {IMPORT_TAG, ARTICLE_TAG, classifyPost} from "./facebook-tag.mjs";
 import {getPostPhotos} from "./facebook-media.mjs";
 export function toCase(post, tag = IMPORT_TAG){
  if(!/^\d+_\d+$/.test(post.id||""))throw new Error("Invalid post ID");
  const body=(post.message||"").trim();
  if(!body)return null;
- const clean=body.replace(new RegExp(tag.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "gi"), "");
+ const clean=[tag,ARTICLE_TAG].reduce((text,tag)=>text.replace(new RegExp(tag.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"), "gi"), ""),body);
  const title=clean.split(/\r?\n/).map(line=>line.trim()).find(Boolean)?.slice(0,120);
  if(!title)return null;
  const link=new URL(post.permalink_url);
@@ -25,7 +25,7 @@ export async function sync({root=process.cwd(), fetchImpl=fetch, env=process.env
  const version=env.FACEBOOK_GRAPH_VERSION;
  if(!token||!/^\d+$/.test(page||"")||!/^v\d+\.\d+$/.test(version||""))throw new Error("Set FACEBOOK_PAGE_ACCESS_TOKEN, FACEBOOK_PAGE_ID and FACEBOOK_GRAPH_VERSION in server secrets");
  const tag=env.FACEBOOK_IMPORT_TAG||IMPORT_TAG;
- const dir=path.resolve(root,"content/work");
+ const dirs={work:path.resolve(root,"content/work"),articles:path.resolve(root,"content/articles")};
  const images=path.resolve(root,"public/images/facebook");
  let after;const records=[];let finished=false;
  for(let n=0;n<50;n++){
@@ -36,10 +36,12 @@ export async function sync({root=process.cwd(), fetchImpl=fetch, env=process.env
   if(!res.ok)throw new Error("Facebook request failed: HTTP "+res.status);
   const json=await res.json();if(!Array.isArray(json.data))throw new Error("Invalid Facebook response");
   for(const post of json.data){
-   const selection=classifyPost(post,tag);
-   if(selection.status==="skip")continue;
+   const kinds=[];
+   if(classifyPost(post,tag).status==="publish")kinds.push("work");
+   if(classifyPost(post,ARTICLE_TAG).status==="publish")kinds.push("articles");
+   if(!kinds.length)continue;
    const item=toCase(post,tag);if(!item)continue;
-   records.push({item,post});
+   records.push({item,post,kinds});
   }
   if(!json.paging?.next){finished=true;break;}
   const cursor=json.paging?.cursors?.after;if(!cursor||cursor===after)throw new Error("Invalid Facebook pagination");
@@ -47,9 +49,9 @@ export async function sync({root=process.cwd(), fetchImpl=fetch, env=process.env
  }
  if(!finished)throw new Error("Pagination limit reached; no content changed");
  // Validate and download all selected records before changing published content.
- const seen=new Set();const stagedImages=new Map();
- for(const {item,post} of records){
-  seen.add(item.slug+".json");
+ const seen={work:new Set(),articles:new Set()};const stagedImages=new Map();
+ for(const {item,post,kinds} of records){
+  for(const kind of kinds)seen[kind].add(item.slug+".json");
   const media=await getPostPhotos(post,{token,version,fetchImpl});
   item.images=[];item.videoUrls=media.videos;
   for(const picture of media.photos){
@@ -70,13 +72,13 @@ export async function sync({root=process.cwd(), fetchImpl=fetch, env=process.env
   }
   item.image=item.images[0];
  }
- await fs.mkdir(dir,{recursive:true});await fs.mkdir(images,{recursive:true});
+ for(const dir of Object.values(dirs))await fs.mkdir(dir,{recursive:true});await fs.mkdir(images,{recursive:true});
  for(const [file,bytes] of stagedImages)await fs.writeFile(path.join(images,file),bytes);
- for(const {item} of records)await fs.writeFile(path.join(dir,item.slug+".json"),JSON.stringify(item,null,2)+"\n");
+ for(const {item,kinds} of records)for(const kind of kinds)await fs.writeFile(path.join(dirs[kind],item.slug+".json"),JSON.stringify(item,null,2)+"\n");
  // Remove posts deleted from Facebook or no longer carrying the import tag, only after a complete fetch.
- for(const file of await fs.readdir(dir))if(/^facebook-\d+_\d+\.json$/.test(file)&&!seen.has(file))await fs.unlink(path.join(dir,file));
+ for(const [kind,dir] of Object.entries(dirs))for(const file of await fs.readdir(dir))if(/^facebook-\d+_\d+\.json$/.test(file)&&!seen[kind].has(file))await fs.unlink(path.join(dir,file));
  for(const file of await fs.readdir(images))if(/^facebook-\d+_\d+(?:-[a-f0-9]{16})?\.(jpg|png|webp)$/.test(file)&&!stagedImages.has(file))await fs.unlink(path.join(images,file));
- console.log("Facebook posts synchronized: "+seen.size);
+ console.log("Facebook posts synchronized: work="+seen.work.size+", articles="+seen.articles.size);
 }
 if(process.argv[1]&&path.resolve(process.argv[1])===fileURLToPath(import.meta.url))sync().catch(e=>{console.error(e.message);process.exitCode=1;});
 

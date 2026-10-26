@@ -1,5 +1,7 @@
 export const IMPORT_TAG = '#\u0e1c\u0e25\u0e07\u0e32\u0e19PROEV';
 
+export const ARTICLE_TAG = '#บทความ';
+
 export function classifyPost(post, tag = IMPORT_TAG) {
   const text = (post.message || '').normalize('NFC');
   if (!text.trim()) return {status: 'skip', reason: 'empty'};

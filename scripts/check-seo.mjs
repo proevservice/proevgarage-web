@@ -36,10 +36,12 @@ try{
    const service=data.find(s=>s["@type"]==="Service");assert.equal(service?.provider["@id"],site+"/#business");assert.equal(service?.url,site+path);
    assert.ok(data.some(s=>s["@type"]==="BreadcrumbList"));assert.ok(data.some(s=>s["@type"]==="FAQPage"));
   }
-  if(path.startsWith("/blog/")){const article=data.find(s=>s["@type"]==="BlogPosting");assert.ok(article?.datePublished);assert.equal(article?.publisher["@id"],site+"/#business");assert.ok(data.some(s=>s["@type"]==="BreadcrumbList"));}
+  if(path.startsWith("/blog/")){const article=data.find(s=>s["@type"]==="BlogPosting");assert.ok(article?.datePublished);assert.ok(text.includes("#บทความ"));assert.ok(article?.isBasedOn?.startsWith("https://www.facebook.com/"));assert.ok(html.includes("ดูภาพที่ 2"));assert.equal(article?.publisher["@id"],site+"/#business");assert.ok(data.some(s=>s["@type"]==="BreadcrumbList"));}
   if(path.startsWith("/work/")){assert.ok(data.some(s=>s["@type"]==="Article"));assert.ok(text.includes("#ผลงานPROEV"));assert.ok(data.some(s=>s["@type"]==="BreadcrumbList"));}
  }
  for(const path of assets)assert.equal((await fetch(base+path)).status,200,"schema image "+path);
+ assert.ok(!sitemap.includes("/blog/ev-battery-degradation-signs"));
+ assert.equal((await fetch(base+"/blog/ev-battery-degradation-signs")).status,404);
  const robots=await (await fetch(base+"/robots.txt")).text();
  if(preview){assert.ok(robots.includes("Disallow: /"));assert.ok(!robots.includes("Sitemap:"));}
  else {assert.ok(robots.includes("User-Agent: OAI-SearchBot"));assert.ok(robots.includes("Allow: /"));assert.ok(robots.includes("Disallow: /designs"));assert.ok(robots.includes("Sitemap: "+site+"/sitemap.xml"));}

@@ -41,6 +41,10 @@ export interface Post {
     excerpt: string;
     thumbnail?: string;
     content: string;
+    images?: string[];
+    videoUrls?: string[];
+    sourceUrl?: string;
+    updated?: string;
 }
 
 // --- Loaders ---
@@ -107,29 +111,14 @@ export function getAllFAQs(): FAQ[] {
 }
 
 export function getAllPosts(): Post[] {
-    const dir = path.join(contentDirectory, "posts");
-    if (!fs.existsSync(dir)) return [];
-    const files = fs.readdirSync(dir).filter(f => f.endsWith(".md"));
-    return files.map(file => {
-        const fullPath = path.join(dir, file);
-        const fileContents = fs.readFileSync(fullPath, "utf8");
-        const { data, content } = matter(fileContents);
-        return {
-            slug: file.replace(".md", ""),
-            ...data,
-            content
-        } as Post;
-    }).sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+ const dir=path.join(contentDirectory,"articles");
+ if(!fs.existsSync(dir))return [];
+ return fs.readdirSync(dir).filter(file=>/^facebook-\d+_\d+\.json$/.test(file)).map(file=>{
+  const data=JSON.parse(fs.readFileSync(path.join(dir,file),"utf8"));
+  return {slug:data.slug,title:data.title,date:data.date,updated:data.updated,excerpt:data.summary,thumbnail:data.image,images:data.images||[],videoUrls:data.videoUrls||[],sourceUrl:data.sourceUrl,content:data.body} as Post;
+ }).sort((a,b)=>b.date.localeCompare(a.date));
 }
-
-export function getPostBySlug(slug: string): Post | null {
-    const fullPath = path.join(contentDirectory, "posts", `${slug}.md`);
-    if (!fs.existsSync(fullPath)) return null;
-    const fileContents = fs.readFileSync(fullPath, "utf8");
-    const { data, content } = matter(fileContents);
-    return {
-        slug,
-        ...data,
-        content
-    } as Post;
+export function getPostBySlug(slug:string):Post|null{
+ if(!/^facebook-\d+_\d+$/.test(slug))return null;
+ return getAllPosts().find(post=>post.slug===slug)||null;
 }

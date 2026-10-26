@@ -1,4 +1,4 @@
-name: Import Facebook repair posts
+name: Import Facebook work and article posts
 on:
   workflow_dispatch:
     inputs:
@@ -22,7 +22,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Sync Page repair posts
+      - name: Sync selected Page posts
         env:
           FACEBOOK_PAGE_ID: ${{ secrets.FACEBOOK_PAGE_ID }}
           FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.FACEBOOK_PAGE_ACCESS_TOKEN }}
@@ -34,16 +34,17 @@ jobs:
           name: facebook-work-preview
           path: |
             content/work
+            content/articles
             public/images/facebook
           if-no-files-found: warn
       - name: Test sync behavior
-        run: node --test scripts/facebook-tag.test.mjs scripts/facebook-sync-lifecycle.test.mjs scripts/sync-facebook.test.mjs scripts/facebook-media.test.mjs
+        run: node --test scripts/facebook-tag.test.mjs scripts/facebook-sync-lifecycle.test.mjs scripts/sync-facebook.test.mjs scripts/facebook-media.test.mjs scripts/facebook-articles.test.mjs
       - name: Commit updated content
         if: github.event_name == 'schedule' || inputs.apply == true
         run: |
           git config user.name "PRO EV content sync"
           git config user.email "content-sync@users.noreply.github.com"
-          git add content/work public/images/facebook
+          git add content/work content/articles public/images/facebook
           if ! git diff --cached --quiet; then
             git commit -m "Update repair posts from Facebook"
             git push

@@ -20,6 +20,7 @@ jobs:
         environment: [preview, production]
     env:
       VERCEL_ENV: ${{ matrix.environment }}
+      SEO_TEST_ARTICLE_FIXTURE: "true"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
@@ -27,5 +28,6 @@ jobs:
           node-version: '22'
           cache: npm
       - run: npm ci --no-audit --no-fund
+      - run: node scripts/prepare-seo-fixture.mjs
       - run: npm run build
       - run: node scripts/check-seo.mjs
