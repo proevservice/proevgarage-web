@@ -19,12 +19,12 @@ export default function DesignShell({id,settings,children,review=true}:{id:strin
   if(!href||!href.startsWith("/")||href.startsWith("//")||href.startsWith("/designs")||anchor?.target==="_blank"||anchor?.hasAttribute("download"))return;
   event.preventDefault();setOpen(false);router.push(prefix+href);
  }
- return <div className={s.theme} data-design={id} onClickCapture={handleLink}>
+ return <div className={s.theme} data-design={id} data-compact={!review&&["/contact","/booking"].includes(pathname)} onClickCapture={handleLink}>
   {review&&<div className={s.reviewBar}><Link href="/designs">ตัวเลือกดีไซน์</Link><div className={s.choices}>{designOptions.map(d=><Link aria-label={"ดูแบบ "+d.id+": "+d.name} aria-current={id===d.id?"page":undefined} key={d.id} href={"/designs/"+d.id+currentPath}>{d.id}<span> {d.name}</span></Link>)}</div><span className={s.previewLabel}>PREVIEW</span></div>}
   <header className={s.siteHeader}>
-   <Link href={prefix||"/"} className={s.logo} aria-label="PRO EV SERVICE หน้าแรก"><Image src="/images/logo.png" alt="PRO EV SERVICE" width={180} height={60} priority/></Link>
+   <a href={prefix||"/"} className={s.logo} aria-label="PRO EV SERVICE หน้าแรก"><Image src="/images/logo.png" alt="PRO EV SERVICE" width={180} height={60} priority/></a>
    <button className={s.menuButton} aria-expanded={open} aria-controls="design-navigation" onClick={()=>setOpen(!open)}>{open?"ปิดเมนู":"เมนู +"}</button>
-   <nav id="design-navigation" className={s.navigation} data-open={open}>{designNav.map(item=><Link key={item.path} href={prefix+(item.path?"/"+item.path:"")||"/"} aria-current={currentPath===(item.path?"/"+item.path:"")?"page":undefined} onClick={()=>setOpen(false)}>{item.label}</Link>)}<Link href={prefix+"/booking"} onClick={()=>setOpen(false)}>นัดหมาย</Link></nav>
+   <nav id="design-navigation" className={s.navigation} data-open={open}>{designNav.map(item=><a key={item.path} href={prefix+(item.path?"/"+item.path:"")||"/"} aria-current={currentPath===(item.path?"/"+item.path:"")?"page":undefined} onClick={()=>setOpen(false)}>{item.label}</a>)}<a href={prefix+"/booking"} onClick={()=>setOpen(false)}>นัดหมาย</a></nav>
    <a className={s.headerCall} href={"tel:"+settings.phone}>{settings.phone}</a>
    <div className={s.sidebarNote}><p>EV DIAGNOSTIC<br/>& REPAIR</p><span>ปากเกร็ด · นนทบุรี</span><span>{settings.hours}</span></div>
   </header>

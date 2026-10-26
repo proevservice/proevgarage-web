@@ -45,6 +45,22 @@ try {
   await check("/"+part);
   if(!part){await page.waitForFunction(()=>[...document.images].filter(i=>{const r=i.getBoundingClientRect();return r.width>0&&r.height>0&&r.bottom>0&&r.top<innerHeight;}).every(i=>i.complete&&i.naturalWidth>0));await page.screenshot({path:out+"/version3-home.png"});}
  }
+
+ // Exercise actual header clicks after a page transition, not just direct URLs.
+ for(const part of ["work","blog","contact","booking","services",""]){
+  const href="/"+part;
+  await page.locator('header nav a[href="'+href+'"]').click();
+  await page.waitForURL(base+href);
+  await page.locator("h1").waitFor({state:"visible"});
+ }
+ for(const size of [{width:1366,height:768},{width:1280,height:720}]){
+  await page.setViewportSize(size);
+  for(const part of ["contact","booking"]){
+   await check("/"+part);
+   assert.ok(await page.evaluate(()=>document.documentElement.scrollHeight<=innerHeight+1),"compact page fits viewport: "+part+" "+size.width);
+  }
+ }
+ await page.setViewportSize({width:1440,height:1000});
  await page.goto(base+"/services",{waitUntil:"load"});
  await page.locator("#ev-air-conditioning a[aria-label]").click();
  await page.waitForURL(new RegExp("^"+base+"/work/facebook-"));

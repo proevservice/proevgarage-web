@@ -73,3 +73,38 @@
 .contactMap>a{display:block;padding:17px 20px;color:rgb(var(--accent));font-size:13px;border-top:1px solid rgb(var(--border))}
 @media(max-width:1100px){.theme[data-design="1"] .siteHeader{gap:14px}.theme[data-design="1"] .navigation{gap:12px}.theme[data-design="1"] .navigation a{font-size:12px}}
 @media(max-width:800px){.theme[data-design="1"] .siteHeader{min-height:64px;padding:8px 0}.theme[data-design="1"] .logo{width:108px;height:48px}.theme[data-design="1"] .menuButton{min-height:44px;padding:10px 12px}.theme[data-design="1"] .navigation{gap:18px}.theme[data-design="1"] .navigation a{font-size:14px}.contactMap{min-height:360px}.contactMap iframe{min-height:310px}}
+
+/* Keep navigation above page artwork and embedded maps. */
+.siteHeader{position:relative;z-index:70}
+.compactPage{padding:24px 0 28px}
+.compactPage .pageTitle{padding-bottom:16px;margin-bottom:20px}
+.compactPage .pageTitle h1{font-size:34px;margin-bottom:6px}
+.compactPage .pageTitle .eyebrow{margin-bottom:8px}
+.compactPage .contactGrid{gap:32px}
+.compactPage .contactGrid h2{font-size:22px;margin-bottom:10px}
+.compactPage .contactGrid p{font-size:14px;line-height:1.65}
+.compactPage .contactList{margin-top:14px;gap:8px}
+.compactPage .contactList>a{padding:12px 16px;min-height:46px}
+.compactPage .addressPanel{margin-top:16px;padding:14px 16px}
+.compactPage .addressPanel h3{font-size:17px;margin-bottom:6px}
+.compactPage .addressPanel a{margin-top:8px}
+.compactPage .contactMap{min-height:330px}
+.compactPage .contactMap iframe{min-height:280px}
+.compactPage .bookingSteps{gap:12px}
+.compactPage .bookingSteps>div{padding-top:12px;gap:12px}
+.compactPage .bookingSteps h2{font-size:18px;margin-bottom:5px}
+.compactPage .bookingPanel{padding:20px 24px}
+.theme[data-compact="true"] .footer{display:block;padding:14px 4%}
+.theme[data-compact="true"] .footer>div:not(.footerBottom){display:none}
+.theme[data-compact="true"] .footerBottom{padding:0;margin:0;border:0}
+@media(min-width:801px){
+ .theme[data-compact="true"]{display:flex;flex-direction:column}
+ .theme[data-compact="true"] .siteHeader{flex-shrink:0}
+ .theme[data-compact="true"] .content{flex:1}
+}
+@media(max-width:800px){
+ .compactPage{padding:20px 0 28px}
+ .compactPage .pageTitle h1{font-size:29px}
+ .compactPage .contactGrid{gap:20px}
+ .theme[data-compact="true"] .footer{padding-bottom:96px}
+}
