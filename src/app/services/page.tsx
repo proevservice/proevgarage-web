@@ -28,15 +28,15 @@ export default function Services() {
     <Schema data={webPageSchema("บริการซ่อมรถไฟฟ้า","บริการแอร์ แบตเตอรี่ ระบบชาร์จ ระบบไฟ ช่วงล่าง และบำรุงรักษา พร้อมผลงานจริง","/services","CollectionPage")}/><header className={design.intro}>
       <Breadcrumbs items={[{ label: "บริการของเรา" }]} />
       <div className={design.introGrid}>
-        <div><p className={design.kicker}>OUR SERVICES / REAL REPAIR STORIES</p><h1>บริการของเรา<br/><span>ดูผ่านงานซ่อมจริง</span></h1></div>
-        <div><p className={design.introText}>รู้จักวิธีดูแลรถ EV ของเรา ผ่านบริการที่คุณต้องการและเรื่องราวจากรถที่เข้าซ่อมจริง พร้อมภาพและรายละเอียดให้ดูก่อนนัดหมาย</p><Link href="/work" className={s.textLink}>เปิดดูผลงานทั้งหมด ↗</Link><div className={design.overview}><span><strong>06</strong> หมวดบริการ</span><span><strong>{cases.length}</strong> เรื่องราวจากอู่</span></div></div>
+        <div><p className={design.kicker}>PRO EV SERVICE / SERVICES</p><h1>บริการซ่อมรถไฟฟ้า</h1></div>
+        <div><p className={design.introText}>เลือกบริการตามอาการรถ ดูรายละเอียดและผลงานจริงของอู่ ก่อนติดต่อทีมงานเพื่อนัดหมาย</p><Link href="/work" className={s.textLink}>เปิดดูผลงานทั้งหมด ↗</Link></div>
       </div>
       <details className={design.searchDrawer}><summary>ค้นหาบริการ อาการ รุ่นรถ หรือผลงาน</summary><ServiceSearch items={items}/></details>
     </header>
     <nav className={design.catalogNav} aria-label="เลือกหมวดบริการ">{services.map((service, i) => <a href={"#" + service.slug} key={service.slug}><small>0{i + 1}</small>{categoryLabels[i]}</a>)}</nav>
     <ServiceShowcase />
-    <section className={s.section}><div className={s.sectionHead}><div><p className={s.eyebrow}>NOT SURE WHERE TO START?</p><h2>เริ่มจากอาการที่คุณพบ</h2></div><Link href="/problems" className={s.textLink}>ดูอาการทั้งหมด ↗</Link></div><div className={s.problemGrid}>{problems.map(p => <Link className={s.problem} href={"/problems/" + p.slug} key={p.slug}>{p.title}<span>↗</span></Link>)}</div></section>
+    <details className={design.helpDrawer}><summary>ไม่แน่ใจว่าควรเลือกบริการไหน? ดูตามอาการหรือยี่ห้อรถ</summary><section className={s.section}><div className={s.sectionHead}><div><p className={s.eyebrow}>NOT SURE WHERE TO START?</p><h2>เริ่มจากอาการที่คุณพบ</h2></div><Link href="/problems" className={s.textLink}>ดูอาการทั้งหมด ↗</Link></div><div className={s.problemGrid}>{problems.map(p => <Link className={s.problem} href={"/problems/" + p.slug} key={p.slug}>{p.title}<span>↗</span></Link>)}</div></section>
     <section className={s.section}><h2>หรือเลือกตามยี่ห้อรถ</h2><VehicleLinks/></section>
-    <ContactCta />
+    </details><ContactCta />
   </div><MobileContact/></div>;
 }

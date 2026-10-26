@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import { ArrowUpRight, Check } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { services } from "@/lib/website-v3";
 import { getRepairCases } from "@/lib/repair-cases";
 import { casesForService } from "@/lib/service-work.mjs";
@@ -20,20 +20,20 @@ export function ServiceShowcase() {
           <h2 id={"service-" + service.slug}>{service.title}</h2>
           <div className={s.tags}>{service.short.split(" · ").map(tag => <span key={tag}>{tag}</span>)}</div>
           <p className={s.description}>{service.description}</p>
-          <ul className={s.checks}>{service.checks.slice(0, 2).map(check => <li key={check}><Check size={16} aria-hidden="true" /><span>{check}</span></li>)}</ul>
+          
           <div className={s.storyActions}>
-            <Link className={featured ? s.serviceLink : s.primaryLink} href={"/services/" + service.slug}>รายละเอียดบริการ <ArrowUpRight size={18} /></Link>
-            {featured && <Link className={s.primaryLink} href={"/work/" + featured.slug}>ดูเคสซ่อมจริง <ArrowUpRight size={18} /></Link>}
+            <Link className={s.primaryLink} href={"/services/" + service.slug}>รายละเอียดบริการ <ArrowUpRight size={18} /></Link>
+            {featured && <Link className={s.serviceLink} href={"/work/" + featured.slug}>ดูเคสซ่อมจริง <ArrowUpRight size={18} /></Link>}
           </div>
           {related.length > 1 && <Link className={s.moreLink} href={"/services/" + service.slug + "#related-work"}>ดูผลงานในบริการนี้ทั้งหมด {related.length} งาน →</Link>}
         </div>
         <Link className={s.storyVisual} href={destination} aria-label={featured ? "ดูผลงาน: " + featured.title : "รายละเอียด: " + service.title}>
-          <Image src={photo} alt={featured?.title || service.title} fill sizes="(max-width:800px) 100vw, 55vw" priority={index === 0} />
+          <Image src={photo} alt={featured?.title || service.title} fill quality={90} sizes="(max-width:700px) 92vw, (max-width:1280px) 44vw, 575px" priority={index === 0} />
           <div className={s.visualShade} />
           <span className={s.photoLabel}>{featured ? "ผลงานซ่อมจริงจากอู่" : "บริการของ PRO EV"}</span>
           {featured ? <div className={s.photoCaption}>
             <p className={s.photoMeta}>{featured.images?.length || 1} ภาพจากโพสต์ต้นฉบับ</p>
-            <h3>{featured.title}</h3>
+            <h3>ดูเรื่องราวและภาพงานซ่อม ↗</h3>
             <span className={s.photoArrow}><ArrowUpRight size={24} /></span>
           </div> : <span className={s.visualCorner}><ArrowUpRight size={26} /></span>}
         </Link>

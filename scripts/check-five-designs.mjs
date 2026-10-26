@@ -46,6 +46,7 @@ try {
   if(!part){await page.waitForFunction(()=>[...document.images].filter(i=>{const r=i.getBoundingClientRect();return r.width>0&&r.height>0&&r.bottom>0&&r.top<innerHeight;}).every(i=>i.complete&&i.naturalWidth>0));await page.screenshot({path:out+"/version3-home.png"});}
  }
 
+ await page.goto(base+"/",{waitUntil:"load"});
  // Exercise actual header clicks after a page transition, not just direct URLs.
  for(const part of ["work","blog","contact","booking","services",""]){
   const href="/"+part;
