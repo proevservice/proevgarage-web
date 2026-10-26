@@ -41,7 +41,23 @@ try{
  }
  for(const path of assets)assert.equal((await fetch(base+path)).status,200,"schema image "+path);
  assert.ok(!sitemap.includes("/blog/ev-battery-degradation-signs"));
- assert.equal((await fetch(base+"/blog/ev-battery-degradation-signs")).status,404);
+
+ const moves={"/blog/ev-ac-problems":"/problems/ac-not-cold","/blog/ev-battery-degradation-signs":"/problems/battery-soc","/blog/urgent-warning-signs":"/problems"};
+ for(const [oldPath,newPath] of Object.entries(moves)){
+  const response=await fetch(base+oldPath+"?utm_source=legacy&gclid=qa-test",{redirect:"manual"});
+  assert.equal(response.status,308,"permanent redirect "+oldPath);
+  const target=new URL(response.headers.get("location"),base);
+  assert.equal(target.pathname,newPath);
+  assert.equal(target.searchParams.get("utm_source"),"legacy");
+  assert.equal(target.searchParams.get("gclid"),"qa-test");
+  assert.equal((await fetch(target)).status,200,"redirect destination");
+  assert.ok(!sitemap.includes(site+oldPath),"old URL absent from sitemap");
+ }
+ for(const slug of ["daily-charging-fact","newbie-mistakes","second-hand-ev-check"]){
+  const response=await fetch(base+"/blog/"+slug);
+  assert.equal(response.status,404,"no unrelated redirect "+slug);
+  assert.ok((await response.text()).includes("ดูบทความล่าสุด"),"helpful 404");
+ }
  const robots=await (await fetch(base+"/robots.txt")).text();
  if(preview){assert.ok(robots.includes("Disallow: /"));assert.ok(!robots.includes("Sitemap:"));}
  else {assert.ok(robots.includes("User-Agent: OAI-SearchBot"));assert.ok(robots.includes("Allow: /"));assert.ok(robots.includes("Disallow: /designs"));assert.ok(robots.includes("Sitemap: "+site+"/sitemap.xml"));}

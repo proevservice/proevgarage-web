@@ -6,6 +6,13 @@ const nextConfig = {
     images: {
         formats: ['image/avif', 'image/webp'],
     },
+    async redirects() {
+        return [
+            { source: '/blog/ev-ac-problems', destination: '/problems/ac-not-cold', permanent: true },
+            { source: '/blog/ev-battery-degradation-signs', destination: '/problems/battery-soc', permanent: true },
+            { source: '/blog/urgent-warning-signs', destination: '/problems', permanent: true },
+        ];
+    },
     async headers() {
         return [
             {
