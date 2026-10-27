@@ -136,8 +136,3 @@
 .theme[data-design="1"] .cinematic{min-height:calc(100vh - 72px);min-height:calc(100svh - 72px)}
 @media(max-width:800px){.theme[data-design="1"] .cinematic{min-height:calc(100vh - 64px);min-height:calc(100svh - 64px)}}
 
-/* Facebook and Messenger share the Facebook brand blue. */
-.theme a[href]:is([href*="m.me/"],[href*="messenger.com/"],[href*="facebook.com/"]){background:#0866ff;border-color:#0866ff;color:#fff}
-.theme .footerContact a:is([href*="m.me/"],[href*="messenger.com/"],[href*="facebook.com/"]){padding:11px 16px;border-radius:var(--radius)}
-.theme a[href]:is([href*="m.me/"],[href*="messenger.com/"],[href*="facebook.com/"]) span{color:inherit}
-@media(hover:hover){.theme a[href]:is([href*="m.me/"],[href*="messenger.com/"],[href*="facebook.com/"]):hover{background:#0756d6;border-color:#0756d6;color:#fff;text-decoration:none}}
