@@ -9,7 +9,7 @@ try{
  await mkdir("output/english-qa",{recursive:true});
  browser=await chromium.launch();
  const context=await browser.newContext({locale:"en-US"});
- await context.route(/https?:\\/\\/[^/]*(googletagmanager|google-analytics|googleadservices|doubleclick|googlesyndication)\\./,route=>route.abort());
+ await context.route(/googletagmanager|google-analytics|googleadservices|doubleclick|googlesyndication/,route=>route.abort());
  const page=await context.newPage();
  await page.goto("http://localhost:3100/");
  assert.equal(new URL(page.url()).pathname,"/en");
@@ -30,7 +30,7 @@ try{
   assert.equal(await page.locator("html").getAttribute("lang"),"en",route);
   assert.equal(await page.locator("h1").count(),1,route);
   assert.equal(await page.locator('link[rel="canonical"]').getAttribute("href"),"https://www.proevgarage.com/en"+(route?"/"+route:""),route);
-  await page.locator('script#gtm-script').waitFor();assert.equal(await page.locator('script#gtm-script').count(),1,route);
+  await page.locator('script#gtm-script').waitFor({state:"attached"});assert.equal(await page.locator('script#gtm-script').count(),1,route);
   const thai=await page.locator("main").innerText();assert.ok(!/[ก-๙]/.test(thai),route+" contains Thai body copy");
   const internal=await page.locator('main a[href^="/"]').evaluateAll(elements=>elements.map(a=>a.getAttribute("href")));assert.ok(internal.every(href=>href.startsWith("/en")),route+" links out of English");
   assert.deepEqual(errors,[],route);page.off("pageerror",listener);
@@ -51,7 +51,7 @@ try{
  await page.keyboard.press("Escape");assert.equal(await page.getByRole("dialog").count(),0);
  await page.goto("http://localhost:3100/en/ev-repair");assert.equal(await page.locator("[data-lead-type]").count(),9);
  // Suppress outbound navigation and inspect the existing helper in isolation.
- await page.route("https://m.me/**",route=>route.abort());
+ await context.route("https://m.me/**",route=>route.abort());
  await page.getByRole("link",{name:"Chat with our team ↗",exact:true}).click();
  const events=await page.evaluate(()=>window.dataLayer.filter(item=>item.event==="generate_lead_message"));assert.equal(events.length,1);assert.equal(events[0].click_location,"hero");
  const thaiContext=await browser.newContext({locale:"th-TH"});const thaiPage=await thaiContext.newPage();await thaiPage.goto("http://localhost:3100/");assert.equal(new URL(thaiPage.url()).pathname,"/");
