@@ -1,4 +1,5 @@
 "use client";
+import styles from "./landing.module.css";
 import { MobileSaveContactBtn } from "@/components/MobileSaveContactBtn";
 import { useEffect, useState } from "react";
 import Image from "next/image";
@@ -45,7 +46,7 @@ export default function EvRepairLandingPage() {
     };
 
     return (
-        <div className="min-h-screen bg-bg text-text pb-24 md:pb-0">
+        <div className={`${styles.landing} min-h-screen bg-bg text-text pb-24 md:pb-0`}>
             {/* 1. HERO SECTION */}
             <section className="relative overflow-hidden
     bg-bg border-b border-border
@@ -56,8 +57,8 @@ export default function EvRepairLandingPage() {
                 {/* Background Image / Pattern */}
                 <div className="absolute inset-0 z-0">
                     <Image
-                        src="/images/hero-garage.jpg"
-                        alt="Background"
+                        src="/images/service-diagnostics.jpg"
+                        alt="งานตรวจวิเคราะห์รถไฟฟ้าที่ Pro EV Service"
                         fill
                         className="object-cover opacity-80"
                         priority
@@ -83,10 +84,10 @@ export default function EvRepairLandingPage() {
                                 ซ่อมรถไฟฟ้า EV โดยเฉพาะ <br className="hidden md:block" />
                             </h2>
                             <h3 className="mb-4 text-xl font-bold leading-tight tracking-tight text-accent sm:text-2xl lg:text-3xl">
-                                จบปัญหาระบบไฟ-แอร์-ช่วงล่าง ด้วยมาตรฐานความปลอดภัยสูงสุด
+                                ตรวจวิเคราะห์ก่อนซ่อม แจ้งรายการและค่าใช้จ่ายก่อนเริ่มงาน
                             </h3>
                             <p className="mb-8 text-lg text-muted md:text-xl md:max-w-2xl font-light">
-                                ศูนย์บริการเฉพาะทาง EV แห่งแรกในปากเกร็ด วิเคราะห์ปัญหาด้วย Software ตรงรุ่น เช็คค่า SOH แบตเตอรี่แรงดันสูงละเอียดทุก Cell ไม่เปลี่ยนอะไหล่มั่ว
+                                บริการตรวจเช็กและซ่อมรถยนต์ไฟฟ้าในปากเกร็ด แจ้งอาการและรุ่นรถเพื่อให้ทีมงานประเมินแนวทางตรวจสอบ ก่อนตกลงขอบเขตงานซ่อม
                             </p>
 
 
@@ -95,6 +96,7 @@ export default function EvRepairLandingPage() {
                                     href={LINKS.FB_MESSENGER}
                                     target="_blank"
                                     rel="noopener noreferrer"
+                                    data-lead-type="facebook_chat" data-lead-location="hero"
                                     onClick={() => handleConversion("facebook_chat", "hero")}
                                     className="group flex items-center justify-center gap-3 rounded-full bg-[#0084FF]/10 border border-[#0084FF]/70 px-6 py-4 text-lg font-bold text-white shadow-lg transition-all hover:bg-[#0073e6] hover:border-transparent hover:scale-105 active:scale-95 sm:bg-[#0084FF] sm:border-none"
                                 >
@@ -103,6 +105,7 @@ export default function EvRepairLandingPage() {
                                 </a>
                                 <a
                                     href={`tel:${LINKS.PHONE}`}
+                                    data-lead-type="phone_call" data-lead-location="hero"
                                     onClick={() => handleConversion("phone_call", "hero")}
                                     className="flex items-center justify-center gap-3 rounded-full border border-border bg-white/5 px-6 py-4 text-lg font-bold text-white backdrop-blur-sm transition-all hover:bg-white/10 hover:border-accent hover:scale-105 active:scale-95"
                                 >
@@ -116,7 +119,7 @@ export default function EvRepairLandingPage() {
                             <div className="flex flex-col sm:flex-row items-center justify-center gap-6 text-sm text-muted md:justify-start">
                                 <div className="flex items-center">
                                     <CheckCircle2 className="mr-1.5 h-4 w-4 text-accent" />
-                                    รับประกันงานซ่อม
+                                    สอบถามเงื่อนไขงานซ่อม
                                 </div>
                                 <div className="flex items-center">
                                     <CheckCircle2 className="mr-1.5 h-4 w-4 text-accent" />
@@ -172,7 +175,7 @@ export default function EvRepairLandingPage() {
                                     </div>
                                     <div>
                                         <h4 className="text-lg font-bold text-text mb-2">เชี่ยวชาญระบบ HV Battery & Safety</h4>
-                                        <p className="text-muted leading-relaxed">ช่างผ่านการอบรม Safety Level 3 สำหรับงานซ่อมระบบไฟแรงดันสูง 400V-800V เข้าใจโครงสร้างแบตเตอรี่และระบบ Inverter</p>
+                                        <p className="text-muted leading-relaxed">งานระบบไฟแรงดันสูงต้องตรวจประเมินตามรุ่นรถและอาการ กรุณาสอบถามทีมงานถึงขอบเขตบริการก่อนนัดหมาย</p>
                                     </div>
                                 </div>
                                 <div className="flex">
@@ -236,7 +239,7 @@ export default function EvRepairLandingPage() {
                                 "เปลี่ยนบูชปีกนก / ลูกหมาก",
                                 "เปลี่ยนโช๊คอัพ / สปริง",
                                 "เจียรจานเบรค / เปลี่ยนผ้าเบรค",
-                                "ตั้งศูนย์ล้อ 3D"
+                                "ตรวจเช็กระบบช่วงล่าง"
                             ]}
                         />
                         <ServiceCard
@@ -286,7 +289,8 @@ export default function EvRepairLandingPage() {
                             href="https://www.facebook.com/proevservice"
                             target="_blank"
                             rel="noopener noreferrer"
-                            onClick={() => handleConversion("facebook_chat", "cases_cta")}
+                            data-lead-type="facebook_chat" data-lead-location="cases_cta"
+                                    onClick={() => handleConversion("facebook_chat", "cases_cta")}
                             className="inline-flex items-center gap-2 rounded-full border border-[#0084FF] px-6 py-3 font-bold text-text hover:bg-surface hover:border-accent transition-colors"
                         >
                             <MessageCircle className="h-5 w-5 text-[#0084FF]" />
@@ -301,7 +305,7 @@ export default function EvRepairLandingPage() {
                 <div className="container px-4 text-center">
                     <h2 className="mb-6 text-3xl font-extrabold md:text-5xl">พร้อมจบปัญหารถ EV ของคุณวันนี้</h2>
                     <p className="mb-10 text-muted max-w-2xl mx-auto text-lg">
-                        เรารับประกันความพึงพอใจ ปรึกษาอาการเสียได้ฟรี ไม่ซ่อมไม่ว่ากัน
+                        แจ้งอาการเสียเพื่อสอบถามแนวทางตรวจเช็ก ค่าใช้จ่าย และเงื่อนไขบริการก่อนนัดหมาย
                     </p>
 
                     <div className="flex flex-col items-center justify-center gap-4 sm:flex-row mb-16">
@@ -309,7 +313,8 @@ export default function EvRepairLandingPage() {
                             href={LINKS.FB_MESSENGER}
                             target="_blank"
                             rel="noopener noreferrer"
-                            onClick={() => handleConversion("facebook_chat", "final_cta")}
+                            data-lead-type="facebook_chat" data-lead-location="final_cta"
+                                    onClick={() => handleConversion("facebook_chat", "final_cta")}
                             className="group w-full sm:w-auto flex h-14 items-center justify-center rounded-full bg-[#0084FF] px-8 text-lg font-bold text-white hover:bg-[#0073e6] shadow-lg hover:shadow-xl hover:scale-105 transition-all"
                         >
                             <MessageCircle className="mr-2 h-6 w-6" />
@@ -319,7 +324,8 @@ export default function EvRepairLandingPage() {
                             href={LINKS.LINE}
                             target="_blank"
                             rel="noopener noreferrer"
-                            onClick={() => handleConversion("line_chat", "final_cta")}
+                            data-lead-type="line_chat" data-lead-location="final_cta"
+                                    onClick={() => handleConversion("line_chat", "final_cta")}
                             className="w-full sm:w-auto flex h-14 items-center justify-center rounded-full bg-[#06C755] px-8 text-lg font-bold text-white hover:bg-[#05b34c] shadow-lg hover:shadow-xl hover:scale-105 transition-all"
                         >
                             <div className="mr-2 flex h-6 w-6 items-center justify-center rounded bg-white text-[10px] text-[#06C755] font-black">L</div>
@@ -342,7 +348,8 @@ export default function EvRepairLandingPage() {
                             href="https://maps.app.goo.gl/h21RDsTBUFH5fH9z7"
                             target="_blank"
                             rel="noopener noreferrer"
-                            onClick={() => handleConversion("navigation", "footer_map")}
+                            data-lead-type="navigation" data-lead-location="footer_map"
+                                    onClick={() => handleConversion("navigation", "footer_map")}
                             className="inline-flex items-center justify-center rounded-xl border border-border bg-card px-8 py-4 font-bold text-text hover:bg-surface hover:border-text transition-colors"
                         >
                             ดูแผนที่ร้าน
@@ -361,7 +368,8 @@ export default function EvRepairLandingPage() {
                         href={LINKS.FB_MESSENGER}
                         target="_blank"
                         rel="noopener noreferrer"
-                        onClick={() => handleConversion("facebook_chat", "sticky_bar")}
+                        data-lead-type="facebook_chat" data-lead-location="sticky_bar"
+                                    onClick={() => handleConversion("facebook_chat", "sticky_bar")}
                         className="flex flex-col items-center justify-center border-r border-border hover:bg-bg active:bg-blue-50/50"
                     >
                         <MessageCircle className="mb-1 h-6 w-6 text-[#0084FF]" />
@@ -371,7 +379,8 @@ export default function EvRepairLandingPage() {
                         href={LINKS.LINE}
                         target="_blank"
                         rel="noopener noreferrer"
-                        onClick={() => handleConversion("line_chat", "sticky_bar")}
+                        data-lead-type="line_chat" data-lead-location="sticky_bar"
+                                    onClick={() => handleConversion("line_chat", "sticky_bar")}
                         className="flex flex-col items-center justify-center border-r border-border hover:bg-bg active:bg-green-50/50"
                     >
                         <div className="mb-1 flex h-6 w-6 items-center justify-center rounded bg-[#06C755] text-white shadow-sm">
@@ -381,7 +390,8 @@ export default function EvRepairLandingPage() {
                     </a>
                     <a
                         href={`tel:${LINKS.PHONE}`}
-                        onClick={() => handleConversion("phone_call", "sticky_bar")}
+                        data-lead-type="phone_call" data-lead-location="sticky_bar"
+                                    onClick={() => handleConversion("phone_call", "sticky_bar")}
                         className="flex flex-col items-center justify-center hover:bg-bg active:bg-gray-100/50"
                     >
                         <Phone className="mb-1 h-6 w-6 text-text" />

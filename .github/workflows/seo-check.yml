@@ -1,0 +1,33 @@
+name: Validate SEO and answer content
+on:
+  push:
+    branches: [codex/website-version3, main]
+    paths:
+      - 'src/**'
+      - 'content/**'
+      - 'scripts/check-seo.mjs'
+      - '.github/workflows/seo-check.yml'
+permissions:
+  contents: read
+concurrency:
+  group: seo-${{ github.ref }}
+  cancel-in-progress: true
+jobs:
+  search-contract:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        environment: [preview, production]
+    env:
+      VERCEL_ENV: ${{ matrix.environment }}
+      SEO_TEST_ARTICLE_FIXTURE: "true"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: node scripts/prepare-seo-fixture.mjs
+      - run: npm run build
+      - run: node scripts/check-seo.mjs

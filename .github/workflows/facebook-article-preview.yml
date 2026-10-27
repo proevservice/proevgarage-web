@@ -1,0 +1,55 @@
+name: Import selected Page articles for review
+on:
+  push:
+    branches: [codex/website-version3]
+    paths:
+      - 'scripts/sync-facebook.mjs'
+      - 'scripts/facebook-tag.mjs'
+      - '.github/workflows/facebook-article-preview.yml'
+permissions:
+  contents: write
+concurrency:
+  group: facebook-sync
+  cancel-in-progress: false
+jobs:
+  preview-import:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: codex/website-version3
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Test both content selections before import
+        run: node --test scripts/facebook-tag.test.mjs scripts/facebook-sync-lifecycle.test.mjs scripts/sync-facebook.test.mjs scripts/facebook-media.test.mjs scripts/facebook-articles.test.mjs scripts/facebook-auth.test.mjs
+      - name: Check existing Page credentials
+        id: credentials
+        env:
+          PAGE_TOKEN: ${{ secrets.FACEBOOK_PAGE_ACCESS_TOKEN }}
+          PAGE_ID: ${{ secrets.FACEBOOK_PAGE_ID }}
+          GRAPH_VERSION: ${{ vars.FACEBOOK_GRAPH_VERSION }}
+        run: |
+          if [ -n "$PAGE_TOKEN" ] && [ -n "$PAGE_ID" ] && [ -n "$GRAPH_VERSION" ]; then
+            echo "available=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "available=false" >> "$GITHUB_OUTPUT"
+            echo "Import skipped: Page credentials or Graph version are not configured." >> "$GITHUB_STEP_SUMMARY"
+          fi
+      - name: Import tagged work and articles
+        if: steps.credentials.outputs.available == 'true'
+        env:
+          FACEBOOK_PAGE_ID: ${{ secrets.FACEBOOK_PAGE_ID }}
+          FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.FACEBOOK_PAGE_ACCESS_TOKEN }}
+          FACEBOOK_GRAPH_VERSION: ${{ vars.FACEBOOK_GRAPH_VERSION }}
+        run: node scripts/sync-facebook.mjs
+      - name: Save selected Page content to review branch
+        if: steps.credentials.outputs.available == 'true'
+        run: |
+          git config user.name "PRO EV content sync"
+          git config user.email "content-sync@users.noreply.github.com"
+          git add content/work content/articles public/images/facebook
+          if ! git diff --cached --quiet; then
+            git commit -m "Refresh selected Facebook work and articles"
+            git push origin HEAD:codex/website-version3
+          fi

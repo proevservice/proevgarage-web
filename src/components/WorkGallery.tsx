@@ -1,14 +1,17 @@
 "use client";
-import {useEffect,useState} from "react";
+import {useEffect,useState,useRef} from "react";
 import styles from "./work.module.css";
 export default function WorkGallery({images,title}:{images:string[];title:string}){
+ const dialogRef=useRef<HTMLDivElement>(null);
+ const openerRef=useRef<HTMLButtonElement|null>(null);
+ function openPhoto(index:number,button:HTMLButtonElement){openerRef.current=button;setActive(index);setOpen(true);}
  const [active,setActive]=useState(0);const [open,setOpen]=useState(false);
- useEffect(()=>{if(!open)return;const onKey=(e:KeyboardEvent)=>{if(e.key==='Escape')setOpen(false);if(e.key==='ArrowRight')setActive(a=>(a+1)%images.length);if(e.key==='ArrowLeft')setActive(a=>(a-1+images.length)%images.length);};window.addEventListener('keydown',onKey);const before=document.body.style.overflow;document.body.style.overflow='hidden';return()=>{window.removeEventListener('keydown',onKey);document.body.style.overflow=before;};},[open,images.length]);
+ useEffect(()=>{if(!open)return;const onKey=(e:KeyboardEvent)=>{if(e.key==='Tab'){const buttons=dialogRef.current?.querySelectorAll<HTMLButtonElement>('button:not([disabled])');if(buttons?.length){const first=buttons[0],last=buttons[buttons.length-1];if(e.shiftKey&&(document.activeElement===first||!dialogRef.current?.contains(document.activeElement))){e.preventDefault();last.focus();}else if(!e.shiftKey&&(document.activeElement===last||!dialogRef.current?.contains(document.activeElement))){e.preventDefault();first.focus();}}}if(e.key==='Escape')setOpen(false);if(e.key==='ArrowRight')setActive(a=>(a+1)%images.length);if(e.key==='ArrowLeft')setActive(a=>(a-1+images.length)%images.length);};window.addEventListener('keydown',onKey);const before=document.body.style.overflow;const beforePadding=document.body.style.paddingRight;const gap=window.innerWidth-document.documentElement.clientWidth;if(gap>0)document.body.style.paddingRight=(parseFloat(getComputedStyle(document.body).paddingRight)+gap)+'px';document.body.style.overflow='hidden';return()=>{window.removeEventListener('keydown',onKey);document.body.style.overflow=before;document.body.style.paddingRight=beforePadding;openerRef.current?.focus({preventScroll:true});};},[open,images.length]);
  if(!images.length)return null;
- return <section aria-label="รูปภาพทั้งหมดของงานซ่อม" className={styles.gallery}>
-  <button className={styles.mainPhoto} onClick={()=>setOpen(true)} aria-label="ขยายรูปภาพ"><img src={images[active]} alt={`${title} ภาพที่ ${active+1}`} /><span className={styles.photoCount}>{active+1} / {images.length} · ขยายภาพ ↗</span></button>
-  <div className={styles.thumbs}>{images.map((src,i)=><button key={src} onClick={()=>setActive(i)} aria-label={`ดูภาพที่ ${i+1}`} aria-pressed={active===i} className={active===i?styles.selected:''}><img loading="lazy" src={src} alt={`ภาพงานซ่อม ${i+1}`}/></button>)}</div>
+ return <section aria-label="รูปภาพทั้งหมดจากโพสต์" className={styles.gallery}>
+  <button ref={openerRef} className={styles.mainPhoto} onClick={event=>openPhoto(0,event.currentTarget)} aria-label="ขยายรูปภาพ"><img src={images[0]} alt={`${title} ภาพที่ 1`} /><span className={styles.photoCount}>ดูรูปทั้งหมด {images.length} ภาพ ↗</span></button>
+  <div className={styles.thumbs}>{images.map((src,i)=><button key={src} onClick={event=>openPhoto(i,event.currentTarget)} aria-label={`ดูภาพที่ ${i+1}`} aria-pressed={active===i} className={active===i?styles.selected:''}><img loading="lazy" src={src} alt={`ภาพจากโพสต์ ${i+1}`}/></button>)}</div>
   <p className={styles.hint}>รูปภาพจากโพสต์ต้นฉบับ · {images.length} ภาพ</p>
-  {open&&<div role="dialog" aria-modal="true" aria-label="ภาพงานซ่อมขนาดใหญ่" className={styles.lightbox}><button autoFocus className={styles.close} onClick={()=>setOpen(false)}>ปิด ✕</button><button className={styles.previous} aria-label="ภาพก่อนหน้า" onClick={()=>setActive((active-1+images.length)%images.length)}>‹</button><img src={images[active]} alt={`${title} ภาพที่ ${active+1}`}/><button className={styles.next} aria-label="ภาพถัดไป" onClick={()=>setActive((active+1)%images.length)}>›</button><span>{active+1} / {images.length}</span></div>}
+  {open&&<div ref={dialogRef} role="dialog" aria-modal="true" aria-label="รูปภาพขนาดใหญ่" className={styles.lightbox}><button autoFocus className={styles.close} onClick={()=>setOpen(false)}>ปิด ✕</button><button className={styles.previous} aria-label="ภาพก่อนหน้า" onClick={()=>setActive((active-1+images.length)%images.length)}>‹</button><img src={images[active]} alt={`${title} ภาพที่ ${active+1}`}/><button className={styles.next} aria-label="ภาพถัดไป" onClick={()=>setActive((active+1)%images.length)}>›</button><span>{active+1} / {images.length}</span></div>}
  </section>;
 }

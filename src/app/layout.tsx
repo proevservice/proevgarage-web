@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Prompt } from "next/font/google";
 import "./globals.css";
+import SiteFrame from "@/components/SiteFrame";
 import { Navbar } from "@/components/Navbar";
 import { Footer } from "@/components/Footer";
 //import { CtaBar } from "@/components/CtaBar";
@@ -16,19 +17,20 @@ const prompt = Prompt({
 });
 
 export const metadata: Metadata = {
+    metadataBase: new URL("https://www.proevgarage.com"),
     title: "Pro EV Service ซ่อมรถไฟฟ้า Neta BYD MG - แอร์ แบตเตอรี่ ช่วงล่าง (ปากเกร็ด)",
-    description: "ศูนย์ซ่อมรถไฟฟ้าครบวงจร ปากเกร็ด นนทบุรี. เชี่ยวชาญระบบแอร์ EV แบตเตอรี่ High Voltage ระบบไฟโชว์ ช่วงล่าง. ซ่อมโดยช่างเทคนิคเฉพาะทาง เครื่องมือวิเคราะห์ตรงรุ่น. โทร 098-979-4116",
+    description: "อู่ซ่อมรถไฟฟ้า ปากเกร็ด นนทบุรี ตรวจระบบแอร์ แบตเตอรี่ BCU/BMS ระบบชาร์จ ระบบไฟ และช่วงล่าง พร้อมผลงานซ่อมจริงและข้อมูลนัดหมาย โทร 098-9794116",
     keywords: ["ซ่อมรถไฟฟ้า", "อู่ซ่อม EV", "ซ่อมแอร์รถไฟฟ้า", "ซ่อมแบตเตอรี่ EV", "Neta V", "BYD Atto 3", "MG ZS EV", "ปากเกร็ด", "นนทบุรี"],
     robots: {
-        index: true,
-        follow: true,
+        index: process.env.VERCEL_ENV !== "preview",
+        follow: process.env.VERCEL_ENV !== "preview",
     },
     openGraph: {
         type: "website",
         locale: "th_TH",
-        url: "https://proevgarage.com",
+        url: "https://www.proevgarage.com",
         title: "Pro EV Service ซ่อมรถไฟฟ้า ปากเกร็ด - แอร์ แบต ช่วงล่าง",
-        description: "จบทุกปัญหารถไฟฟ้า แอร์ไม่เย็น แบตเตอรี่มีปัญหา ช่วงล่างดัง. วิเคราะห์ตรงจุดด้วยเครื่องมือมาตรฐาน. รับประกันงานซ่อม.",
+        description: "ตรวจวิเคราะห์และซ่อมรถไฟฟ้า แอร์ แบตเตอรี่ ระบบชาร์จ ระบบไฟ และช่วงล่าง ดูผลงานจริงและนัดหมายเข้าตรวจที่ Pro EV Service ปากเกร็ด",
         siteName: "Pro EV Service",
         images: ["/images/hero-garage.jpg"],
     },
@@ -49,11 +51,9 @@ export default function RootLayout({
             </head>
             <body className="flex min-h-screen flex-col font-sans antialiased text-text bg-bg">
                 <GoogleTagManagerNoScript />
-                <Navbar />
-                <main className="flex-1 w-full">
+                <SiteFrame settings={settings} legacyHeader={<Navbar />} legacyFooter={<Footer />}>
                     {children}
-                </main>
-                <Footer />
+                </SiteFrame>
                 {/* <CtaBar
           fbLink={settings.facebook}
           messengerLink={settings.messenger}

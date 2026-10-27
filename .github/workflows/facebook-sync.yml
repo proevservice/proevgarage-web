@@ -1,9 +1,9 @@
-name: Sync Facebook content to Version 3 preview
+name: Sync Facebook content
 on:
   workflow_dispatch:
     inputs:
       apply:
-        description: Update Version 3 preview content
+        description: Commit content to the branch running this workflow
         type: boolean
         default: false
   schedule:
@@ -14,17 +14,18 @@ concurrency:
   group: facebook-sync
   cancel-in-progress: false
 jobs:
-  sync-preview:
+  sync:
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/codex/website-version3'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
       - uses: actions/checkout@v4
         with:
-          ref: codex/website-version3
+          ref: ${{ github.ref_name }}
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - name: Test preview importer
+      - name: Test content importer
         run: node --test scripts/facebook-tag.test.mjs scripts/facebook-sync-lifecycle.test.mjs scripts/sync-facebook.test.mjs scripts/facebook-media.test.mjs scripts/facebook-articles.test.mjs scripts/facebook-auth.test.mjs
       - name: Import tagged work and articles
         env:
@@ -32,7 +33,7 @@ jobs:
           FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.FACEBOOK_PAGE_ACCESS_TOKEN }}
           FACEBOOK_GRAPH_VERSION: ${{ vars.FACEBOOK_GRAPH_VERSION }}
         run: node scripts/sync-facebook.mjs
-      - name: Update Version 3 preview only
+      - name: Update the checked-out branch
         if: github.event_name == 'schedule' || inputs.apply == true
         run: |
           git config user.name "PRO EV content sync"
@@ -40,5 +41,5 @@ jobs:
           git add content/work content/articles public/images/facebook
           if ! git diff --cached --quiet; then
             git commit -m "Refresh selected Facebook work and articles"
-            git push origin HEAD:codex/website-version3
+            git push origin "HEAD:${GITHUB_REF_NAME}"
           fi

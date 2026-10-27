@@ -1,0 +1,45 @@
+{
+  "results": [
+    {
+      "design": 1,
+      "name": "Signature",
+      "pages": "8 desktop / 4 mobile",
+      "navigation": true,
+      "galleryPhotos": 9,
+      "conversionLinks": "unchanged"
+    },
+    {
+      "design": 2,
+      "name": "Precision",
+      "pages": "8 desktop / 4 mobile",
+      "navigation": true,
+      "galleryPhotos": 9,
+      "conversionLinks": "unchanged"
+    },
+    {
+      "design": 3,
+      "name": "Workshop Journal",
+      "pages": "8 desktop / 4 mobile",
+      "navigation": true,
+      "galleryPhotos": 9,
+      "conversionLinks": "unchanged"
+    },
+    {
+      "design": 4,
+      "name": "Private Garage",
+      "pages": "8 desktop / 4 mobile",
+      "navigation": true,
+      "galleryPhotos": 9,
+      "conversionLinks": "unchanged"
+    },
+    {
+      "design": 5,
+      "name": "Service Desk",
+      "pages": "8 desktop / 4 mobile",
+      "navigation": true,
+      "galleryPhotos": 9,
+      "conversionLinks": "unchanged"
+    }
+  ],
+  "browserErrors": []
+}

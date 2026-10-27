@@ -1,84 +1,42 @@
-import { getAllLegacyServices, getSettings } from "@/lib/site";
-import { MessageCircle, ArrowRight } from "lucide-react";
+import type { Metadata } from "next";
 import Link from "next/link";
+import { services, problems, vehicles, SITE_URL } from "@/lib/website-v3";
+import { ServiceShowcase } from "@/components/ServiceShowcase";
+import { getRepairCases } from "@/lib/repair-cases";
+import { Schema, Breadcrumbs, VehicleLinks, ContactCta, MobileContact } from "@/components/WebsiteV3";
+import {webPageSchema} from "@/lib/seo";
+import ServiceSearch from "@/components/ServiceSearch";
+import s from "@/components/v3.module.css";
+import design from "@/components/service-stories.module.css";
 
-import * as LucideIcons from "lucide-react";
+export const metadata: Metadata = {
+  title: "บริการซ่อมรถไฟฟ้า แอร์ แบตเตอรี่ ระบบชาร์จ | Pro EV Service",
+  description: "รู้จักบริการของ Pro EV Service ผ่านภาพงานซ่อมจริง แอร์ EV แบตเตอรี่ ระบบชาร์จ ระบบไฟ ช่วงล่าง และเช็กระยะ",
+  alternates: { canonical: SITE_URL + "/services" }
+};
+const categoryLabels = ["แอร์รถไฟฟ้า", "แบตเตอรี่ / BMS", "ระบบชาร์จ", "ระบบไฟ / ไฟเตือน", "ช่วงล่าง", "เช็กระยะ / 12V"];
 
-export default function ServicesPage() {
-    const settings = getSettings();
-    const services = getAllLegacyServices(); // using legacy loader to get MD content
-
-    return (
-        <div className="bg-bg min-h-screen pb-20">
-            {/* Header */}
-            <div className="bg-surface pt-24 pb-16 text-center text-text border-b border-border shadow-sm">
-                <h1 className="mb-4 text-3xl font-bold md:text-4xl">บริการของเรา</h1>
-                <p className="text-muted">ดูแลรถไฟฟ้าของคุณด้วยมาตรฐานมืออาชีพ</p>
-            </div>
-
-            <div className="container px-4 py-12">
-                <div className="space-y-16">
-                    {services.map((service: any, index: number) => {
-                        const Icon = (LucideIcons as any)[service.icon] || LucideIcons.Wrench;
-                        const isEven = index % 2 === 0;
-
-                        return (
-                            <div key={index} className={`flex flex-col gap-8 lg:items-center ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'}`}>
-                                {/* Content */}
-                                <div className="flex-1 space-y-6">
-                                    <div className="inline-flex h-14 w-14 items-center justify-center rounded-xl bg-card border border-border text-accent shadow-lg shadow-accent/10">
-                                        <Icon className="h-7 w-7" />
-                                    </div>
-                                    <h2 className="text-3xl font-bold text-text">{service.title}</h2>
-                                    <div className="prose prose-lg dark:prose-invert text-muted">
-                                        {service.content}
-                                    </div>
-
-                                    {/* Mini Q&A if present */}
-                                    {service.qna && service.qna.length > 0 && (
-                                        <div className="mt-6 rounded-xl border border-border bg-card p-6">
-                                            <h4 className="mb-4 font-bold text-accent">คำถามที่พบบ่อย</h4>
-                                            <div className="space-y-4">
-                                                {service.qna.map((qa: any, qIdx: number) => (
-                                                    <div key={qIdx}>
-                                                        <p className="font-semibold text-text text-sm">Q: {qa.question}</p>
-                                                        <p className="text-sm text-muted">A: {qa.answer}</p>
-                                                    </div>
-                                                ))}
-                                            </div>
-                                        </div>
-                                    )}
-
-                                    <div className="pt-4">
-                                        <Link
-                                            href={settings.facebook}
-                                            target="_blank"
-                                            className="inline-flex items-center justify-center rounded-full border border-accent/50 px-6 py-3 text-accent transition-all hover:bg-accent hover:text-white active:scale-95 text-base font-bold"
-                                        >
-                                            จองคิวซ่อมรายการนี้
-                                        </Link>
-                                    </div>
-                                </div>
-
-                                {/* Image Placeholder */}
-                                <div className="flex-1">
-                                    <div className="aspect-video w-full overflow-hidden rounded-2xl bg-card border border-border shadow-2xl">
-                                        <div className="flex h-full w-full items-center justify-center text-muted">
-                                            {service.image ? (
-                                                // Ideally use next/image but for external/cms images simple img is safer if domains not optimized
-                                                // eslint-disable-next-line @next/next/no-img-element
-                                                <img src={service.image} alt={service.title} className="h-full w-full object-cover" />
-                                            ) : (
-                                                <span>รูปภาพ {service.title}</span>
-                                            )}
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        )
-                    })}
-                </div>
-            </div>
-        </div>
-    );
+export default function Services() {
+  const cases = getRepairCases();
+  const items = [
+    ...services.map(i => ({ title: i.title, href: "/services/" + i.slug, type: "บริการ", keywords: i.short + " " + i.keywords.join(" ") })),
+    ...problems.map(i => ({ title: i.title, href: "/problems/" + i.slug, type: "อาการ", keywords: i.intro })),
+    ...vehicles.map(i => ({ title: i.name, href: "/vehicles/" + i.slug, type: "ยี่ห้อรถ", keywords: i.models.join(" ") })),
+    ...cases.map(i => ({ title: i.title, href: "/work/" + i.slug, type: "ผลงานจริง", keywords: i.model + " " + i.title }))
+  ];
+  return <div className={s.page}><div className={s.wrap}>
+    <Schema data={webPageSchema("บริการซ่อมรถไฟฟ้า","บริการแอร์ แบตเตอรี่ ระบบชาร์จ ระบบไฟ ช่วงล่าง และบำรุงรักษา พร้อมผลงานจริง","/services","CollectionPage")}/><header className={design.intro}>
+      <Breadcrumbs items={[{ label: "บริการของเรา" }]} />
+      <div className={design.introGrid}>
+        <div><p className={design.kicker}>PRO EV SERVICE / SERVICES</p><h1>บริการซ่อมรถไฟฟ้า</h1></div>
+        <div><p className={design.introText}>เลือกบริการตามอาการรถ ดูรายละเอียดและผลงานจริงของอู่ ก่อนติดต่อทีมงานเพื่อนัดหมาย</p><Link href="/work" className={s.textLink}>เปิดดูผลงานทั้งหมด ↗</Link></div>
+      </div>
+      <details className={design.searchDrawer}><summary>ค้นหาบริการ อาการ รุ่นรถ หรือผลงาน</summary><ServiceSearch items={items}/></details>
+    </header>
+    <nav className={design.catalogNav} aria-label="เลือกหมวดบริการ">{services.map((service, i) => <a href={"#" + service.slug} key={service.slug}><small>0{i + 1}</small>{categoryLabels[i]}</a>)}</nav>
+    <ServiceShowcase />
+    <details className={design.helpDrawer}><summary>ไม่แน่ใจว่าควรเลือกบริการไหน? ดูตามอาการหรือยี่ห้อรถ</summary><section className={s.section}><div className={s.sectionHead}><div><p className={s.eyebrow}>NOT SURE WHERE TO START?</p><h2>เริ่มจากอาการที่คุณพบ</h2></div><Link href="/problems" className={s.textLink}>ดูอาการทั้งหมด ↗</Link></div><div className={s.problemGrid}>{problems.map(p => <Link className={s.problem} href={"/problems/" + p.slug} key={p.slug}>{p.title}<span>↗</span></Link>)}</div></section>
+    <section className={s.section}><h2>หรือเลือกตามยี่ห้อรถ</h2><VehicleLinks/></section>
+    </details><ContactCta />
+  </div><MobileContact/></div>;
 }

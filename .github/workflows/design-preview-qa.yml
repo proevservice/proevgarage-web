@@ -1,0 +1,42 @@
+name: Validate five website designs
+on:
+  push:
+    branches: [codex/website-version3]
+    paths:
+      - 'src/**'
+      - 'scripts/check-five-designs.mjs'
+      - '.github/workflows/design-preview-qa.yml'
+permissions:
+  contents: write
+jobs:
+  browser-review:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci --no-audit --no-fund
+      - run: npm run build
+        env:
+          VERCEL_ENV: preview
+      - run: npm install --no-save --package-lock=false playwright@1.56.1 sharp --no-audit --no-fund
+      - run: npx playwright install --with-deps chromium
+      - run: node scripts/check-five-designs.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: proev-five-design-review
+          path: public/design-previews
+          if-no-files-found: warn
+      - name: Save verified screenshots for owner review
+        run: |
+          git config user.name "proevservice"
+          git config user.email "254152759+proevservice@users.noreply.github.com"
+          git add public/design-previews
+          if ! git diff --cached --quiet; then
+            git commit -m "Save verified previews of five website design options"
+            git push origin HEAD:codex/website-version3
+          fi
