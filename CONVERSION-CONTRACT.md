@@ -41,5 +41,13 @@ Read-only inspection of the account's All conversions table, date range 27 Septe
 These action names differ from the GTM tag names. On 2026-10-27, the Facebook action's Google Tag Manager installation panel showed conversion ID 17771461581 and label pPgsCNC1yekbEM33i5pC, matching the previously inspected GTM Facebook tag. Facebook mapping is confirmed; Call and LINE labels still need matching. Historical counts do not prove receipt or attribution of an individual debug click. Fractional counts are reported as displayed; Facebook details show data-driven attribution over Google paid channels; Call and LINE attribution settings have not been inspected. No conversion, campaign, budget or bidding settings were changed.
 Facebook one-click test was attempted again, but tool session reset removed access to its result; it remains unverified.
 
+## Preview environment correction — 2026-10-27 (Asia/Bangkok)
+- Vercel originally had NEXT_PUBLIC_GTM_ID scoped only to Production. Added a separate Preview config value GTM-P7WNQQNH; the existing Production variable was left unchanged.
+- Owner completed Vercel reauthentication. Preview redeployment dpl_EwYNdnpVWDPLQJd6xdMLsGhrL6GK reached Ready, from source 892ea64313e96c00dca62cc7c0c4f21b506bfc89.
+- Verified the branch Preview /ev-repair DOM contains one GTM loader for GTM-P7WNQQNH and Google tag scripts for G-1LMMEQBSJY and AW-17771461581.
+- Tag Assistant connected to the Preview and showed Conversion Linker and both Google tags each firing once on the observed page load. No successful contact conversion click has yet been observed for this Preview session.
+- The connected popup is not exposed as a controllable browser tab. Do not substitute clicks in an unrelated tab as proof of debug results.
+- SiteFrame now explicitly restores legacyHeader/legacyFooter on /ev-repair and /ev-repair/; the repaired Preview visibly renders these components.
+
 ## Release gate still open
 Successful tag execution is not proof of Google Ads receipt, counting or attribution. Facebook firing/deduplication and Google Ads diagnostics remain outstanding. Browser session loss is not evidence of a website code defect. Do not add duplicate tracking snippets or merge/publish based on source compatibility alone.
