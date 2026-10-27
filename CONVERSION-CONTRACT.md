@@ -33,5 +33,13 @@ The /ev-repair advertising landing route is retained. Its copy and diagnostic da
 - Source comparison against main confirms identical tracking utility and GTM loader, identical landing LINKS values and nine matching conversion handlers; no preventDefault or stopPropagation was added to the landing page.
 - The controllable website tab displayed Tag Assistant Not Connected while Tag Assistant reported a connected window. Do not count clicks from that disconnected tab as a failed conversion. Verify the website-side connected indicator before each test.
 
+## Google Ads account observation — 2026-10-27 (Asia/Bangkok)
+Read-only inspection of the account's All conversions table, date range 27 September–26 October 2026:
+- TechSol - Facebook 59474: website, active, primary, count one, 30-day click window; All conversions 263.50.
+- TechSol - Line 52820: website, active, secondary, count one, 30-day click window; All conversions 264.99.
+- TechSol - Call 1563: website, active, primary, count one, 30-day click window; All conversions 262.49.
+These action names differ from the GTM tag names. Their conversion labels still need matching before claiming they are the exact tested actions. Historical counts do not prove receipt or attribution of an individual debug click. Fractional counts are reported as displayed; their attribution settings have not been inspected. No conversion, campaign, budget or bidding settings were changed.
+Facebook one-click test was attempted again, but tool session reset removed access to its result; it remains unverified.
+
 ## Release gate still open
 Successful tag execution is not proof of Google Ads receipt, counting or attribution. Facebook firing/deduplication and Google Ads diagnostics remain outstanding. Browser session loss is not evidence of a website code defect. Do not add duplicate tracking snippets or merge/publish based on source compatibility alone.
