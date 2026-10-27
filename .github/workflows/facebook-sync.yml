@@ -15,7 +15,7 @@ concurrency:
   cancel-in-progress: false
 jobs:
   sync:
-    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/codex/website-version3'
+    if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/codex/website-version3' || github.ref == 'refs/heads/codex/automatic-english-content'
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -26,19 +26,26 @@ jobs:
         with:
           node-version: '22'
       - name: Test content importer
-        run: node --test scripts/facebook-tag.test.mjs scripts/facebook-sync-lifecycle.test.mjs scripts/sync-facebook.test.mjs scripts/facebook-media.test.mjs scripts/facebook-articles.test.mjs scripts/facebook-auth.test.mjs
+        run: node --test scripts/facebook-tag.test.mjs scripts/facebook-sync-lifecycle.test.mjs scripts/sync-facebook.test.mjs scripts/facebook-media.test.mjs scripts/facebook-articles.test.mjs scripts/facebook-auth.test.mjs scripts/translate-facebook.test.mjs
       - name: Import tagged work and articles
         env:
           FACEBOOK_PAGE_ID: ${{ secrets.FACEBOOK_PAGE_ID }}
           FACEBOOK_PAGE_ACCESS_TOKEN: ${{ secrets.FACEBOOK_PAGE_ACCESS_TOKEN }}
           FACEBOOK_GRAPH_VERSION: ${{ vars.FACEBOOK_GRAPH_VERSION }}
         run: node scripts/sync-facebook.mjs
+      - name: Translate new or changed posts to English
+        continue-on-error: true
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_TRANSLATION_MODEL: ${{ vars.OPENAI_TRANSLATION_MODEL }}
+          TRANSLATION_MAX_POSTS_PER_RUN: '10'
+        run: node scripts/translate-facebook.mjs
       - name: Update the checked-out branch
         if: github.event_name == 'schedule' || inputs.apply == true
         run: |
           git config user.name "PRO EV content sync"
           git config user.email "content-sync@users.noreply.github.com"
-          git add content/work content/articles public/images/facebook
+          git add content/work content/articles content/translations/en public/images/facebook
           if ! git diff --cached --quiet; then
             git commit -m "Refresh selected Facebook work and articles"
             git push origin "HEAD:${GITHUB_REF_NAME}"

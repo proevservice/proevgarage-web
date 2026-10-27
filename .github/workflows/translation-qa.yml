@@ -1,0 +1,24 @@
+name: Automatic English content QA
+on:
+  push:
+    branches: [codex/automatic-english-content]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  translation:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: node --check scripts/translate-facebook.mjs
+      - run: node --test scripts/translate-facebook.test.mjs scripts/facebook-tag.test.mjs scripts/facebook-sync-lifecycle.test.mjs scripts/sync-facebook.test.mjs scripts/facebook-media.test.mjs scripts/facebook-articles.test.mjs scripts/facebook-auth.test.mjs
+      - run: npm ci
+      - run: npm run build
+        env:
+          VERCEL_ENV: preview
+          NEXT_PUBLIC_GTM_ID: GTM-P7WNQQNH
