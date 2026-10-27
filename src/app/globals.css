@@ -73,8 +73,3 @@
     -webkit-text-stroke: 2px white;
   }
 }
-/* Keep advertising-page Facebook CTAs in the same brand color. */
-a:is([href*="m.me/"],[href*="messenger.com/"],[href*="facebook.com/"]){background-color:#0866ff;color:#fff}
-a:is([href*="m.me/"],[href*="messenger.com/"],[href*="facebook.com/"]) :is(span,svg){color:inherit}
-a:is([href*="m.me/"],[href*="messenger.com/"],[href*="facebook.com/"]):hover{background-color:#0756d6;color:#fff;text-decoration:none}
-a:is([href*="m.me/"],[href*="messenger.com/"],[href*="facebook.com/"]):active{background-color:#064bbd}
