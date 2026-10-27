@@ -131,3 +131,7 @@
  .theme a[href],.theme button,.theme summary{transition:none}
  .theme .button:hover,.theme .secondary:hover,.theme .headerCall:hover,.theme .menuButton:hover,.theme .heroTextLink:hover,.theme .mobileActions a:hover{transform:none}
 }
+
+/* Fill the first screen below the responsive navigation; allow content to grow. */
+.theme[data-design="1"] .cinematic{min-height:calc(100vh - 72px);min-height:calc(100svh - 72px)}
+@media(max-width:800px){.theme[data-design="1"] .cinematic{min-height:calc(100vh - 64px);min-height:calc(100svh - 64px)}}
