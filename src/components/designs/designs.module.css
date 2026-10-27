@@ -118,7 +118,7 @@
 .theme a:focus-visible,.theme button:focus-visible,.theme summary:focus-visible{outline:3px solid #86efac;outline-offset:4px}
 .theme a[href]:active,.theme button:not(:disabled):active,.theme summary:active{filter:brightness(.88)}
 @media(hover:hover){
- .theme a[href]:hover{color:#86efac;text-decoration:none}
+ .theme :where(a[href]:hover){color:#86efac;text-decoration:none}
  .theme .button:hover{background:#066331;box-shadow:0 4px 16px #0005;transform:translateY(-2px);text-decoration:none}
  .theme .secondary:hover,.theme .headerCall:hover,.theme .menuButton:hover,.theme .heroTextLink:hover,.theme .mobileActions a:not(:nth-child(2)):hover{background:#334155;border-color:#86efac;color:#fff;box-shadow:0 4px 16px #0005;transform:translateY(-2px);text-decoration:none}
  .theme .contactList>a:hover,.theme .problems>a:hover,.theme .startPanel a:hover,.theme .serviceIndex>a:hover{background:rgb(var(--card));box-shadow:inset 3px 0 0 rgb(var(--accent));text-decoration:none}
