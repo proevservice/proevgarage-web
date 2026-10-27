@@ -90,3 +90,6 @@
 .language-switcher a{gap:7px;min-height:40px;padding:8px 12px;border:1px solid #475569;color:#f8fafc}
 .language-switcher a span[aria-hidden]{font-size:18px;line-height:1}
 @media(max-width:520px){.language-switcher a{gap:5px;padding:7px 9px}}
+
+/* Compact language control; retain a comfortable touch target. */
+.language-switcher a{font-size:11px;line-height:1;min-width:34px;min-height:34px;padding:6px 8px;border-radius:5px}
