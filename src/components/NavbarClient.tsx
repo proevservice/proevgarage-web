@@ -1,5 +1,6 @@
 "use client";
 
+import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
@@ -99,6 +100,7 @@ export function NavbarClient({ settings, navItems }: NavbarClientProps) {
                         <Phone className="h-4 w-4" /> {settings.phone}
                     </Link>
 
+                    <LanguageSwitcher/>
                     {/* Mobile Menu Trigger */}
                     <MobileMenu settings={settings} navItems={navItems} />
                 </div>

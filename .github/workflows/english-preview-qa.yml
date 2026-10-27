@@ -1,0 +1,31 @@
+name: English website QA
+on:
+  push:
+    branches: [codex/english-website]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  english:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: node --test scripts/language.test.mjs
+      - run: npm run build
+        env:
+          NEXT_PUBLIC_GTM_ID: GTM-P7WNQQNH
+          VERCEL_ENV: preview
+      - run: npm install --no-save playwright
+      - run: npx playwright install --with-deps chromium
+      - run: node scripts/check-english.mjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: english-website-qa
+          path: output/english-qa

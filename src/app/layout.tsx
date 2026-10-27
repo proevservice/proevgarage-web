@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import {headers} from "next/headers";
 import { Prompt } from "next/font/google";
 import "./globals.css";
 import SiteFrame from "@/components/SiteFrame";
@@ -44,7 +45,7 @@ export default function RootLayout({
     const settings = getSettings();
 
     return (
-        <html lang="th" className={`${prompt.variable} dark`}>
+        <html lang={headers().get("x-site-language")==="en"?"en":"th"} className={`${prompt.variable} dark`}>
             <head>
                 <GoogleTagManager />
                 <JsonLd settings={settings} />
