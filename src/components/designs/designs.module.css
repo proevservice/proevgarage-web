@@ -111,14 +111,14 @@
 
 /* Visible controls on photography, with consistent pointer and keyboard feedback. */
 .theme a[href],.theme button:not(:disabled),.theme summary{cursor:pointer}
-.theme a[href],.theme button,.theme summary{transition:color .18s ease,background-color .18s ease,border-color .18s ease,box-shadow .18s ease,transform .18s ease;text-underline-offset:4px}
+.theme a[href],.theme button,.theme summary{transition:color .18s ease,background-color .18s ease,border-color .18s ease,box-shadow .18s ease,transform .18s ease}
 .theme .secondary,.theme .headerCall,.theme .menuButton,.theme .mobileActions a:not(:nth-child(2)){background:#1e293b;border-color:#64748b;color:#f8fafc}
 .theme .heroTextLink{padding:11px 16px;min-height:44px;background:#1e293b;border:1px solid #64748b;border-radius:var(--radius);color:#f8fafc}
 .theme .button{background:#087f3e;color:#fff}
 .theme a:focus-visible,.theme button:focus-visible,.theme summary:focus-visible{outline:3px solid #86efac;outline-offset:4px}
 .theme a[href]:active,.theme button:not(:disabled):active,.theme summary:active{filter:brightness(.88)}
 @media(hover:hover){
- .theme a[href]:hover{ text-decoration:underline }
+ .theme a[href]:hover{color:#86efac;text-decoration:none}
  .theme .button:hover{background:#066331;box-shadow:0 4px 16px #0005;transform:translateY(-2px);text-decoration:none}
  .theme .secondary:hover,.theme .headerCall:hover,.theme .menuButton:hover,.theme .heroTextLink:hover,.theme .mobileActions a:not(:nth-child(2)):hover{background:#334155;border-color:#86efac;color:#fff;box-shadow:0 4px 16px #0005;transform:translateY(-2px);text-decoration:none}
  .theme .contactList>a:hover,.theme .problems>a:hover,.theme .startPanel a:hover,.theme .serviceIndex>a:hover{background:rgb(var(--card));box-shadow:inset 3px 0 0 rgb(var(--accent));text-decoration:none}
