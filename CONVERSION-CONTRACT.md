@@ -38,7 +38,7 @@ Read-only inspection of the account's All conversions table, date range 27 Septe
 - TechSol - Facebook 59474: website, active, primary, count one, 30-day click window; All conversions 263.50.
 - TechSol - Line 52820: website, active, secondary, count one, 30-day click window; All conversions 264.99.
 - TechSol - Call 1563: website, active, primary, count one, 30-day click window; All conversions 262.49.
-These action names differ from the GTM tag names. Their conversion labels still need matching before claiming they are the exact tested actions. Historical counts do not prove receipt or attribution of an individual debug click. Fractional counts are reported as displayed; their attribution settings have not been inspected. No conversion, campaign, budget or bidding settings were changed.
+These action names differ from the GTM tag names. On 2026-10-27, the Facebook action's Google Tag Manager installation panel showed conversion ID 17771461581 and label pPgsCNC1yekbEM33i5pC, matching the previously inspected GTM Facebook tag. Facebook mapping is confirmed; Call and LINE labels still need matching. Historical counts do not prove receipt or attribution of an individual debug click. Fractional counts are reported as displayed; Facebook details show data-driven attribution over Google paid channels; Call and LINE attribution settings have not been inspected. No conversion, campaign, budget or bidding settings were changed.
 Facebook one-click test was attempted again, but tool session reset removed access to its result; it remains unverified.
 
 ## Release gate still open
