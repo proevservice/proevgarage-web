@@ -6,7 +6,7 @@ export const WEBSITE_ID=SITE_URL+"/#website";
 export const absoluteUrl=(path:string)=>new URL(path,SITE_URL).href;
 export function pageMetadata(title:string,description:string,path:string,image="/images/service-diagnostics.jpg"):Metadata{
  const url=absoluteUrl(path);
- return {title,description,alternates:{canonical:url},openGraph:{type:"website",locale:"th_TH",siteName:"Pro EV Service",title,description,url,images:[{url:absoluteUrl(image),alt:title}]},twitter:{card:"summary_large_image",title,description,images:[absoluteUrl(image)]}};
+ return {title,description,alternates:{canonical:url,languages:{th:url,en:absoluteUrl("/en"+(path==="/"?"":path)),"x-default":url}},openGraph:{type:"website",locale:"th_TH",siteName:"Pro EV Service",title,description,url,images:[{url:absoluteUrl(image),alt:title}]},twitter:{card:"summary_large_image",title,description,images:[absoluteUrl(image)]}};
 }
 export function businessGraph(settings:Settings){
  return {"@context":"https://schema.org","@graph":[
@@ -16,7 +16,7 @@ export function businessGraph(settings:Settings){
  areaServed:settings.service_areas.map(name=>({"@type":"Place",name})),
  openingHoursSpecification:settings.opening_hours?[{"@type":"OpeningHoursSpecification",dayOfWeek:settings.opening_hours.days,opens:settings.opening_hours.opens,closes:settings.opening_hours.closes}]:undefined,
  hasOfferCatalog:{"@type":"OfferCatalog",name:"บริการซ่อมรถไฟฟ้า",itemListElement:services.map(item=>({"@type":"Offer",itemOffered:{"@type":"Service","@id":absoluteUrl("/services/"+item.slug)+"#service",name:item.title,url:absoluteUrl("/services/"+item.slug),provider:{"@id":BUSINESS_ID}}}))}},
- {"@type":"WebSite","@id":WEBSITE_ID,url:SITE_URL,name:"Pro EV Service",inLanguage:"th-TH",publisher:{"@id":BUSINESS_ID}}
+ {"@type":"WebSite","@id":WEBSITE_ID,url:SITE_URL,name:"Pro EV Service",inLanguage:["th-TH","en"],publisher:{"@id":BUSINESS_ID}}
  ]};
 }
 export function webPageSchema(name:string,description:string,path:string,type="WebPage"){

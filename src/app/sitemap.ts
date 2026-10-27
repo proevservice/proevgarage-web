@@ -1,3 +1,4 @@
+import {englishPaths} from "@/lib/english";
 import { MetadataRoute } from "next";
 import { getRepairCases } from "@/lib/repair-cases";
 import { getAllPosts } from "@/lib/site";
@@ -8,5 +9,6 @@ export default function sitemap():MetadataRoute.Sitemap{return [
 ...problems.map(i=>({url:SITE_URL+"/problems/"+i.slug})),
 ...vehicles.map(i=>({url:SITE_URL+"/vehicles/"+i.slug})),
 ...getRepairCases().map(c=>({url:SITE_URL+"/work/"+c.slug,lastModified:c.updated||c.date})),
-...getAllPosts().map(p=>({url:SITE_URL+"/blog/"+p.slug,lastModified:p.date}))
+...getAllPosts().map(p=>({url:SITE_URL+"/blog/"+p.slug,lastModified:p.date})),
+...englishPaths().map(path=>({url:SITE_URL+"/en"+(path?"/"+path:""),alternates:{languages:{th:SITE_URL+(path?"/"+path:"/"),en:SITE_URL+"/en"+(path?"/"+path:"")}}}))
 ];}

@@ -1,0 +1,7 @@
+import test from "node:test";
+import assert from "node:assert/strict";
+import {preferredLanguage,languagePath,shouldSuggestEnglish} from "../src/lib/language.mjs";
+test("explicit preference wins over browser languages",()=>{assert.equal(preferredLanguage("th","en-US"),"th");assert.equal(preferredLanguage("en","th-TH"),"en");});
+test("browser language uses quality order, with a Thai fallback",()=>{assert.equal(preferredLanguage(undefined,"en;q=0.5,th-TH;q=0.9"),"th");assert.equal(preferredLanguage(undefined,"fr-FR,en;q=0.8"),"en");assert.equal(preferredLanguage(undefined,null),"th");assert.equal(preferredLanguage(undefined,"en;q=0"),"th");});
+test("switching preserves the corresponding route",()=>{for(const path of ["/","/services/ev-charging","/work/facebook-123_456","/ev-repair"]){assert.equal(languagePath(languagePath(path,"en"),"th"),path);}assert.equal(languagePath("/en/contact","en"),"/en/contact");});
+test("direct ads, direct content and crawlers never auto-redirect",()=>{for(const path of ["/ev-repair","/services","/en","/en/ev-repair"]){assert.equal(shouldSuggestEnglish(path,"en","en-US","Mozilla",""),false);}assert.equal(shouldSuggestEnglish("/",undefined,"en-US","Googlebot",""),false);for(const query of ["gclid=abc","utm_source=google","fbclid=abc"]){assert.equal(shouldSuggestEnglish("/",undefined,"en-US","Mozilla",query),false);}assert.equal(shouldSuggestEnglish("/",undefined,"en-US","Mozilla",""),true);});
