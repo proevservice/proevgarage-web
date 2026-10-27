@@ -10,7 +10,7 @@ export default function LanguageSwitcher(){
  const target=english?"th":"en";
  return <nav className="language-switcher" aria-label={english?"Website language":"เลือกภาษาเว็บไซต์"}>
   <a href={languagePath(pathname,target)} hrefLang={target} lang={target} aria-label={english?"Switch to Thai":"เปลี่ยนเป็นภาษาอังกฤษ"} onClick={event=>remember(event,target)}>
-   <span>{english?"TH":"EN"}</span>
+   <span>{english?"ไทย":"EN"}</span>
   </a>
  </nav>;
 }
