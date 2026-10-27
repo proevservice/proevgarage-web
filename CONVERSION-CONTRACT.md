@@ -38,7 +38,7 @@ Read-only inspection of the account's All conversions table, date range 27 Septe
 - TechSol - Facebook 59474: website, active, primary, count one, 30-day click window; All conversions 263.50.
 - TechSol - Line 52820: website, active, secondary, count one, 30-day click window; All conversions 264.99.
 - TechSol - Call 1563: website, active, primary, count one, 30-day click window; All conversions 262.49.
-These action names differ from the GTM tag names. On 2026-10-27, the Facebook action's Google Tag Manager installation panel showed conversion ID 17771461581 and label pPgsCNC1yekbEM33i5pC, matching the previously inspected GTM Facebook tag. Facebook mapping is confirmed; Call and LINE labels still need matching. Historical counts do not prove receipt or attribution of an individual debug click. Fractional counts are reported as displayed; Facebook details show data-driven attribution over Google paid channels; Call and LINE attribution settings have not been inspected. No conversion, campaign, budget or bidding settings were changed.
+These action names differ from the GTM tag names. On 2026-10-27, the Facebook action's Google Tag Manager installation panel showed conversion ID 17771461581 and label pPgsCNC1yekbEM33i5pC, matching the previously inspected GTM Facebook tag. All three mappings are now confirmed: Call uses mJOYCJv4yukbEM33i5pC, LINE uses Rbw6CPrWyukbEM33i5pC and Facebook uses pPgsCNC1yekbEM33i5pC, all under conversion ID 17771461581. Historical counts do not prove receipt or attribution of an individual debug click. Fractional counts are reported as displayed; Facebook details show data-driven attribution over Google paid channels; Call and LINE attribution settings have not been inspected. No conversion, campaign, budget or bidding settings were changed.
 Earlier Facebook testing was interrupted by tool session resets; the subsequent Preview test below provides one-click evidence.
 
 ## Preview environment correction — 2026-10-27 (Asia/Bangkok)
@@ -56,7 +56,10 @@ Owner confirmed one click each on Facebook, phone and LINE in the connected Prev
 - Event 11 generate_lead_line: no GTM tags fired. Event 12 gtm.linkClick: Line 63118 successful.
 - Session summary: one firing each for Facebook, Call and Line; one each for Conversion Linker and both base Google tags. No duplicate Ads firing observed for these three clicks.
 - Conversion ID 17771461581; Call label mJOYCJv4yukbEM33i5pC; LINE label Rbw6CPrWyukbEM33i5pC; Facebook label pPgsCNC1yekbEM33i5pC.
-- Google Ads LINE installation instructions matched the tested LINE ID/label exactly; Facebook ID/label matched in the previous inspection.
+- Google Ads installation instructions matched the tested Call and LINE IDs/labels exactly; Facebook ID/label matched in the previous inspection.
 
 ## Remaining verification boundary
 Successful debug execution and active historical Ads actions do not prove attribution of these particular test clicks. Preserve campaign settings and LINE's existing secondary status. Check the final production deployment, then monitor real attributed lead counts. Before publishing, check CI for the current head and retain the Version 2 rollback branch.
+
+## Production release — 2026-10-27
+PR #2 merged at 10:46:29 Asia/Bangkok, commit 39e0b3fd156c8196f75c4973ebe39ca23a3f5424. Production deployment dpl_dPXgSiWNyNg4wHHAbYfzosxcmCCq completed successfully. Live /ev-repair has index/follow, its production canonical, all nine CTA contracts, and the original GTM/GA4/Ads scripts. The homepage renders Version 3 and one normal GTM loader. Contact click success/deduplication evidence above is from Preview; individual paid-click attribution remains a monitoring item, not a claimed debug result.
