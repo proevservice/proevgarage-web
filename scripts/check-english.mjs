@@ -9,6 +9,7 @@ try{
  await mkdir("output/english-qa",{recursive:true});
  browser=await chromium.launch();
  const context=await browser.newContext({locale:"en-US"});
+ await context.route(/https?:\\/\\/[^/]*(googletagmanager|google-analytics|googleadservices|doubleclick|googlesyndication)\\./,route=>route.abort());
  const page=await context.newPage();
  await page.goto("http://localhost:3100/");
  assert.equal(new URL(page.url()).pathname,"/en");
