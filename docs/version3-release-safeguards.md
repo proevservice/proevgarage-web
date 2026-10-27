@@ -34,7 +34,9 @@ After launch, check production robots/canonical/sitemap, old URL redirects, cont
 ## Facebook sync
 Enabled with owner approval on 2026-10-26. Main commit 763501b507f6187148ff0157be541269ad845929 changes only .github/workflows/facebook-sync.yml; the production application remains Version 2.
 - Cron: `17 */2 * * *` (UTC), every two hours. GitHub may delay scheduled runs.
-- Checkout and push target are explicitly `codex/website-version3`; content is never pushed to main by this workflow.
+- Current production workflow still targets `codex/website-version3` until PR #2 is merged.
+- Prepared Version 3 workflow checks out and pushes `github.ref_name`, restricted to main and codex/website-version3. After merge, scheduled main runs update main; manual preview runs update only preview. Cron remains every two hours. This change is staged on the preview branch, not active on production yet.
+- Verify a successful post-release main sync and the resulting Vercel production deployment; committing content alone is not proof it reached the live site.
 - Manual apply test: https://github.com/proevservice/proevgarage-web/actions/runs/40333876947 — success; 20 tests passed, 3 work posts and 1 article synchronized.
 - Tags select content: #ผลงานPROEV for work, #บทความ for articles. Edits and tag removal propagate on the next successful complete sync.
 - The workflow does not merge or publish the Version 3 application.
