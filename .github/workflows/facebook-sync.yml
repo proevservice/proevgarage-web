@@ -7,7 +7,7 @@ on:
         type: boolean
         default: false
   schedule:
-    - cron: '17 */2 * * *'
+    - cron: '17 1,5,11 * * *' # 08:17, 12:17, 18:17 Bangkok
 permissions:
   contents: write
 concurrency:
