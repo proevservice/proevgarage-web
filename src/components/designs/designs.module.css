@@ -143,8 +143,20 @@
 .serviceIndex p{font-size:13px;color:rgb(var(--text-muted));margin-top:2px}
 .serviceIndex h3{font-size:19px}
 .sectionHeading{align-items:center}
-.caseFeature{grid-template-columns:repeat(2,1fr)}
-.caseFeature>a:first-child{grid-column:1/-1;display:grid;grid-template-columns:1.6fr 1fr;gap:32px;align-items:end}
-.caseFeature>a:first-child .casePhoto{aspect-ratio:16/10;margin-bottom:0}
-.caseFeature>a:first-child h3{font-size:24px}
-@media(max-width:800px){.caseFeature{grid-template-columns:1fr}.caseFeature>a:first-child{display:block}.caseFeature>a:first-child .casePhoto{margin-bottom:20px}}
+/* latest repairs: lead photo + compact list */
+.latest{display:grid;grid-template-columns:1.35fr 1fr;gap:32px;align-items:stretch}
+.latestLead{position:relative;min-height:540px;border-radius:var(--radius);overflow:hidden;display:flex;align-items:flex-end;background:rgb(var(--card))}
+.latestLead img{object-fit:cover;transition:transform .5s}
+.latestLead:hover img{transform:scale(1.02)}
+.latestLead::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(12,13,12,0) 38%,rgba(12,13,12,.94) 100%)}
+.latestLeadText{position:relative;z-index:1;padding:30px 30px 28px}
+.latestLeadText h3{font-size:24px;line-height:1.55;max-width:560px}
+.latestList{display:flex;flex-direction:column;border-top:1px solid rgb(var(--border))}
+.latestRow{flex:1;display:grid;grid-template-columns:168px 1fr;gap:20px;align-items:center;padding:18px 0;border-bottom:1px solid rgb(var(--border))}
+.latestRow:hover h3{color:rgb(var(--accent))}
+.latestThumb{position:relative;aspect-ratio:4/3;border-radius:10px;overflow:hidden;background:rgb(var(--card))}
+.latestThumb img{object-fit:cover}
+.latestRow h3{font-size:16px;line-height:1.65;font-weight:500;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.latestMeta{display:flex;flex-wrap:wrap;gap:4px 12px;font-size:12px;color:rgb(var(--text-muted));margin-bottom:8px}
+.latestMeta b{font-weight:600;color:rgb(var(--accent))}
+@media(max-width:800px){.latest{grid-template-columns:1fr;gap:8px}.latestLead{min-height:400px}.latestLeadText{padding:22px}.latestLeadText h3{font-size:20px}.latestRow{grid-template-columns:112px 1fr;gap:14px;padding:14px 0}.latestRow h3{font-size:15px}}
