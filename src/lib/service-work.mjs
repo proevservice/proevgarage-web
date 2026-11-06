@@ -1,5 +1,6 @@
 // Match the repair topic, not workshop signatures or promotional hashtags.
 const topics = {
+  "ev-ac-cleaning": ["ล้างแอร์", "ล้างแผง", "ล้างตู้แอร์", "กรองแอร์", "cabin filter"],
   "ev-air-conditioning": ["แอร์", "คอมเพรสเซอร์", "คอมแอร์", "air conditioning", "a/c"],
   "ev-battery-bms": ["แบตเตอรี่", "ถาดแบต", "บาลานซ์", "bcu", "bms", "battery", "soc"],
   "ev-charging": ["ชาร์จ", "obc", "cdu", "charging"],
