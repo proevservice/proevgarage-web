@@ -7,6 +7,7 @@ import {getRepairCases} from "@/lib/repair-cases";
 import {services, problems} from "@/lib/website-v3";
 import {LeadLink, StickyBar} from "./LeadLink";
 import {LINKS} from "./links";
+import {HeroCopy, OpenStatus} from "./HeroCopy";
 import s from "./landing.module.css";
 
 // Google Ads landing page, styled with the Version 3 design system.
@@ -17,6 +18,20 @@ const trust = [
  {title: "ตรวจวิเคราะห์ก่อนซ่อม", text: "อ่านค่าจากกล่องควบคุมด้วยเครื่องมือวิเคราะห์ ร่วมกับการตรวจอาการจริงของรถ เพื่อหาสาเหตุก่อนเปลี่ยนอะไหล่"},
  {title: "แจ้งรายการและค่าใช้จ่ายก่อนเริ่มงาน", text: "อธิบายผลตรวจ แนวทางซ่อม อะไหล่ และค่าใช้จ่ายให้พิจารณา เริ่มงานเมื่อเจ้าของรถอนุมัติเท่านั้น"},
  {title: "ดูแลระบบแรงดันสูงอย่างระมัดระวัง", text: "งานแบตเตอรี่ BCU/BMS ระบบชาร์จ และแอร์ไฟฟ้า ประเมินตามรุ่นรถและอาการ พร้อมแจ้งขอบเขตงานก่อนนัดหมาย"},
+];
+
+const promises = [
+ {title: "ตรวจเช็คเบื้องต้นฟรี", text: "หากต้องตรวจวิเคราะห์เชิงลึกและมีค่าใช้จ่าย หักเป็นค่าซ่อมได้เมื่อซ่อมกับเรา"},
+ {title: "งานส่วนใหญ่เสร็จภายในวัน", text: "รับงานด่วน ทักแชทแจ้งอาการไว้ก่อน ทีมงานช่วยจัดคิวให้"},
+ {title: "รับประกันงานซ่อม 3 เดือน – 1 ปี", text: "ระยะเวลารับประกันขึ้นอยู่กับประเภทงาน แจ้งให้ทราบก่อนเริ่มซ่อม"},
+];
+
+const faqs = [
+ {q: "ตรวจเช็คมีค่าใช้จ่ายไหม?", a: "ตรวจเช็คเบื้องต้นฟรี หากรถต้องตรวจวิเคราะห์เชิงลึกและมีค่าใช้จ่าย ทีมงานจะแจ้งก่อน และหักเป็นค่าซ่อมได้เมื่อซ่อมกับเรา"},
+ {q: "ซ่อมนานไหม รอรับได้หรือเปล่า?", a: "งานส่วนใหญ่เสร็จได้ภายในวัน และรับงานด่วน ระยะเวลาจริงขึ้นอยู่กับอาการและอะไหล่ ทักแชทแจ้งรุ่นรถและอาการเพื่อให้ทีมงานประเมินและจัดคิวให้"},
+ {q: "มีรับประกันงานซ่อมไหม?", a: "รับประกันงานซ่อม 3 เดือน 6 เดือน หรือ 1 ปี ขึ้นอยู่กับประเภทงาน ทีมงานจะแจ้งเงื่อนไขก่อนเริ่มซ่อม"},
+ {q: "ถ้าตรวจแล้วไม่ซ่อมได้ไหม?", a: "ได้ ทีมงานแจ้งผลตรวจ แนวทางซ่อม และค่าใช้จ่ายให้พิจารณาก่อน จะเริ่มงานเมื่อเจ้าของรถอนุมัติเท่านั้น"},
+ {q: "รถขับมาไม่ได้ ทำอย่างไร?", a: "ทักแชทหรือโทรแจ้งอาการก่อน ทีมงานช่วยประเมินว่าควรขับมาหรือควรใช้รถสไลด์ เพื่อความปลอดภัยของรถและระบบแรงดันสูง"},
 ];
 
 const steps = [
@@ -30,6 +45,9 @@ export default function EvRepairLandingPage() {
  const settings = getSettings();
  const cases = getRepairCases().filter(c => c.image).slice(0, 2);
  const models = settings.models?.length ? settings.models : ["NETA V", "BYD Atto 3", "BYD Dolphin", "MG EP", "MG ZS EV", "Deepal", "GAC AION"];
+ const rating = settings.google_rating;
+ const reviewCount = settings.google_review_count;
+ const reviewsUrl = settings.google_reviews_url || "https://www.google.com/maps?cid=12415469945169781142";
  const areas = settings.service_areas?.length ? settings.service_areas : ["ปากเกร็ด", "นนทบุรี", "กรุงเทพฯ"];
 
  return <div className={`${d.home} ${s.page}`}>
@@ -39,17 +57,18 @@ export default function EvRepairLandingPage() {
    <div className={d.cinematicShade}/>
    <div className={d.heroCopy}>
     <p className={d.eyebrow}>ปากเกร็ด · นนทบุรี · กรุงเทพฯ</p>
-    <h1>ซ่อมรถไฟฟ้า EV<br/><em>ตรวจวิเคราะห์ก่อนซ่อม</em></h1>
-    <p>แอร์ไม่เย็น แบตเตอรี่ ระบบชาร์จ ไฟเตือน และช่วงล่าง<br/>แจ้งรุ่นรถและอาการ ทีมงานช่วยประเมินแนวทางตรวจ และแจ้งค่าใช้จ่ายก่อนเริ่มงานทุกครั้ง</p>
+    <HeroCopy/>
     <div className={`${d.actions} ${s.heroActions}`}>
      <LeadLink type="facebook_chat" location="hero" href={LINKS.FB_MESSENGER} className={s.fb}>ทักแชทปรึกษาช่าง ↗</LeadLink>
      <LeadLink type="phone_call" location="hero" href={`tel:${LINKS.PHONE}`} className={d.secondary}>โทร {settings.phone || "098-9794116"}</LeadLink>
     </div>
     <div className={s.saveContact}><MobileSaveContactBtn/></div>
+    <OpenStatus className={s.openStatus} dotOpen={s.dotOpen} dotClosed={s.dotClosed}/>
     <ul className={s.heroFacts}>
-     <li>แจ้งรายการก่อนเริ่มงาน</li>
-     <li>{settings.hours || "09:00 - 19:00 (หยุดวันพุธ)"}</li>
-     <li>ใกล้เมเจอร์ ฮอลลีวู้ด ปากเกร็ด</li>
+     <li>ตรวจเช็คเบื้องต้นฟรี</li>
+     <li>งานส่วนใหญ่เสร็จภายในวัน</li>
+     <li>รับประกันงานซ่อม 3 เดือน – 1 ปี</li>
+     {rating ? <li>★ {rating} จาก {reviewCount} รีวิวบน Google</li> : null}
     </ul>
    </div>
   </section>
@@ -59,6 +78,19 @@ export default function EvRepairLandingPage() {
    <section className={d.section}>
     <div className={d.sectionHeading}><div><p className={d.eyebrow}>COMMON PROBLEMS</p><h2>รถของคุณมีอาการเหล่านี้อยู่ไหม?</h2></div><Link href="/problems">ดูอาการทั้งหมด ↗</Link></div>
     <div className={d.problems}>{problems.map(p => <Link key={p.slug} href={"/problems/" + p.slug}>{p.title}<span>↗</span></Link>)}</div>
+   </section>
+
+   {/* 2b. Offer + reviews */}
+   <section className={d.section}>
+    <div className={s.offer}>
+     <div className={s.promises}>{promises.map(p => <div key={p.title}><h3>{p.title}</h3><p>{p.text}</p></div>)}</div>
+     {rating ? <a className={s.reviews} href={reviewsUrl} target="_blank" rel="noopener noreferrer">
+      <strong>{rating}</strong>
+      <span className={s.stars} aria-hidden="true">★★★★★</span>
+      <span>จาก {reviewCount} รีวิวบน Google Maps</span>
+      <em>อ่านรีวิวจากลูกค้าจริง ↗</em>
+     </a> : null}
+    </div>
    </section>
 
    {/* 3. Why us */}
@@ -92,11 +124,19 @@ export default function EvRepairLandingPage() {
     <div className={d.process}>{steps.map((st, i) => <div key={st.title}><span>0{i + 1}</span><h3>{st.title}</h3><p>{st.text}</p></div>)}</div>
    </section>
 
+   {/* 6b. FAQ */}
+   <section className={d.section}>
+    <div className={d.sectionHeading}><div><p className={d.eyebrow}>FAQ</p><h2>คำถามที่พบบ่อยก่อนเข้ารับบริการ</h2></div></div>
+    <div>{faqs.map(f => <details key={f.q} className={d.faq}><summary>{f.q}</summary><p>{f.a}</p></details>)}</div>
+    <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify({"@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqs.map(f => ({"@type": "Question", name: f.q, acceptedAnswer: {"@type": "Answer", text: f.a}}))}).replace(/</g, "\\u003c")}}/>
+   </section>
+
    {/* 7. Final CTA + location */}
    <section className={d.closing}>
     <p className={d.eyebrow}>BOOK AN INSPECTION</p>
     <h2>บอกรุ่นรถและอาการ<br/>แล้วให้เราช่วยวางแผนเข้าตรวจ</h2>
-    <p>แจ้งอาการเพื่อสอบถามแนวทางตรวจเช็ก ค่าใช้จ่าย และคิวว่าง ก่อนนำรถเข้าร้าน</p>
+    <p>ตรวจเช็คเบื้องต้นฟรี · แจ้งค่าใช้จ่ายก่อนเริ่มงาน · งานส่วนใหญ่เสร็จภายในวัน</p>
+    <OpenStatus className={s.openStatus} dotOpen={s.dotOpen} dotClosed={s.dotClosed}/>
     <div className={`${d.actions} ${s.finalActions}`}>
      <LeadLink type="facebook_chat" location="final_cta" href={LINKS.FB_MESSENGER} className={s.fb}>ทักแชทจองคิว ↗</LeadLink>
      <LeadLink type="line_chat" location="final_cta" href={LINKS.LINE} className={d.button}>ทักไลน์ ↗</LeadLink>

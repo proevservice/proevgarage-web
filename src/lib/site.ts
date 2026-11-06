@@ -17,6 +17,9 @@ export interface Settings {
     service_areas: string[];
     models: string[];
     opening_hours?: {days:string[];opens:string;closes:string};
+    google_rating?: number;
+    google_review_count?: number;
+    google_reviews_url?: string;
 }
 
 export interface Service {
