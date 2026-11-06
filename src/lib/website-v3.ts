@@ -65,5 +65,8 @@ export const faqs = [
 {question:"ไม่แน่ใจว่ารถเสียส่วนไหน ต้องเลือกบริการอะไร?",answer:"เริ่มจากหน้าอาการเสีย หรือส่งภาพไฟเตือนพร้อมรุ่นรถให้ทีมงานช่วยประเมินแนวทางเข้าตรวจได้"}
 ];
 export const SITE_URL="https://www.proevgarage.com";
+// Shown first in brand lists; the rest sit under "ยี่ห้ออื่นๆ".
+export const popularBrandSlugs=["byd","mg","neta","deepal","aion","ora","jaecoo-omoda","geely","zeekr","xpeng","tesla","chery"];
+export function splitBrands<T extends {slug:string}>(list:T[]){return {popular:popularBrandSlugs.map(slug=>list.find(v=>v.slug===slug)).filter((v):v is T=>!!v),others:list.filter(v=>!popularBrandSlugs.includes(v.slug))};}
 export function relatedServices(problem:string){return services.filter(s=>s.problems.includes(problem));}
 export function matchesCase(item:{title:string;body:string;model:string},keywords:string[]){const text=[item.title,item.model,item.body].join(" ").toLowerCase();return keywords.some(k=>text.includes(k.toLowerCase()));}
