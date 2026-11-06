@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "@/components/Link";
-import { services, problems, vehicles, SITE_URL } from "@/lib/website-v3";
+import { services, problems, SITE_URL } from "@/lib/website-v3";
+import { vehicles } from "@/lib/vehicles";
 import { ServiceShowcase } from "@/components/ServiceShowcase";
 import { getRepairCases } from "@/lib/repair-cases";
 import { Schema, Breadcrumbs, VehicleLinks, ContactCta, MobileContact } from "@/components/WebsiteV3";

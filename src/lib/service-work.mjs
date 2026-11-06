@@ -2,10 +2,10 @@
 const topics = {
   "ev-ac-cleaning": ["ล้างแอร์", "ล้างแผง", "ล้างตู้แอร์", "กรองแอร์", "cabin filter"],
   "ev-air-conditioning": ["แอร์", "คอมเพรสเซอร์", "คอมแอร์", "air conditioning", "a/c"],
-  "ev-battery-bms": ["แบตเตอรี่", "ถาดแบต", "บาลานซ์", "bcu", "bms", "battery", "soc"],
+  "ev-battery-bms": ["แบตเตอรี่", "แบตรั่ว", "แบตยกแพ็", "โมดูลแบต", "เปลี่ยน 1 โมดูล", "ถาดแบต", "บาลานซ์", "bcu", "bms", "battery", "soc"],
   "ev-charging": ["ชาร์จ", "obc", "cdu", "charging"],
   "ev-diagnostics": ["ระบบไฟ", "ไฟเตือน", "fault", "ready", "วงจร"],
-  "ev-suspension": ["ช่วงล่าง", "โช้ค", "โช๊ค", "ลูกหมาก", "ปีกนก", "บูช"],
+  "ev-suspension": ["ช่วงล่าง", "เสียงหอน", "ลูกปืน", "โช้ค", "โช๊ค", "ลูกหมาก", "ปีกนก", "บูช"],
   "ev-maintenance": ["เช็กระยะ", "เช็คระยะ", "บำรุงรักษา", "12v", "12 v"]
 };
 function match(text) {

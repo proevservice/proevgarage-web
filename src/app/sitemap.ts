@@ -2,7 +2,8 @@ import {englishPaths} from "@/lib/english";
 import { MetadataRoute } from "next";
 import { getRepairCases } from "@/lib/repair-cases";
 import { getAllPosts } from "@/lib/site";
-import { services,problems,vehicles,SITE_URL } from "@/lib/website-v3";
+import { services,problems,SITE_URL } from "@/lib/website-v3";
+import { vehicles } from "@/lib/vehicles";
 export default function sitemap():MetadataRoute.Sitemap{return [
 ...["","/services","/ev-repair","/problems","/vehicles","/work","/contact","/booking","/blog"].map(path=>({url:SITE_URL+path})),
 ...services.map(i=>({url:SITE_URL+"/services/"+i.slug})),

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "@/components/Link";
-import { vehicles,SITE_URL } from "@/lib/website-v3";
+import { SITE_URL } from "@/lib/website-v3";
+import { vehicles } from "@/lib/vehicles";
 import { PageHeader,ContactCta,MobileContact } from "@/components/WebsiteV3";
 import s from "@/components/v3.module.css";
 export const metadata:Metadata={title:"บริการซ่อม EV ตามยี่ห้อรถ | Pro EV Service",description:"ค้นหาบริการและผลงานสำหรับ NETA BYD MG ORA DEEPAL และ AION",alternates:{canonical:SITE_URL+"/vehicles"}};

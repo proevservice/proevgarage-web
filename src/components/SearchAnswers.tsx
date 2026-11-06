@@ -1,6 +1,6 @@
 import Link from "@/components/Link";
 import {getSettings} from "@/lib/site";
-import {vehicles} from "@/lib/website-v3";
+import {vehicles} from "@/lib/vehicles";
 import {faqSchema} from "@/lib/seo";
 import {Schema} from "@/components/WebsiteV3";
 import s from "@/components/designs/designs.module.css";
