@@ -13,7 +13,7 @@ export async function Footer() {
                     <div className="space-y-4">
                         <h3 className="text-xl font-bold text-text">{settings.brand_name}</h3>
                         <p className="text-sm leading-relaxed text-gray-400">
-                            ศูนย์บริการซ่อมรถยนต์ไฟฟ้าครบวงจร มาตรฐานมืออาชีพ ดูแลโดยทีมงานผู้เชี่ยวชาญเฉพาะทาง
+                            อู่ซ่อมรถไฟฟ้าใกล้เมเจอร์ ฮอลลีวู้ด ปากเกร็ด รับงานแอร์ แบตเตอรี่และ BMS ระบบชาร์จ ระบบไฟ ช่วงล่าง
                         </p>
                         <div className="flex items-center gap-4 pt-2">
                             <a href={settings.facebook} target="_blank" className="text-gray-400 hover:text-white transition-colors">
@@ -71,7 +71,6 @@ export async function Footer() {
 
                 <div className="mt-16 flex flex-col items-center justify-between border-t border-border pt-8 text-xs text-muted sm:flex-row">
                     <p>© {new Date().getFullYear()} Pro EV Service. All rights reserved.</p>
-                    <p>Designed for Performance.</p>
                 </div>
             </div>
         </footer>

@@ -11,12 +11,12 @@ export const promises = [
  {title: "มีการรับประกันงานซ่อม", text: "เงื่อนไขการรับประกันขึ้นอยู่กับประเภทงาน ทีมงานแจ้งให้ทราบก่อนเริ่มซ่อม"},
 ];
 
-export function HeroFacts() {
+export function HeroFacts({promisesShown = true}: {promisesShown?: boolean} = {}) {
  const settings = getSettings();
  return <>
   <OpenStatus/>
   <ul className={s.heroFacts}>
-   {promises.map(p => <li key={p.title}>{p.title}</li>)}
+   {promisesShown ? promises.map(p => <li key={p.title}>{p.title}</li>) : null}
    {settings.google_rating ? <li>★ {settings.google_rating} จาก {settings.google_review_count} รีวิวบน Google</li> : null}
   </ul>
  </>;

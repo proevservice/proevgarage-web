@@ -28,7 +28,7 @@
 .serviceLink{color:rgb(var(--text));border-bottom:1px solid rgb(var(--border))}
 .moreLink{font-size:12px;color:rgb(var(--accent));margin-top:14px}
 .visualShade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.12),transparent 35%,rgba(3,9,16,.72))}
-.photoLabel{position:absolute;left:16px;top:16px;font-size:10px;background:rgba(11,18,32,.88);padding:7px 10px;border-radius:4px;color:white}
+.photoLabel{position:absolute;left:16px;top:16px;font-size:10px;background:rgba(12,13,12,.88);padding:7px 10px;border-radius:4px;color:white}
 .photoCaption{position:absolute;bottom:16px;left:20px;right:20px}
 .photoMeta{font-size:10px;color:#e5e7eb;margin-bottom:4px}
 .photoCaption h3{font-size:13px;color:white;font-weight:500}

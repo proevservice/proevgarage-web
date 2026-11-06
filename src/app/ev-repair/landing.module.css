@@ -38,7 +38,7 @@
  .trust{grid-template-columns:1fr;gap:20px}
  .location{flex-direction:column;align-items:flex-start}
  .heroActions>a,.finalActions>a{flex:1 1 100%}
- .sticky{display:grid;grid-template-columns:repeat(3,1fr);position:fixed;left:0;right:0;bottom:0;z-index:70;background:#0b1220;border-top:1px solid rgb(51 65 85);padding-bottom:env(safe-area-inset-bottom);transform:translateY(100%);transition:transform .25s}
+ .sticky{display:grid;grid-template-columns:repeat(3,1fr);position:fixed;left:0;right:0;bottom:0;z-index:70;background:#0c0d0c;border-top:1px solid rgb(51 65 85);padding-bottom:env(safe-area-inset-bottom);transform:translateY(100%);transition:transform .25s}
  .sticky[data-show="true"]{transform:none}
  .sticky>a{display:flex;align-items:center;justify-content:center;min-height:58px;font-size:13px;font-weight:600;color:#fff;border-right:1px solid rgb(51 65 85)}
  .sticky>a:last-child{border-right:0}
