@@ -70,3 +70,20 @@
 .reviews span:not(.stars){font-size:13px;color:rgb(var(--text-muted))}
 .reviews em{font-style:normal;font-size:13px;color:rgb(var(--accent));margin-top:8px}
 @media(max-width:800px){.offer,.promises{grid-template-columns:1fr}}
+
+/* Near you */
+.near{display:grid;grid-template-columns:1.3fr 1fr;gap:30px;align-items:stretch}
+.near iframe{width:100%;min-height:320px;height:100%;border:0;border-radius:var(--radius);background:rgb(var(--card))}
+.near h3{font-size:19px;margin-bottom:10px}
+.near p{font-size:14px;line-height:1.9;color:rgb(var(--text-muted))}
+.nearLabel{margin-top:22px}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+.chips li{font-size:12px;padding:6px 12px;border:1px solid rgb(var(--border));border-radius:999px}
+
+/* Brands */
+.brands{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.brands>div{padding:22px;border:1px solid rgb(var(--border));border-radius:var(--radius)}
+.brands h3{font-size:18px}
+.brands p{margin-top:6px;font-size:13px;color:rgb(var(--text-muted))}
+.brandJobs{margin-top:22px;font-size:13px;color:rgb(var(--text-muted))}
+@media(max-width:800px){.near{grid-template-columns:1fr}.near iframe{min-height:260px}.brands{grid-template-columns:1fr 1fr}}

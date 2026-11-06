@@ -31,6 +31,7 @@ const faqs = [
  {q: "ซ่อมนานไหม รอรับได้หรือเปล่า?", a: "รับงานซ่อมด่วน รอรับได้ ระยะเวลาจริงขึ้นอยู่กับอาการและอะไหล่ ทักแชทแจ้งรุ่นรถและอาการเพื่อให้ทีมงานประเมินและจัดคิวให้"},
  {q: "มีรับประกันงานซ่อมไหม?", a: "มีการรับประกันงานซ่อม เงื่อนไขขึ้นอยู่กับประเภทงาน ทีมงานจะแจ้งให้ทราบก่อนเริ่มซ่อม"},
  {q: "ถ้าตรวจแล้วไม่ซ่อมได้ไหม?", a: "ได้ ทีมงานแจ้งผลตรวจ แนวทางซ่อม และค่าใช้จ่ายให้พิจารณาก่อน จะเริ่มงานเมื่อเจ้าของรถอนุมัติเท่านั้น"},
+ {q: "รับดูแลรถยี่ห้อไหนบ้าง เช็คระยะนอกศูนย์ได้ไหม?", a: "ดูแล NETA BYD MG Deepal GAC AION ORA และรุ่นอื่นๆ ทั้งเช็คระยะ ล้างแอร์ ซ่อมแอร์ แบตเตอรี่ และช่วงล่าง หากรถยังอยู่ในประกันศูนย์ แนะนำให้ตรวจเงื่อนไขประกันของรถก่อน ทีมงานช่วยให้ข้อมูลได้"},
  {q: "รถขับมาไม่ได้ ทำอย่างไร?", a: "ทักแชทหรือโทรแจ้งอาการก่อน ทีมงานช่วยประเมินว่าควรขับมาหรือควรใช้รถสไลด์ เพื่อความปลอดภัยของรถและระบบแรงดันสูง"},
 ];
 
@@ -44,10 +45,17 @@ const steps = [
 export default function EvRepairLandingPage() {
  const settings = getSettings();
  const cases = getRepairCases().filter(c => c.image).slice(0, 2);
- const models = settings.models?.length ? settings.models : ["NETA V", "BYD Atto 3", "BYD Dolphin", "MG EP", "MG ZS EV", "Deepal", "GAC AION"];
  const rating = settings.google_rating;
  const reviewCount = settings.google_review_count;
  const reviewsUrl = settings.google_reviews_url || "https://www.google.com/maps?cid=12415469945169781142";
+ const brands = [
+  {name: "NETA", models: "NETA V · NETA V-II · NETA X"},
+  {name: "BYD", models: "Atto 3 · Dolphin · Seal"},
+  {name: "MG", models: "MG EP · MG ZS EV · MG4"},
+  {name: "Deepal", models: "Deepal S07 · L07"},
+  {name: "GAC AION / ORA", models: "AION · ORA Good Cat"},
+  {name: "อื่นๆ", models: "Geely · Jaecoo และรุ่นอื่น สอบถามได้"},
+ ];
  const areas = settings.service_areas?.length ? settings.service_areas : ["ปากเกร็ด", "นนทบุรี", "กรุงเทพฯ"];
 
  return <div className={`${d.home} ${s.page}`}>
@@ -74,13 +82,7 @@ export default function EvRepairLandingPage() {
   </section>
 
   <div className={d.inner}>
-   {/* 2. Symptoms */}
-   <section className={d.section}>
-    <div className={d.sectionHeading}><div><p className={d.eyebrow}>COMMON PROBLEMS</p><h2>รถของคุณมีอาการเหล่านี้อยู่ไหม?</h2></div><Link href="/problems">ดูอาการทั้งหมด ↗</Link></div>
-    <div className={d.problems}>{problems.map(p => <Link key={p.slug} href={"/problems/" + p.slug}>{p.title}<span>↗</span></Link>)}</div>
-   </section>
-
-   {/* 2b. Offer + reviews */}
+   {/* 2. Offer + reviews */}
    <section className={d.section}>
     <div className={s.offer}>
      <div className={s.promises}>{promises.map(p => <div key={p.title}><h3>{p.title}</h3><p>{p.text}</p></div>)}</div>
@@ -93,20 +95,36 @@ export default function EvRepairLandingPage() {
     </div>
    </section>
 
-   {/* 3. Why us */}
+   {/* 3. Near you — most searches are "ร้าน/อู่ซ่อมรถไฟฟ้าใกล้ฉัน" */}
    <section className={d.section}>
-    <div className={d.sectionHeading}><div><p className={d.eyebrow}>WHY PRO EV SERVICE</p><h2>เริ่มจากหาสาเหตุ<br/>ก่อนตัดสินใจซ่อม</h2></div></div>
-    <div className={s.trust}>{trust.map((t, i) => <div key={t.title}><span>0{i + 1}</span><h3>{t.title}</h3><p>{t.text}</p></div>)}</div>
-    <div className={s.models}><p>รุ่นที่ดูแลเป็นประจำ</p><ul>{models.map(m => <li key={m}>{m}</li>)}</ul></div>
+    <div className={d.sectionHeading}><div><p className={d.eyebrow}>NEAR YOU</p><h2>อู่อยู่ปากเกร็ด<br/>ใกล้เมเจอร์ ฮอลลีวู้ด</h2></div><a href={LINKS.MAP} target="_blank" rel="noopener noreferrer">นำทางด้วย Google Maps ↗</a></div>
+    <div className={s.near}>
+     <iframe title="แผนที่ Pro EV Service ปากเกร็ด" src="https://maps.google.com/maps?cid=12415469945169781142&output=embed&hl=th&z=15" loading="lazy" referrerPolicy="no-referrer-when-downgrade" allowFullScreen/>
+     <div>
+      <h3>Pro EV Service อู่ซ่อมรถไฟฟ้า ปากเกร็ด</h3>
+      <p>{settings.address || "เมเจอร์ ฮอลลีวู้ด ตำบลปากเกร็ด อำเภอปากเกร็ด นนทบุรี 11120"}</p>
+      <p>เปิด {settings.hours || "09:00 - 19:00 (หยุดวันพุธ)"}</p>
+      <OpenStatus className={s.openStatus} dotOpen={s.dotOpen} dotClosed={s.dotClosed}/>
+      <p className={s.nearLabel}>สะดวกสำหรับลูกค้าจาก</p>
+      <ul className={s.chips}>{areas.map(a => <li key={a}>{a}</li>)}</ul>
+     </div>
+    </div>
    </section>
 
-   {/* 4. Services */}
+   {/* 4. Brands — many searches name the brand or the dealer */}
    <section className={d.section}>
-    <div className={d.sectionHeading}><div><p className={d.eyebrow}>OUR SERVICES</p><h2>บริการของเรา</h2></div><Link href="/services">รายละเอียดทุกบริการ ↗</Link></div>
-    <div className={d.serviceIndex}>{services.map((item, i) => <Link href={"/services/" + item.slug} key={item.slug}><span>0{i + 1}</span><h3>{item.title}<small className={s.serviceShort}>{item.short}</small></h3><span>↗</span></Link>)}</div>
+    <div className={d.sectionHeading}><div><p className={d.eyebrow}>BRANDS WE SERVICE</p><h2>ดูแลรถไฟฟ้าหลายยี่ห้อ<br/>ทางเลือกนอกศูนย์บริการ</h2></div></div>
+    <div className={s.brands}>{brands.map(b => <div key={b.name}><h3>{b.name}</h3><p>{b.models}</p></div>)}</div>
+    <p className={s.brandJobs}>เช็คระยะ · ล้างแอร์ · ซ่อมแอร์ · แบตเตอรี่ 12V และแบตเตอรี่ EV · ระบบชาร์จ · ช่วงล่าง</p>
    </section>
 
-   {/* 5. Real cases */}
+   {/* 5. Symptoms */}
+   <section className={d.section}>
+    <div className={d.sectionHeading}><div><p className={d.eyebrow}>COMMON PROBLEMS</p><h2>รถของคุณมีอาการเหล่านี้อยู่ไหม?</h2></div><Link href="/problems">ดูอาการทั้งหมด ↗</Link></div>
+    <div className={d.problems}><Link href="/services/ev-air-conditioning">ล้างแอร์ / ล้างแผงแอร์รถไฟฟ้า<span>↗</span></Link>{problems.map(p => <Link key={p.slug} href={"/problems/" + p.slug}>{p.title}<span>↗</span></Link>)}</div>
+   </section>
+
+   {/* 6. Real cases */}
    <section className={d.section}>
     <div className={d.sectionHeading}><div><p className={d.eyebrow}>REAL REPAIRS</p><h2>ตัวอย่างงานซ่อมจริงจากอู่</h2></div><Link href="/work">ดูผลงานทั้งหมด ↗</Link></div>
     <div className={d.caseGrid}>{cases.map(c => <Link key={c.slug} href={"/work/" + c.slug} className={d.caseCard}>
@@ -118,20 +136,32 @@ export default function EvRepairLandingPage() {
     </div>
    </section>
 
-   {/* 6. Process */}
+   {/* 7. Why us */}
+   <section className={d.section}>
+    <div className={d.sectionHeading}><div><p className={d.eyebrow}>WHY PRO EV SERVICE</p><h2>เริ่มจากหาสาเหตุ<br/>ก่อนตัดสินใจซ่อม</h2></div></div>
+    <div className={s.trust}>{trust.map((t, i) => <div key={t.title}><span>0{i + 1}</span><h3>{t.title}</h3><p>{t.text}</p></div>)}</div>
+   </section>
+
+   {/* 8. Services */}
+   <section className={d.section}>
+    <div className={d.sectionHeading}><div><p className={d.eyebrow}>OUR SERVICES</p><h2>บริการของเรา</h2></div><Link href="/services">รายละเอียดทุกบริการ ↗</Link></div>
+    <div className={d.serviceIndex}>{services.map((item, i) => <Link href={"/services/" + item.slug} key={item.slug}><span>0{i + 1}</span><h3>{item.title}<small className={s.serviceShort}>{item.short}</small></h3><span>↗</span></Link>)}</div>
+   </section>
+
+   {/* 9. Process */}
    <section className={d.section}>
     <div className={d.sectionHeading}><div><p className={d.eyebrow}>HOW IT WORKS</p><h2>ขั้นตอนเข้ารับบริการ</h2></div></div>
     <div className={d.process}>{steps.map((st, i) => <div key={st.title}><span>0{i + 1}</span><h3>{st.title}</h3><p>{st.text}</p></div>)}</div>
    </section>
 
-   {/* 6b. FAQ */}
+   {/* 10. FAQ */}
    <section className={d.section}>
     <div className={d.sectionHeading}><div><p className={d.eyebrow}>FAQ</p><h2>คำถามที่พบบ่อยก่อนเข้ารับบริการ</h2></div></div>
     <div>{faqs.map(f => <details key={f.q} className={d.faq}><summary>{f.q}</summary><p>{f.a}</p></details>)}</div>
     <script type="application/ld+json" dangerouslySetInnerHTML={{__html: JSON.stringify({"@context": "https://schema.org", "@type": "FAQPage", mainEntity: faqs.map(f => ({"@type": "Question", name: f.q, acceptedAnswer: {"@type": "Answer", text: f.a}}))}).replace(/</g, "\\u003c")}}/>
    </section>
 
-   {/* 7. Final CTA + location */}
+   {/* 11. Final CTA + location */}
    <section className={d.closing}>
     <p className={d.eyebrow}>BOOK AN INSPECTION</p>
     <h2>บอกรุ่นรถและอาการ<br/>แล้วให้เราช่วยวางแผนเข้าตรวจ</h2>
@@ -153,7 +183,7 @@ export default function EvRepairLandingPage() {
    </section>
   </div>
 
-  {/* 8. Mobile sticky bar */}
+  {/* 12. Mobile sticky bar */}
   <StickyBar/>
  </div>;
 }
