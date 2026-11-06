@@ -68,26 +68,3 @@ export function HeroCopy() {
   <p>{copy.text}</p>
  </>;
 }
-
-// Shop hours: 09:00–19:00 Bangkok time, closed Wednesdays.
-function status(now: Date) {
- const bkk = new Date(now.toLocaleString("en-US", {timeZone: "Asia/Bangkok"}));
- const day = bkk.getDay(), mins = bkk.getHours() * 60 + bkk.getMinutes();
- const openToday = day !== 3;
- if (openToday && mins >= 540 && mins < 1140) return {open: true, text: "เปิดอยู่ตอนนี้ · ปิด 19:00 น."};
- if (openToday && mins < 540) return {open: false, text: "ปิดอยู่ · เปิดวันนี้ 09:00 น."};
- const tomorrowIsWed = (day + 1) % 7 === 3;
- return {open: false, text: tomorrowIsWed ? "ปิดอยู่ · เปิดวันพฤหัสบดี 09:00 น. (หยุดวันพุธ)" : day === 3 && mins < 1140 ? "วันนี้หยุด (วันพุธ) · เปิดพรุ่งนี้ 09:00 น." : "ปิดอยู่ · เปิดพรุ่งนี้ 09:00 น."};
-}
-
-export function OpenStatus({className, dotOpen, dotClosed}: {className?: string; dotOpen?: string; dotClosed?: string}) {
- const [state, setState] = useState<{open: boolean; text: string} | null>(null);
- useEffect(() => {
-  const tick = () => setState(status(new Date()));
-  tick();
-  const id = setInterval(tick, 60000);
-  return () => clearInterval(id);
- }, []);
- if (!state) return null;
- return <p className={className}><span className={state.open ? dotOpen : dotClosed}/>{state.text}{!state.open && " · ทักแชทไว้ได้ ทีมงานตอบกลับเมื่อเปิดร้าน"}</p>;
-}

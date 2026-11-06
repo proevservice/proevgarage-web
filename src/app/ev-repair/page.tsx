@@ -7,7 +7,9 @@ import {getRepairCases} from "@/lib/repair-cases";
 import {services, problems} from "@/lib/website-v3";
 import {LeadLink, StickyBar} from "./LeadLink";
 import {LINKS} from "./links";
-import {HeroCopy, OpenStatus} from "./HeroCopy";
+import {HeroCopy} from "./HeroCopy";
+import OpenStatus from "@/components/OpenStatus";
+import {HeroFacts, ShopOffer, NearYou} from "@/components/ShopHighlights";
 import s from "./landing.module.css";
 
 // Google Ads landing page, styled with the Version 3 design system.
@@ -18,12 +20,6 @@ const trust = [
  {title: "ตรวจวิเคราะห์ก่อนซ่อม", text: "อ่านค่าจากกล่องควบคุมด้วยเครื่องมือวิเคราะห์ ร่วมกับการตรวจอาการจริงของรถ เพื่อหาสาเหตุก่อนเปลี่ยนอะไหล่"},
  {title: "แจ้งรายการและค่าใช้จ่ายก่อนเริ่มงาน", text: "อธิบายผลตรวจ แนวทางซ่อม อะไหล่ และค่าใช้จ่ายให้พิจารณา เริ่มงานเมื่อเจ้าของรถอนุมัติเท่านั้น"},
  {title: "ดูแลระบบแรงดันสูงอย่างระมัดระวัง", text: "งานแบตเตอรี่ BCU/BMS ระบบชาร์จ และแอร์ไฟฟ้า ประเมินตามรุ่นรถและอาการ พร้อมแจ้งขอบเขตงานก่อนนัดหมาย"},
-];
-
-const promises = [
- {title: "ตรวจเช็คเบื้องต้นฟรี", text: "หากต้องตรวจวิเคราะห์เชิงลึกและมีค่าใช้จ่าย หักเป็นค่าซ่อมได้เมื่อซ่อมกับเรา"},
- {title: "ซ่อมด่วน รอรับได้", text: "ทักแชทแจ้งรุ่นรถและอาการไว้ก่อน ทีมงานช่วยจัดคิวให้"},
- {title: "มีการรับประกันงานซ่อม", text: "เงื่อนไขการรับประกันขึ้นอยู่กับประเภทงาน ทีมงานแจ้งให้ทราบก่อนเริ่มซ่อม"},
 ];
 
 const faqs = [
@@ -45,9 +41,6 @@ const steps = [
 export default function EvRepairLandingPage() {
  const settings = getSettings();
  const cases = getRepairCases().filter(c => c.image).slice(0, 2);
- const rating = settings.google_rating;
- const reviewCount = settings.google_review_count;
- const reviewsUrl = settings.google_reviews_url || "https://www.google.com/maps?cid=12415469945169781142";
  const brands = [
   {name: "NETA", models: "NETA V · NETA V-II · NETA X"},
   {name: "BYD", models: "Atto 3 · Dolphin · Seal"},
@@ -71,44 +64,19 @@ export default function EvRepairLandingPage() {
      <LeadLink type="phone_call" location="hero" href={`tel:${LINKS.PHONE}`} className={d.secondary}>โทร {settings.phone || "098-9794116"}</LeadLink>
     </div>
     <div className={s.saveContact}><MobileSaveContactBtn/></div>
-    <OpenStatus className={s.openStatus} dotOpen={s.dotOpen} dotClosed={s.dotClosed}/>
-    <ul className={s.heroFacts}>
-     <li>ตรวจเช็คเบื้องต้นฟรี</li>
-     <li>ซ่อมด่วน รอรับได้</li>
-     <li>มีการรับประกันงานซ่อม</li>
-     {rating ? <li>★ {rating} จาก {reviewCount} รีวิวบน Google</li> : null}
-    </ul>
+    <HeroFacts/>
    </div>
   </section>
 
   <div className={d.inner}>
    {/* 2. Offer + reviews */}
    <section className={d.section}>
-    <div className={s.offer}>
-     <div className={s.promises}>{promises.map(p => <div key={p.title}><h3>{p.title}</h3><p>{p.text}</p></div>)}</div>
-     {rating ? <a className={s.reviews} href={reviewsUrl} target="_blank" rel="noopener noreferrer">
-      <strong>{rating}</strong>
-      <span className={s.stars} aria-hidden="true">★★★★★</span>
-      <span>จาก {reviewCount} รีวิวบน Google Maps</span>
-      <em>อ่านรีวิวจากลูกค้าจริง ↗</em>
-     </a> : null}
-    </div>
+    <ShopOffer/>
    </section>
 
    {/* 3. Near you — most searches are "ร้าน/อู่ซ่อมรถไฟฟ้าใกล้ฉัน" */}
    <section className={d.section}>
-    <div className={d.sectionHeading}><div><p className={d.eyebrow}>NEAR YOU</p><h2>อู่อยู่ปากเกร็ด<br/>ใกล้เมเจอร์ ฮอลลีวู้ด</h2></div><a href={LINKS.MAP} target="_blank" rel="noopener noreferrer">นำทางด้วย Google Maps ↗</a></div>
-    <div className={s.near}>
-     <iframe title="แผนที่ Pro EV Service ปากเกร็ด" src="https://maps.google.com/maps?cid=12415469945169781142&output=embed&hl=th&z=15" loading="lazy" referrerPolicy="no-referrer-when-downgrade" allowFullScreen/>
-     <div>
-      <h3>Pro EV Service อู่ซ่อมรถไฟฟ้า ปากเกร็ด</h3>
-      <p>{settings.address || "เมเจอร์ ฮอลลีวู้ด ตำบลปากเกร็ด อำเภอปากเกร็ด นนทบุรี 11120"}</p>
-      <p>เปิด {settings.hours || "09:00 - 19:00 (หยุดวันพุธ)"}</p>
-      <OpenStatus className={s.openStatus} dotOpen={s.dotOpen} dotClosed={s.dotClosed}/>
-      <p className={s.nearLabel}>สะดวกสำหรับลูกค้าจาก</p>
-      <ul className={s.chips}>{areas.map(a => <li key={a}>{a}</li>)}</ul>
-     </div>
-    </div>
+    <NearYou headingClass={d.sectionHeading} eyebrowClass={d.eyebrow}/>
    </section>
 
    {/* 4. Brands — many searches name the brand or the dealer */}
@@ -166,7 +134,7 @@ export default function EvRepairLandingPage() {
     <p className={d.eyebrow}>BOOK AN INSPECTION</p>
     <h2>บอกรุ่นรถและอาการ<br/>แล้วให้เราช่วยวางแผนเข้าตรวจ</h2>
     <p>ตรวจเช็คเบื้องต้นฟรี · แจ้งค่าใช้จ่ายก่อนเริ่มงาน · ซ่อมด่วน รอรับได้</p>
-    <OpenStatus className={s.openStatus} dotOpen={s.dotOpen} dotClosed={s.dotClosed}/>
+    <OpenStatus/>
     <div className={`${d.actions} ${s.finalActions}`}>
      <LeadLink type="facebook_chat" location="final_cta" href={LINKS.FB_MESSENGER} className={s.fb}>ทักแชทจองคิว ↗</LeadLink>
      <LeadLink type="line_chat" location="final_cta" href={LINKS.LINE} className={d.button}>ทักไลน์ ↗</LeadLink>
