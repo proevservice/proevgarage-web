@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/Link";
 import {getSettings} from "@/lib/site";
 import {vehicles} from "@/lib/website-v3";
 import {faqSchema} from "@/lib/seo";

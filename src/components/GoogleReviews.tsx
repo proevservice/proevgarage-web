@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/Link";
 import Image from "next/image";
 import { Star, MapPin, MessageSquareQuote, CheckCircle } from "lucide-react";
 import { GooglePlaceDetails } from "@/lib/google";

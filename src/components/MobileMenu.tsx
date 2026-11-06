@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
-import Link from "next/link";
+import Link from "@/components/Link";
 import { usePathname } from "next/navigation";
 import { Menu, X, MessageCircle, Phone } from "lucide-react";
 import { Settings } from "@/lib/site";

@@ -1,5 +1,5 @@
 import {NextRequest,NextResponse} from "next/server";
-import {LANGUAGE_COOKIE,isEnglishPath,languagePath,shouldSuggestEnglish} from "@/lib/language.mjs";
+import {LANGUAGE_COOKIE,languagePath,shouldSuggestEnglish} from "@/lib/language.mjs";
 export function middleware(request:NextRequest){
  const {pathname,search}=request.nextUrl;
  if(shouldSuggestEnglish(pathname,request.cookies.get(LANGUAGE_COOKIE)?.value,request.headers.get("accept-language"),request.headers.get("user-agent"),search.slice(1))){
@@ -9,8 +9,7 @@ export function middleware(request:NextRequest){
   response.headers.set("Vary","Accept-Language, Cookie");
   return response;
  }
- const requestHeaders=new Headers(request.headers);
- requestHeaders.set("x-site-language",isEnglishPath(pathname)?"en":"th");
- return NextResponse.next({request:{headers:requestHeaders}});
+ return NextResponse.next();
 }
-export const config={matcher:["/((?!api|_next|images|admin|.*\\..*).*)"]};
+// Only the home page can redirect, so skip middleware everywhere else.
+export const config={matcher:["/"]};

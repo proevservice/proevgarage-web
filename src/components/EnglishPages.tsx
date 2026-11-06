@@ -1,5 +1,5 @@
 import Image from "next/image";
-import Link from "next/link";
+import Link from "@/components/Link";
 import {notFound} from "next/navigation";
 import {englishServices as services,englishProblems as problems,englishVehicles as vehicles,englishFaqs as faqs,englishWork,englishPosts,englishSettings} from "@/lib/english";
 import WorkGallery from "@/components/WorkGallery";

@@ -1,4 +1,4 @@
-import Link from "next/link";
+import Link from "@/components/Link";
 import { Facebook, MapPin, Phone, Clock } from "lucide-react";
 import { getSettings } from "@/lib/site";
 

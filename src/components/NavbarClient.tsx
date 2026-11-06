@@ -3,7 +3,7 @@
 import LanguageSwitcher from "@/components/LanguageSwitcher";
 import { useState, useEffect } from "react";
 import { usePathname } from "next/navigation";
-import Link from "next/link";
+import Link from "@/components/Link";
 import Image from "next/image";
 import { MessageCircle, Phone } from "lucide-react";
 import { Settings } from "@/lib/site";

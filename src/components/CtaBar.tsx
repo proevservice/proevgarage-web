@@ -1,7 +1,7 @@
 "use client";
 
 import { MessageCircle, Phone } from "lucide-react";
-import Link from "next/link";
+import Link from "@/components/Link";
 
 interface CtaBarProps {
     fbLink: string;

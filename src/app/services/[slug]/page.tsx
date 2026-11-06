@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import {pageMetadata,serviceSchema,webPageSchema,serviceQuestions} from "@/lib/seo";
 import {AnswerList} from "@/components/SearchAnswers";
 import { notFound } from "next/navigation";
-import Link from "next/link";
+import Link from "@/components/Link";
 import Image from "next/image";
 import { services,problems,SITE_URL } from "@/lib/website-v3";
 import { PageHeader,Schema,RelatedWork,ContactCta,MobileContact } from "@/components/WebsiteV3";

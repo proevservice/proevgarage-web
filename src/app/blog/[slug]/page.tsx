@@ -1,6 +1,6 @@
 import type {Metadata} from "next";
 import {notFound} from "next/navigation";
-import Link from "next/link";
+import Link from "@/components/Link";
 import {getPostBySlug,getAllPosts,getSettings} from "@/lib/site";
 import {Schema,Breadcrumbs} from "@/components/WebsiteV3";
 import WorkGallery from "@/components/WorkGallery";

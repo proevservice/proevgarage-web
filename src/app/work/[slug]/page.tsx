@@ -5,7 +5,7 @@ import {casesForService} from "@/lib/service-work.mjs";
 import {Schema,Breadcrumbs} from "@/components/WebsiteV3";
 import {getRepairCases} from "@/lib/repair-cases";
 import {getSettings} from "@/lib/site";
-import Link from "next/link";
+import Link from "@/components/Link";
 import WorkGallery from "@/components/WorkGallery";
 import styles from "@/components/work.module.css";
 export const dynamicParams=false;

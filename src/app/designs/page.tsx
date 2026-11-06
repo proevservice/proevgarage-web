@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/components/Link";
 import Image from "next/image";
 import { designOptions } from "@/lib/design-options";
 import s from "@/components/designs/designs.module.css";

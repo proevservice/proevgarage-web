@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/components/Link";
 import { services, problems, vehicles, SITE_URL } from "@/lib/website-v3";
 import { ServiceShowcase } from "@/components/ServiceShowcase";
 import { getRepairCases } from "@/lib/repair-cases";

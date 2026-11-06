@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Link from "next/link";
+import Link from "@/components/Link";
 import { vehicles,SITE_URL } from "@/lib/website-v3";
 import { PageHeader,ContactCta,MobileContact } from "@/components/WebsiteV3";
 import s from "@/components/v3.module.css";

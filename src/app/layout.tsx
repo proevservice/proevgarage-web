@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import {headers} from "next/headers";
 import { Prompt } from "next/font/google";
 import "./globals.css";
 import SiteFrame from "@/components/SiteFrame";
@@ -8,6 +7,7 @@ import { Footer } from "@/components/Footer";
 //import { CtaBar } from "@/components/CtaBar";
 import { getSettings } from "@/lib/site";
 import { JsonLd } from "@/components/JsonLd";
+import HtmlLang from "@/components/HtmlLang";
 import { GoogleTagManager, GoogleTagManagerNoScript } from "@/components/GoogleTagManager";
 
 const prompt = Prompt({
@@ -45,13 +45,14 @@ export default function RootLayout({
     const settings = getSettings();
 
     return (
-        <html lang={headers().get("x-site-language")==="en"?"en":"th"} className={`${prompt.variable} dark`}>
+        <html lang="th" className={`${prompt.variable} dark`}>
             <head>
                 <GoogleTagManager />
                 <JsonLd settings={settings} />
             </head>
             <body className="flex min-h-screen flex-col font-sans antialiased text-text bg-bg">
                 <GoogleTagManagerNoScript />
+                <HtmlLang />
                 <SiteFrame settings={settings} legacyHeader={<Navbar />} legacyFooter={<Footer />}>
                     {children}
                 </SiteFrame>
