@@ -14,7 +14,7 @@ import ProblemDetail from "@/app/problems/[slug]/page";
 import Vehicles from "@/app/vehicles/page";
 import VehicleDetail from "@/app/vehicles/[slug]/page";
 type Props={params:{variant:string;path?:string[]}};
-export const dynamicParams=true;
+export const dynamicParams=false;
 export function generateStaticParams(){return designOptions.flatMap(d=>["","services","work","blog","contact","booking","problems","vehicles"].map(path=>({variant:d.id,path:path?path.split("/"):[]})));}
 export function generateMetadata({params}:Props):Metadata{const option=designOptions.find(d=>d.id===params.variant);return {title:option?option.name+" · PRO EV SERVICE | Design Preview":"Design Preview",robots:{index:false,follow:false},alternates:{canonical:"https://www.proevgarage.com/"+(params.path||[]).join("/")}};}
 export default function DesignOptionPage({params}:Props){

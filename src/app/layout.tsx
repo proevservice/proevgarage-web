@@ -8,6 +8,7 @@ import { Footer } from "@/components/Footer";
 import { getSettings } from "@/lib/site";
 import { JsonLd } from "@/components/JsonLd";
 import HtmlLang from "@/components/HtmlLang";
+import { isPreviewDeploy } from "@/lib/deploy-env";
 import { GoogleTagManager, GoogleTagManagerNoScript } from "@/components/GoogleTagManager";
 
 const prompt = Prompt({
@@ -23,8 +24,8 @@ export const metadata: Metadata = {
     description: "อู่ซ่อมรถไฟฟ้า ปากเกร็ด นนทบุรี ตรวจระบบแอร์ แบตเตอรี่ BCU/BMS ระบบชาร์จ ระบบไฟ และช่วงล่าง พร้อมผลงานซ่อมจริงและข้อมูลนัดหมาย โทร 098-9794116",
     keywords: ["ซ่อมรถไฟฟ้า", "อู่ซ่อม EV", "ซ่อมแอร์รถไฟฟ้า", "ซ่อมแบตเตอรี่ EV", "Neta V", "BYD Atto 3", "MG ZS EV", "ปากเกร็ด", "นนทบุรี"],
     robots: {
-        index: process.env.VERCEL_ENV !== "preview",
-        follow: process.env.VERCEL_ENV !== "preview",
+        index: !isPreviewDeploy,
+        follow: !isPreviewDeploy,
     },
     openGraph: {
         type: "website",

@@ -1,40 +1,13 @@
 /** @type {import('next').NextConfig} */
+// Built as a fully static site (out/) for Cloudflare Pages, where static
+// requests and bandwidth are free and unlimited. Redirects and cache headers
+// live in public/_redirects and public/_headers.
 const nextConfig = {
-    compress: true,
+    output: 'export',
     poweredByHeader: false,
     reactStrictMode: true,
     images: {
-        formats: ['image/avif', 'image/webp'],
-    },
-    async redirects() {
-        return [
-            { source: '/blog/ev-ac-problems', destination: '/problems/ac-not-cold', permanent: true },
-            { source: '/blog/ev-battery-degradation-signs', destination: '/problems/battery-soc', permanent: true },
-            { source: '/blog/urgent-warning-signs', destination: '/problems', permanent: true },
-        ];
-    },
-    async headers() {
-        return [
-            {
-                source: '/:all*(svg|jpg|png)',
-                locale: false,
-                headers: [
-                    {
-                        key: 'Cache-Control',
-                        value: 'public, max-age=31536000, immutable',
-                    },
-                ],
-            },
-            {
-                source: '/_next/image(.*)',
-                headers: [
-                    {
-                        key: 'Cache-Control',
-                        value: 'public, max-age=31536000, immutable',
-                    },
-                ],
-            },
-        ];
+        unoptimized: true,
     },
 };
 
