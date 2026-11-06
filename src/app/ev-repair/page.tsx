@@ -45,9 +45,12 @@ export default function EvRepairLandingPage() {
   {name: "NETA", models: "NETA V · NETA V-II · NETA X"},
   {name: "BYD", models: "Atto 3 · Dolphin · Seal"},
   {name: "MG", models: "MG EP · MG ZS EV · MG4"},
-  {name: "Deepal", models: "Deepal S07 · L07"},
-  {name: "GAC AION / ORA", models: "AION · ORA Good Cat"},
-  {name: "อื่นๆ", models: "Geely · Jaecoo และรุ่นอื่น สอบถามได้"},
+  {name: "DEEPAL", models: "Deepal S07 · L07"},
+  {name: "GAC AION", models: "AION Y Plus · ES · V"},
+  {name: "ORA", models: "Good Cat"},
+  {name: "Geely", models: "EX5"},
+  {name: "JAECOO / OMODA", models: "J6 · C5 EV"},
+  {name: "รุ่นอื่นๆ", models: "สอบถามทีมงานได้"},
  ];
  const areas = settings.service_areas?.length ? settings.service_areas : ["ปากเกร็ด", "นนทบุรี", "กรุงเทพฯ"];
 

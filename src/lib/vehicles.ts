@@ -1,4 +1,4 @@
-// Vehicle brand pages = fixed core brands + extra EV brands that get a page
+// Vehicle brand pages = brands the shop services (website-v3) + extra EV brands that get a page
 // automatically as soon as a repair case mentions them (build time).
 // Server-only: reads repair cases from content/.
 import {vehicles as coreVehicles} from "./website-v3";
@@ -13,8 +13,6 @@ const extraBrands: (Vehicle & {match:RegExp})[] = [
  {slug:"tesla",name:"Tesla",models:["Model 3","Model Y"],keywords:["tesla","เทสล่า"],match:/tesla|เทสล่า|model\s?[3y]\b/i},
  {slug:"xpeng",name:"XPENG",models:["XPENG G6","XPENG X9"],keywords:["xpeng","เสี่ยวเผิง"],match:/xpeng|เสี่ยวเผิง/i},
  {slug:"changan",name:"Changan",models:["Lumin","Avatr"],keywords:["changan","ฉางอัน","lumin","avatr"],match:/changan|ฉางอัน|\blumin\b|avatr/i},
- {slug:"geely",name:"Geely",models:["Geely EX5"],keywords:["geely","จีลี่"],match:/geely|จีลี่/i},
- {slug:"jaecoo-omoda",name:"JAECOO / OMODA",models:["JAECOO J6","OMODA C5 EV"],keywords:["jaecoo","omoda","เจคู","โอโมดะ"],match:/jaecoo|omoda|เจคู|โอโมดะ/i},
  {slug:"wuling",name:"Wuling",models:["Wuling Air ev","Wuling Bingo"],keywords:["wuling","วูหลิง"],match:/wuling|วูหลิง/i},
  {slug:"volvo",name:"Volvo",models:["EX30","XC40 Recharge"],keywords:["volvo","วอลโว่"],match:/volvo|วอลโว่/i},
  {slug:"bmw",name:"BMW",models:["iX","i4","iX1"],keywords:["bmw","บีเอ็ม"],match:/\bbmw\b|บีเอ็ม/i},

@@ -20,7 +20,10 @@ export const vehicles = [
 {slug:"byd",name:"BYD",models:["Atto 3","Dolphin","Seal"],keywords:["byd","atto","dolphin","seal"]},
 {slug:"mg",name:"MG",models:["MG EP","MG ZS EV","MG4"],keywords:["mg"]},
 {slug:"ora",name:"ORA",models:["Good Cat"],keywords:["ora","good cat"]},
-{slug:"deepal-aion",name:"DEEPAL / AION",models:["DEEPAL","GAC AION"],keywords:["deepal","aion"]}
+{slug:"deepal",name:"DEEPAL",models:["DEEPAL S07","DEEPAL L07"],keywords:["deepal","ดีพอล"]},
+{slug:"aion",name:"GAC AION",models:["AION Y Plus","AION ES","AION V"],keywords:["aion","ไอออน"]},
+{slug:"geely",name:"Geely",models:["Geely EX5"],keywords:["geely","จีลี่"]},
+{slug:"jaecoo-omoda",name:"JAECOO / OMODA",models:["JAECOO J6","OMODA C5 EV"],keywords:["jaecoo","omoda","เจคู","โอโมดะ"]}
 ];
 export const faqs = [
 {question:"ต้องนัดหมายก่อนเข้ารับบริการไหม?",answer:"แนะนำให้แจ้งรุ่นรถ อาการ และวันที่สะดวกผ่าน LINE โทร หรือ Facebook เพื่อให้ทีมงานตรวจสอบคิวและเตรียมรับรถ"},
