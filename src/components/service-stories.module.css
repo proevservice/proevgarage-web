@@ -24,7 +24,7 @@
 .description{font-size:14px;line-height:1.85;color:rgb(var(--text-muted));margin-bottom:22px}
 .storyActions{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;margin-top:auto}
 .serviceLink,.primaryLink{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-size:12px;min-height:44px}
-.primaryLink{background:rgb(var(--accent));color:#07160d;border-radius:6px;padding:10px 14px;font-weight:600}
+.primaryLink{border:1px solid rgb(var(--accent));color:rgb(var(--accent));border-radius:var(--radius,8px);padding:10px 16px;font-weight:500}.primaryLink:hover{background:rgb(var(--accent));color:#0c140a}
 .serviceLink{color:rgb(var(--text));border-bottom:1px solid rgb(var(--border))}
 .moreLink{font-size:12px;color:rgb(var(--accent));margin-top:14px}
 .visualShade{position:absolute;inset:0;background:linear-gradient(180deg,rgba(0,0,0,.12),transparent 35%,rgba(3,9,16,.72))}
@@ -39,3 +39,5 @@
 @media(max-width:900px){.introGrid{gap:28px}.story h2{font-size:23px}.storyContent{padding:20px}.stories{gap:20px}}
 @media(max-width:700px){.intro{padding:24px 0}.introGrid{grid-template-columns:1fr;gap:14px;margin-top:20px}.intro h1{font-size:32px}.introText{font-size:14px;max-width:none}.stories{grid-template-columns:1fr;gap:24px}.catalogNav{gap:7px;padding-bottom:24px}.catalogNav a{font-size:11px;padding:8px 10px}.story h2{font-size:24px}.storyContent{padding:20px}.storyVisual{aspect-ratio:16/10}.searchDrawer{margin-top:18px}}
 @media(prefers-reduced-motion:reduce){.storyVisual>img{transition:none}}
+
+.kicker,.serviceNumber{display:none}

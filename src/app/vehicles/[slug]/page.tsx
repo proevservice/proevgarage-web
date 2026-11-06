@@ -32,7 +32,7 @@ export default function Vehicle({params}:{params:{slug:string}}){
   <section className={s.section}>
    <h2>งานที่เจ้าของ {item.name} ใช้บริการบ่อย</h2>
    <p className={s.muted} style={{marginBottom:24}}>รายการที่รับดำเนินการขึ้นอยู่กับรุ่นรถ อาการ และผลตรวจ</p>
-   <div className={s.problemGrid}>{jobs.map(j=><Link key={j.slug} className={s.problem} href={"/services/"+j.slug}><span>{j.title}<br/><small className={s.muted}>{j.short}</small></span><span>↗</span></Link>)}</div>
+   <div className={s.problemGrid}>{jobs.map(j=><Link key={j.slug} className={s.problem} href={"/services/"+j.slug}><span>{j.title}<br/><small className={s.muted}>{j.short}</small></span></Link>)}</div>
   </section>
   <RelatedWork keywords={item.keywords}/>
   <section className={s.section}><h2>คำถามเกี่ยวกับ {item.name}</h2><AnswerList items={brandFaqs(item.name)} path={"/vehicles/"+item.slug}/></section>

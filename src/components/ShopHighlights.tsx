@@ -31,7 +31,7 @@ export function ShopOffer() {
    <strong>{settings.google_rating}</strong>
    <span className={s.stars} aria-hidden="true">★★★★★</span>
    <span>จาก {settings.google_review_count} รีวิวบน Google Maps</span>
-   <em>อ่านรีวิวจากลูกค้าจริง ↗</em>
+   <em>อ่านรีวิวจากลูกค้าจริง</em>
   </a> : null}
  </div>;
 }
@@ -41,7 +41,7 @@ export function NearYou({headingClass, eyebrowClass}: {headingClass: string; eye
  const areas = settings.service_areas?.length ? settings.service_areas : ["ปากเกร็ด", "นนทบุรี", "กรุงเทพฯ"];
  const maps = settings.maps || "https://maps.app.goo.gl/h21RDsTBUFH5fH9z7";
  return <>
-  <div className={headingClass}><div><p className={eyebrowClass}>NEAR YOU</p><h2>อู่อยู่ปากเกร็ด<br/>ใกล้เมเจอร์ ฮอลลีวู้ด</h2></div><a href={maps} target="_blank" rel="noopener noreferrer">นำทางด้วย Google Maps ↗</a></div>
+  <div className={headingClass}><div><p className={eyebrowClass}>NEAR YOU</p><h2>อู่อยู่ปากเกร็ด<br/>ใกล้เมเจอร์ ฮอลลีวู้ด</h2></div><a href={maps} target="_blank" rel="noopener noreferrer">นำทางด้วย Google Maps</a></div>
   <div className={s.near}>
    <iframe title="แผนที่ Pro EV Service ปากเกร็ด" src="https://maps.google.com/maps?cid=12415469945169781142&output=embed&hl=th&z=15" loading="lazy" referrerPolicy="no-referrer-when-downgrade" allowFullScreen/>
    <div>

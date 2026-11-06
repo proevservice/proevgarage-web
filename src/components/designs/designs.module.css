@@ -220,3 +220,17 @@
 @media(max-width:1000px){.svcGrid{grid-template-columns:repeat(2,1fr)}.brandBand{grid-template-columns:1fr;gap:16px}}
 @media(max-width:800px){.svcGrid{gap:22px 14px}.svcCard h3{font-size:15px}.svcAsk{grid-column:1/-1;min-height:auto}.visit{grid-template-columns:1fr;gap:36px;padding:60px 0}.faqBlock{grid-template-columns:1fr;gap:20px}.footer{grid-template-columns:1fr}}
 .theme .svcAsk em{color:#0c140a}
+
+/* shared visit CTA on inner pages */
+.visitCta{display:grid;grid-template-columns:1.1fr 1fr;margin:72px 0 24px;border-radius:var(--radius);overflow:hidden;background:rgb(var(--surface));border:1px solid rgb(var(--border))}
+.visitCtaPhoto{position:relative;min-height:340px}
+.visitCtaPhoto img{object-fit:cover}
+.visitCtaBody{padding:40px;display:flex;flex-direction:column;justify-content:center}
+.visitCtaBody h2{font-size:clamp(26px,3vw,36px);line-height:1.45;letter-spacing:-.03em;margin-bottom:14px}
+.visitCtaBody p{font-size:14px;color:rgb(var(--text-muted));line-height:1.8}
+.visitCtaBody .actions{gap:10px;margin-top:22px}
+@media(max-width:800px){.visitCta{grid-template-columns:1fr}.visitCtaPhoto{min-height:220px}.visitCtaBody{padding:26px}}
+.heroRating{font-size:13px!important;color:rgb(var(--text))!important;margin-top:16px}
+.visitBody a{color:rgb(var(--accent))}
+.visitBody .actions a{color:inherit}
+.visitBody .actions .button{color:#fff}
