@@ -1,4 +1,5 @@
 import Link from "@/components/Link";
+import {mediaCount} from "@/components/FacebookVideo";
 import Image from "next/image";
 import { services } from "@/lib/website-v3";
 import { getRepairCases } from "@/lib/repair-cases";
@@ -31,7 +32,7 @@ export function ServiceShowcase() {
           <div className={s.visualShade} />
           <span className={s.photoLabel}>{featured ? "ผลงานซ่อมจริงจากอู่" : "บริการของ PRO EV"}</span>
           {featured ? <div className={s.photoCaption}>
-            <p className={s.photoMeta}>{featured.images?.length || 1} ภาพจากโพสต์ต้นฉบับ</p>
+            <p className={s.photoMeta}>{mediaCount(featured)}จากโพสต์ต้นฉบับ</p>
             <h3>ดูเรื่องราวและภาพงานซ่อม</h3>
             <span className={s.photoArrow}></span>
           </div> : <span className={s.visualCorner}></span>}

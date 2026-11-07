@@ -57,7 +57,9 @@ export async function sync({root=process.cwd(), fetchImpl=fetch, env=process.env
   for(const kind of kinds)seen[kind].add(item.slug+".json");
   const media=await getPostPhotos(post,{token,version,fetchImpl});
   item.images=[];item.videoUrls=media.videos;
-  for(const picture of media.photos){
+  const downloads=media.photos.map(src=>({src,poster:false}));
+  if(!media.photos.length&&media.posters?.length)downloads.push({src:media.posters[0],poster:true});
+  for(const {src:picture,poster} of downloads){
    const u=new URL(picture);
    if(u.protocol!=="https:"||!/(^|\.)(fbcdn\.net|fbsbx\.com)$/.test(u.hostname))throw new Error("Untrusted image host");
    const r=await fetchImpl(u,{redirect:"error",signal:AbortSignal.timeout(30000)});
@@ -71,9 +73,10 @@ export async function sync({root=process.cwd(), fetchImpl=fetch, env=process.env
    const bytes=Buffer.concat(parts);
    const digest=createHash("sha256").update(bytes).digest("hex").slice(0,16);
    const file=item.slug+"-"+digest+"."+ext;stagedImages.set(file,bytes);
+   if(poster){item.poster="/images/facebook/"+file;continue;}
    if(!item.images.includes("/images/facebook/"+file))item.images.push("/images/facebook/"+file);
   }
-  item.image=item.images[0];
+  item.image=item.images[0]||item.poster;
  }
  for(const dir of Object.values(dirs))await fs.mkdir(dir,{recursive:true});await fs.mkdir(images,{recursive:true});
  for(const [file,bytes] of stagedImages)await fs.writeFile(path.join(images,file),bytes);

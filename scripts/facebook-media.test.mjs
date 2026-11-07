@@ -14,3 +14,5 @@ test('keeps attachment photo when rendition list is empty',async()=>{
  const result=await getPostPhotos({id:'1_2'},{token:'placeholder',version:'v26.0',fetchImpl:async url=>new Response(JSON.stringify(String(url).includes('/attachments')?{data:[{target:{id:'123'},media:{image:{src:'preview'}}}]}:{images:[]}))});
  assert.deepEqual(result.photos,['preview']);
 });
+test('video cover is kept as poster, not as a photo',async()=>{const result=await getPostPhotos({id:'1_2',full_picture:'thumb'},{token:'placeholder',version:'v26.0',fetchImpl:async()=>new Response(JSON.stringify({data:[{media_type:'video',url:'https://www.facebook.com/reel/1/',media:{image:{src:'cover'}}}]}))});assert.deepEqual(result.photos,[]);assert.deepEqual(result.posters,['cover']);});
+test('falls back to full_picture as video poster',async()=>{const result=await getPostPhotos({id:'1_2',full_picture:'thumb'},{token:'placeholder',version:'v26.0',fetchImpl:async()=>new Response(JSON.stringify({data:[{media_type:'video',url:'https://www.facebook.com/reel/1/'}]}))});assert.deepEqual(result.posters,['thumb']);});

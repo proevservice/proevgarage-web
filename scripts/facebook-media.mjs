@@ -1,12 +1,12 @@
 export async function getPostPhotos(post,{token,version,fetchImpl=fetch}) {
  const fields='media,media_type,type,url,target,subattachments.limit(100){media,media_type,type,url,target}';
- const photos=[];const videos=[];
+ const photos=[];const videos=[];const posters=[];
  async function collect(edge){
   if(!Array.isArray(edge?.data))throw new Error('Invalid attachment response');
   for(const attachment of edge.data){
    if(attachment.subattachments){await collect(attachment.subattachments);continue;}
    const isVideo=/video/i.test(attachment.media_type||attachment.type||'');
-   if(isVideo){if(attachment.url)videos.push(attachment.url);continue;}
+   if(isVideo){if(attachment.url&&!videos.includes(attachment.url))videos.push(attachment.url);const poster=attachment.media?.image?.src;if(poster&&!posters.includes(poster))posters.push(poster);continue;}
    let src=attachment.media?.image?.src;
    // Photo-node renditions preserve more detail than attachment previews.
    if(/^\d+$/.test(attachment.target?.id||'')){
@@ -32,5 +32,7 @@ export async function getPostPhotos(post,{token,version,fetchImpl=fetch}) {
  url.searchParams.set('fields',fields);url.searchParams.set('limit','100');
  await collect(await request(url));
  if(!photos.length&&post.full_picture&&!videos.length)photos.push(post.full_picture);
- return {photos,videos};
+ // Video posts keep their cover separately so it is never counted as a gallery photo.
+ if(videos.length&&!posters.length&&post.full_picture)posters.push(post.full_picture);
+ return {photos,videos,posters};
 }
